@@ -1,0 +1,826 @@
+[
+  {
+    "file": "today-newUser_360.png",
+    "screen": "today",
+    "state": "newUser",
+    "variant": "360",
+    "pageScrollsHorizontally": false,
+    "scrolls": false,
+    "scrollExtra": 0,
+    "viewport": {
+      "width": 360,
+      "height": 800
+    },
+    "horizontalOverflow": [],
+    "clippedText": [],
+    "fullFile": null,
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "today-nothingDue_360.png",
+    "screen": "today",
+    "state": "nothingDue",
+    "variant": "360",
+    "pageScrollsHorizontally": false,
+    "scrolls": false,
+    "scrollExtra": 0,
+    "viewport": {
+      "width": 360,
+      "height": 800
+    },
+    "horizontalOverflow": [],
+    "clippedText": [],
+    "fullFile": null,
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "today-dueNow_360.png",
+    "screen": "today",
+    "state": "dueNow",
+    "variant": "360",
+    "pageScrollsHorizontally": false,
+    "scrolls": true,
+    "scrollExtra": 324,
+    "viewport": {
+      "width": 360,
+      "height": 800
+    },
+    "horizontalOverflow": [],
+    "clippedText": [],
+    "fullFile": "today-dueNow_360_full.png",
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "today-manyDue_360.png",
+    "screen": "today",
+    "state": "manyDue",
+    "variant": "360",
+    "pageScrollsHorizontally": false,
+    "scrolls": true,
+    "scrollExtra": 1145,
+    "viewport": {
+      "width": 360,
+      "height": 800
+    },
+    "horizontalOverflow": [],
+    "clippedText": [],
+    "fullFile": "today-manyDue_360_full.png",
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "today-allDone_360.png",
+    "screen": "today",
+    "state": "allDone",
+    "variant": "360",
+    "pageScrollsHorizontally": false,
+    "scrolls": true,
+    "scrollExtra": 15,
+    "viewport": {
+      "width": 360,
+      "height": 800
+    },
+    "horizontalOverflow": [],
+    "clippedText": [],
+    "fullFile": "today-allDone_360_full.png",
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "today-allDone-uploading_360.png",
+    "screen": "today",
+    "state": "allDone-uploading",
+    "variant": "360",
+    "pageScrollsHorizontally": false,
+    "scrolls": true,
+    "scrollExtra": 69,
+    "viewport": {
+      "width": 360,
+      "height": 800
+    },
+    "horizontalOverflow": [],
+    "clippedText": [],
+    "fullFile": "today-allDone-uploading_360_full.png",
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "today-error_360.png",
+    "screen": "today",
+    "state": "error",
+    "variant": "360",
+    "pageScrollsHorizontally": false,
+    "scrolls": false,
+    "scrollExtra": 0,
+    "viewport": {
+      "width": 360,
+      "height": 800
+    },
+    "horizontalOverflow": [],
+    "clippedText": [],
+    "fullFile": null,
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "today-offline_360.png",
+    "screen": "today",
+    "state": "offline",
+    "variant": "360",
+    "pageScrollsHorizontally": false,
+    "scrolls": true,
+    "scrollExtra": 446,
+    "viewport": {
+      "width": 360,
+      "height": 800
+    },
+    "horizontalOverflow": [],
+    "clippedText": [],
+    "fullFile": "today-offline_360_full.png",
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "records-timeline_360.png",
+    "screen": "records",
+    "state": "timeline",
+    "variant": "360",
+    "pageScrollsHorizontally": false,
+    "scrolls": true,
+    "scrollExtra": 2381,
+    "viewport": {
+      "width": 360,
+      "height": 800
+    },
+    "horizontalOverflow": [],
+    "clippedText": [
+      "div \"TODAY\""
+    ],
+    "fullFile": "records-timeline_360_full.png",
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "records-filteredEmpty_360.png",
+    "screen": "records",
+    "state": "filteredEmpty",
+    "variant": "360",
+    "pageScrollsHorizontally": false,
+    "scrolls": false,
+    "scrollExtra": 0,
+    "viewport": {
+      "width": 360,
+      "height": 800
+    },
+    "horizontalOverflow": [],
+    "clippedText": [
+      "div \"TODAY\""
+    ],
+    "fullFile": null,
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "records-reports_360.png",
+    "screen": "records",
+    "state": "reports",
+    "variant": "360",
+    "pageScrollsHorizontally": false,
+    "scrolls": true,
+    "scrollExtra": 1267,
+    "viewport": {
+      "width": 360,
+      "height": 800
+    },
+    "horizontalOverflow": [],
+    "clippedText": [],
+    "fullFile": "records-reports_360_full.png",
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "medicines-list_360.png",
+    "screen": "medicines",
+    "state": "list",
+    "variant": "360",
+    "pageScrollsHorizontally": false,
+    "scrolls": true,
+    "scrollExtra": 2417,
+    "viewport": {
+      "width": 360,
+      "height": 800
+    },
+    "horizontalOverflow": [],
+    "clippedText": [],
+    "fullFile": "medicines-list_360_full.png",
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "medicines-empty_360.png",
+    "screen": "medicines",
+    "state": "empty",
+    "variant": "360",
+    "pageScrollsHorizontally": false,
+    "scrolls": true,
+    "scrollExtra": 565,
+    "viewport": {
+      "width": 360,
+      "height": 800
+    },
+    "horizontalOverflow": [],
+    "clippedText": [],
+    "fullFile": "medicines-empty_360_full.png",
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "profile-signedIn_360.png",
+    "screen": "profile",
+    "state": "signedIn",
+    "variant": "360",
+    "pageScrollsHorizontally": false,
+    "scrolls": true,
+    "scrollExtra": 499,
+    "viewport": {
+      "width": 360,
+      "height": 800
+    },
+    "horizontalOverflow": [],
+    "clippedText": [],
+    "fullFile": "profile-signedIn_360_full.png",
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "today-newUser_430.png",
+    "screen": "today",
+    "state": "newUser",
+    "variant": "430",
+    "pageScrollsHorizontally": false,
+    "scrolls": false,
+    "scrollExtra": 0,
+    "viewport": {
+      "width": 430,
+      "height": 932
+    },
+    "horizontalOverflow": [],
+    "clippedText": [],
+    "fullFile": null,
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "today-nothingDue_430.png",
+    "screen": "today",
+    "state": "nothingDue",
+    "variant": "430",
+    "pageScrollsHorizontally": false,
+    "scrolls": false,
+    "scrollExtra": 0,
+    "viewport": {
+      "width": 430,
+      "height": 932
+    },
+    "horizontalOverflow": [],
+    "clippedText": [],
+    "fullFile": null,
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "today-dueNow_430.png",
+    "screen": "today",
+    "state": "dueNow",
+    "variant": "430",
+    "pageScrollsHorizontally": false,
+    "scrolls": true,
+    "scrollExtra": 146,
+    "viewport": {
+      "width": 430,
+      "height": 932
+    },
+    "horizontalOverflow": [],
+    "clippedText": [],
+    "fullFile": "today-dueNow_430_full.png",
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "today-manyDue_430.png",
+    "screen": "today",
+    "state": "manyDue",
+    "variant": "430",
+    "pageScrollsHorizontally": false,
+    "scrolls": true,
+    "scrollExtra": 951,
+    "viewport": {
+      "width": 430,
+      "height": 932
+    },
+    "horizontalOverflow": [],
+    "clippedText": [],
+    "fullFile": "today-manyDue_430_full.png",
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "today-allDone_430.png",
+    "screen": "today",
+    "state": "allDone",
+    "variant": "430",
+    "pageScrollsHorizontally": false,
+    "scrolls": false,
+    "scrollExtra": 0,
+    "viewport": {
+      "width": 430,
+      "height": 932
+    },
+    "horizontalOverflow": [],
+    "clippedText": [],
+    "fullFile": null,
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "today-allDone-uploading_430.png",
+    "screen": "today",
+    "state": "allDone-uploading",
+    "variant": "430",
+    "pageScrollsHorizontally": false,
+    "scrolls": false,
+    "scrollExtra": 0,
+    "viewport": {
+      "width": 430,
+      "height": 932
+    },
+    "horizontalOverflow": [],
+    "clippedText": [],
+    "fullFile": null,
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "today-error_430.png",
+    "screen": "today",
+    "state": "error",
+    "variant": "430",
+    "pageScrollsHorizontally": false,
+    "scrolls": false,
+    "scrollExtra": 0,
+    "viewport": {
+      "width": 430,
+      "height": 932
+    },
+    "horizontalOverflow": [],
+    "clippedText": [],
+    "fullFile": null,
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "today-offline_430.png",
+    "screen": "today",
+    "state": "offline",
+    "variant": "430",
+    "pageScrollsHorizontally": false,
+    "scrolls": true,
+    "scrollExtra": 250,
+    "viewport": {
+      "width": 430,
+      "height": 932
+    },
+    "horizontalOverflow": [],
+    "clippedText": [],
+    "fullFile": "today-offline_430_full.png",
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "records-timeline_430.png",
+    "screen": "records",
+    "state": "timeline",
+    "variant": "430",
+    "pageScrollsHorizontally": false,
+    "scrolls": true,
+    "scrollExtra": 2393,
+    "viewport": {
+      "width": 430,
+      "height": 932
+    },
+    "horizontalOverflow": [],
+    "clippedText": [],
+    "fullFile": "records-timeline_430_full.png",
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "records-filteredEmpty_430.png",
+    "screen": "records",
+    "state": "filteredEmpty",
+    "variant": "430",
+    "pageScrollsHorizontally": false,
+    "scrolls": false,
+    "scrollExtra": 0,
+    "viewport": {
+      "width": 430,
+      "height": 932
+    },
+    "horizontalOverflow": [],
+    "clippedText": [],
+    "fullFile": null,
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "records-reports_430.png",
+    "screen": "records",
+    "state": "reports",
+    "variant": "430",
+    "pageScrollsHorizontally": false,
+    "scrolls": true,
+    "scrollExtra": 895,
+    "viewport": {
+      "width": 430,
+      "height": 932
+    },
+    "horizontalOverflow": [],
+    "clippedText": [],
+    "fullFile": "records-reports_430_full.png",
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "medicines-list_430.png",
+    "screen": "medicines",
+    "state": "list",
+    "variant": "430",
+    "pageScrollsHorizontally": false,
+    "scrolls": true,
+    "scrollExtra": 2225,
+    "viewport": {
+      "width": 430,
+      "height": 932
+    },
+    "horizontalOverflow": [],
+    "clippedText": [],
+    "fullFile": "medicines-list_430_full.png",
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "medicines-empty_430.png",
+    "screen": "medicines",
+    "state": "empty",
+    "variant": "430",
+    "pageScrollsHorizontally": false,
+    "scrolls": true,
+    "scrollExtra": 347,
+    "viewport": {
+      "width": 430,
+      "height": 932
+    },
+    "horizontalOverflow": [],
+    "clippedText": [],
+    "fullFile": "medicines-empty_430_full.png",
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "profile-signedIn_430.png",
+    "screen": "profile",
+    "state": "signedIn",
+    "variant": "430",
+    "pageScrollsHorizontally": false,
+    "scrolls": true,
+    "scrollExtra": 323,
+    "viewport": {
+      "width": 430,
+      "height": 932
+    },
+    "horizontalOverflow": [],
+    "clippedText": [],
+    "fullFile": "profile-signedIn_430_full.png",
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "today-newUser_360-fs2.png",
+    "screen": "today",
+    "state": "newUser",
+    "variant": "360-fs2",
+    "pageScrollsHorizontally": false,
+    "scrolls": true,
+    "scrollExtra": 223,
+    "viewport": {
+      "width": 360,
+      "height": 800
+    },
+    "horizontalOverflow": [],
+    "clippedText": [
+      "div \"Records\"",
+      "div \"Medicines\"",
+      "div \"Health Plan\""
+    ],
+    "fullFile": "today-newUser_360-fs2_full.png",
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "today-nothingDue_360-fs2.png",
+    "screen": "today",
+    "state": "nothingDue",
+    "variant": "360-fs2",
+    "pageScrollsHorizontally": false,
+    "scrolls": false,
+    "scrollExtra": 0,
+    "viewport": {
+      "width": 360,
+      "height": 800
+    },
+    "horizontalOverflow": [],
+    "clippedText": [
+      "div \"Records\"",
+      "div \"Medicines\"",
+      "div \"Health Plan\""
+    ],
+    "fullFile": null,
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "today-dueNow_360-fs2.png",
+    "screen": "today",
+    "state": "dueNow",
+    "variant": "360-fs2",
+    "pageScrollsHorizontally": false,
+    "scrolls": true,
+    "scrollExtra": 650,
+    "viewport": {
+      "width": 360,
+      "height": 800
+    },
+    "horizontalOverflow": [],
+    "clippedText": [
+      "div \"Records\"",
+      "div \"Medicines\"",
+      "div \"Health Plan\""
+    ],
+    "fullFile": "today-dueNow_360-fs2_full.png",
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "today-manyDue_360-fs2.png",
+    "screen": "today",
+    "state": "manyDue",
+    "variant": "360-fs2",
+    "pageScrollsHorizontally": false,
+    "scrolls": true,
+    "scrollExtra": 1891,
+    "viewport": {
+      "width": 360,
+      "height": 800
+    },
+    "horizontalOverflow": [],
+    "clippedText": [
+      "div \"Records\"",
+      "div \"Medicines\"",
+      "div \"Health Plan\""
+    ],
+    "fullFile": "today-manyDue_360-fs2_full.png",
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "today-allDone_360-fs2.png",
+    "screen": "today",
+    "state": "allDone",
+    "variant": "360-fs2",
+    "pageScrollsHorizontally": false,
+    "scrolls": true,
+    "scrollExtra": 359,
+    "viewport": {
+      "width": 360,
+      "height": 800
+    },
+    "horizontalOverflow": [],
+    "clippedText": [
+      "div \"Records\"",
+      "div \"Medicines\"",
+      "div \"Health Plan\""
+    ],
+    "fullFile": "today-allDone_360-fs2_full.png",
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "today-allDone-uploading_360-fs2.png",
+    "screen": "today",
+    "state": "allDone-uploading",
+    "variant": "360-fs2",
+    "pageScrollsHorizontally": false,
+    "scrolls": true,
+    "scrollExtra": 497,
+    "viewport": {
+      "width": 360,
+      "height": 800
+    },
+    "horizontalOverflow": [],
+    "clippedText": [
+      "div \"Records\"",
+      "div \"Medicines\"",
+      "div \"Health Plan\""
+    ],
+    "fullFile": "today-allDone-uploading_360-fs2_full.png",
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "today-error_360-fs2.png",
+    "screen": "today",
+    "state": "error",
+    "variant": "360-fs2",
+    "pageScrollsHorizontally": false,
+    "scrolls": false,
+    "scrollExtra": 0,
+    "viewport": {
+      "width": 360,
+      "height": 800
+    },
+    "horizontalOverflow": [],
+    "clippedText": [
+      "div \"Records\"",
+      "div \"Medicines\"",
+      "div \"Health Plan\""
+    ],
+    "fullFile": null,
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "today-offline_360-fs2.png",
+    "screen": "today",
+    "state": "offline",
+    "variant": "360-fs2",
+    "pageScrollsHorizontally": false,
+    "scrolls": true,
+    "scrollExtra": 926,
+    "viewport": {
+      "width": 360,
+      "height": 800
+    },
+    "horizontalOverflow": [],
+    "clippedText": [
+      "div \"Records\"",
+      "div \"Medicines\"",
+      "div \"Health Plan\""
+    ],
+    "fullFile": "today-offline_360-fs2_full.png",
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "records-timeline_360-fs2.png",
+    "screen": "records",
+    "state": "timeline",
+    "variant": "360-fs2",
+    "pageScrollsHorizontally": false,
+    "scrolls": true,
+    "scrollExtra": 4052,
+    "viewport": {
+      "width": 360,
+      "height": 800
+    },
+    "horizontalOverflow": [],
+    "clippedText": [
+      "div \"TODAY\"",
+      "div \"Three synthetic medicines prescribed.\"",
+      "div \"Synthetic result summary, all values in range.\"",
+      "div \"Two synthetic medicines prescribed.\"",
+      "div \"Synthetic day procedure, no follow-up needed.\"",
+      "div \"Exact day was not written on the document.\"",
+      "div \"Records\"",
+      "div \"Medicines\""
+    ],
+    "fullFile": "records-timeline_360-fs2_full.png",
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "records-filteredEmpty_360-fs2.png",
+    "screen": "records",
+    "state": "filteredEmpty",
+    "variant": "360-fs2",
+    "pageScrollsHorizontally": false,
+    "scrolls": false,
+    "scrollExtra": 0,
+    "viewport": {
+      "width": 360,
+      "height": 800
+    },
+    "horizontalOverflow": [],
+    "clippedText": [
+      "div \"TODAY\"",
+      "div \"Records\"",
+      "div \"Medicines\"",
+      "div \"Health Plan\""
+    ],
+    "fullFile": null,
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "records-reports_360-fs2.png",
+    "screen": "records",
+    "state": "reports",
+    "variant": "360-fs2",
+    "pageScrollsHorizontally": false,
+    "scrolls": true,
+    "scrollExtra": 2916,
+    "viewport": {
+      "width": 360,
+      "height": 800
+    },
+    "horizontalOverflow": [
+      "div \"Clinical PDF\""
+    ],
+    "clippedText": [
+      "div \"Records\"",
+      "div \"Medicines\"",
+      "div \"Health Plan\""
+    ],
+    "fullFile": "records-reports_360-fs2_full.png",
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "medicines-list_360-fs2.png",
+    "screen": "medicines",
+    "state": "list",
+    "variant": "360-fs2",
+    "pageScrollsHorizontally": false,
+    "scrolls": true,
+    "scrollExtra": 3904,
+    "viewport": {
+      "width": 360,
+      "height": 800
+    },
+    "horizontalOverflow": [],
+    "clippedText": [
+      "div \"Records\"",
+      "div \"Medicines\"",
+      "div \"Health Plan\""
+    ],
+    "fullFile": "medicines-list_360-fs2_full.png",
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "medicines-empty_360-fs2.png",
+    "screen": "medicines",
+    "state": "empty",
+    "variant": "360-fs2",
+    "pageScrollsHorizontally": false,
+    "scrolls": true,
+    "scrollExtra": 1111,
+    "viewport": {
+      "width": 360,
+      "height": 800
+    },
+    "horizontalOverflow": [],
+    "clippedText": [
+      "div \"Records\"",
+      "div \"Medicines\"",
+      "div \"Health Plan\""
+    ],
+    "fullFile": "medicines-empty_360-fs2_full.png",
+    "consoleErrors": [],
+    "blockedRequests": []
+  },
+  {
+    "file": "profile-signedIn_360-fs2.png",
+    "screen": "profile",
+    "state": "signedIn",
+    "variant": "360-fs2",
+    "pageScrollsHorizontally": false,
+    "scrolls": true,
+    "scrollExtra": 1417,
+    "viewport": {
+      "width": 360,
+      "height": 800
+    },
+    "horizontalOverflow": [],
+    "clippedText": [
+      "div \"Records\"",
+      "div \"Medicines\"",
+      "div \"Health Plan\""
+    ],
+    "fullFile": "profile-signedIn_360-fs2_full.png",
+    "consoleErrors": [],
+    "blockedRequests": []
+  }
+]
