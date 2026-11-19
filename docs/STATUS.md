@@ -8,11 +8,11 @@ Each session reads this first and updates **only its own section** at the end of
   - Tasks 1–4 are done. The design is final.
   - **Design sources:** the designer's branch [`designes/initial-upload`](https://github.com/jai38/myhealthapp/tree/designes/initial-upload) in `jai38/myhealthapp`. Start with [`designes/DEV-HANDOFF.md`](https://github.com/jai38/myhealthapp/blob/designes/initial-upload/designes/DEV-HANDOFF.md), then `designes/design/screens.md` and `designes/design/colour-shape-spec.md`. Where they differ from the canvas, they win. Canvas: https://claude.ai/artifact/7f6T8pLUF6V4CTzCKeYmU9. Never merge the design branch into app `main`.
   - **Next (UI):** foundations first: v4 tokens in light and dark (task 7), Plus Jakarta Sans (8), four tabs (Today, Records, Medications, Profile; Health Plan, Reports and Timeline no longer tabs but still reachable) (9), render tests (10), shared pieces (11). Then S06 Today (13) and S07 Dose update (14).
-  - **Next (backend):** task 16, dose actions for S06/S07: taken-at time, skip reason, a user-chosen Missed, Undo, and the dose shapes in `api.md`. The UI raises it as a `from-ui` issue (task 15).
-  - **Designer:** fix the light-mode contrast failures listed in the brief; mark S07 locked; then design Medication Details, then Records, Medications and Profile.
+  - **Next (backend):** task 16, for S06/S07: accept a user-chosen Missed, refuse a future taken-at time, add a structured skip reason, and return `fullName` from `/auth/me`. The UI raises it as a `from-ui` issue (task 15).
+  - **Designer:** fix the light-mode contrast failures listed in the brief; mark S07 locked; add the "no WhatsApp on this number" state to S01/S02; then design Medication Details, then Records, Medications and Profile.
   - **Owner decisions made 19 November 2026:** new look accepted; search and bell hidden; S07 locked (Missed only from the user); Today may scroll; ring without a percentage; S01–S05 move to Phases 5–6, with allergies stored in Phase 6 and no allergy safety checks until Phase 16.
-  - **Open:** D1, sign-in by mobile OTP or by email and passkey. S01–S03 and the Phase 5 brief wait for it.
-- **Next phase:** 5, accounts and sign-in (roadmap section 6), shape depending on D1.
+  - **D1 decided:** WhatsApp OTP only (see "Owner decisions made"). S01–S03 are built in Phase 5, which waits on the owner's Meta verification (`docs/ops/whatsapp-otp-setup.md`).
+- **Next phase:** 5, accounts and sign-in with WhatsApp OTP (roadmap section 6; brief to be written by the lead).
 - **Moved to cloud sessions on 19 November 2026.** There is one lead, one UI and one backend session; see `WORKING-AGREEMENT.md`.
 
 ## What's live

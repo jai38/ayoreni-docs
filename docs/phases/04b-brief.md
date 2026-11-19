@@ -59,14 +59,14 @@ The build decisions below change decisions 1 (the brand), 3 (Today fits one scre
 
 | # | Question | Decision |
 |---|---|---|
-| D1 | Sign-in by mobile number and SMS OTP (S01, S02) instead of email, password and passkey (roadmap Phase 5) | **Open.** The owner decides after the comparison of cost, DLT time and security. S01–S05 wait for it |
+| D1 | Sign-in method | **Mobile number plus a one-time code by WhatsApp only** (owner, 19 November 2026, revised the same day; see `STATUS.md` and `docs/ops/whatsapp-otp-setup.md`). No SMS and no DLT for now. S01–S03 are built in Phase 5, which waits on Meta business verification and the authentication template. The designer adds a "no WhatsApp on this number" state to S01/S02 |
 | D2 | The new visual system | **Yes.** Calm Glass UI v4: the spec's tokens in light and dark, Plus Jakarta Sans. Noto Sans Devanagari stays for Hindi (Plus Jakarta Sans has none). Roadmap §5 updated |
 | D3 | Search and the notification bell in the header | **Hidden** until their phases. The header keeps the logo lockup |
 | D4 | Records, Medications and Profile aren't designed | The designer designs them **after Medication Details**. Until then the UI builds the foundations and S06/S07 only; the three tabs keep their current layouts and pick up the new tokens |
 | D5 | S07 was "In review" | **Locked by the owner.** Missed comes only from the user's "No, I missed it"; an untouched past dose shows Not confirmed. The designer marks it locked in `screens.md` and the canvas |
 | D6 | "Today fits one screen" (decision 3) | **Dropped** for Today, per the spec ("content scrolls, never squeezed"). Nothing overlaps or clips, and the single notice slot stays |
 | D7 | The hero ring and percentage | Keep the ring and "N of M taken", counted from recorded Taken doses only. **No percentage label** |
-| D8 | Where S01–S05 go | **Phases 5 and 6, pending D1.** S04's allergies need backend storage (Phase 6) and are **not** used for safety checks until Phase 16 |
+| D8 | Where S01–S05 go | **Phases 5 (S01–S03) and 6 (S04, S05).** S04's allergies need backend storage (Phase 6) and are **not** used for safety checks until Phase 16 |
 
 **Not decided by the owner yet, so the brief takes the safe default (owner to confirm):** S06's Upcoming Appointment card and the Add Appointment and Add Reading tiles need data that doesn't exist (appointments, Phase 18; readings, Phase 11). Under hard rule 8 they are hidden, and Quick Actions shows Upload Record and Add Medication. The Supplement tag shows only once a medicine can carry that type.
 
@@ -124,27 +124,27 @@ Tasks 1–4 are done (see Results). **Who** is UI (the UI session, `myhealthapp`
 
 | # | Task | Who | Model | Done when |
 |---|---|---|---|---|
-| 5 | Decide D1 (sign-in method) | **Owner** | n/a | Written decision; Phase 5 brief updated by the lead |
-| 6 | Fix the contrast failures above in the spec; mark S07 locked in `screens.md` and the canvas; then design Medication Details, then Records, Medications and Profile | **Designer** | n/a | Spec updated on `designes/initial-upload`; S07 shows Locked |
+| 5 | D1 is decided (WhatsApp OTP). Start Meta business verification and the authentication template, per `docs/ops/whatsapp-otp-setup.md`; this gates Phase 5, not 4b | **Owner** | n/a | The checklist's status table filled in |
+| 6 | Fix the contrast failures above in the spec; mark S07 locked in `screens.md` and the canvas; add the "no WhatsApp on this number" state to S01/S02 (for Phase 5); then design Medication Details, then Records, Medications and Profile | **Designer** | n/a | Spec updated on `designes/initial-upload`; S07 shows Locked |
 | 7 | **v4 tokens** in `design/tokens.ts`: every colour token in light and dark, the dose chip colours, hero gradient, mesh background, radii, spacing, elevation and motion from the spec, with a theme that follows the system setting. Use the designer's fixed contrast values (task 6); until they land, keep the failing pairs behind a single token each so the swap is one line | **UI** | Sonnet | Gallery shows every token in both themes; the Phase 3 contrast and touch-size checks pass |
 | 8 | **Plus Jakarta Sans** in `design/fonts.ts` (400, 600, 700) replacing Inter, with the spec's type scale, tracking and tabular figures for times and doses; Noto Sans Devanagari kept for Hindi; larger system text works without truncation | **UI** | Sonnet | Gallery type sheet matches the spec; no clipping at the largest text size |
 | 9 | **Four tabs**: Today, Records, Medications, Profile, in the floating frosted tab bar (inset 16, bottom 30, height 68). Remove `health-plan`, `reports` and `timeline` as tabs in `app/(tabs)/`, keeping their screens reachable: Reports and Timeline from Records, Health Plan's route kept but unlinked until Phase 18. Old links `/timeline`, `/reports` and `/medications` still resolve | **UI** | Sonnet | Four tabs render; every old route resolves; tab labels fit at the largest text size |
-| 10 | **Render tests** with React Native Testing Library and Vitest (Phase 4 finding 18), with checks that fail if two notices render at once or a button label is wider than its button at the largest text size | **UI** | Sonnet | Setup lands with one passing render test per tab |
+| 10 | **Render tests** with React Native Testing Library and Vitest (Phase 4 finding 18), with checks that fail if two notices render at once or a button label is wider than its button at the largest text size. **Mostly done** as old task 5 in draft PR jai38/myhealthapp#3; still open: the label-fit check (needs the screenshot measurements, task 18) and flipping the `allDone-uploading` known failure when S06 lands | **UI** | Sonnet | Setup lands with one passing render test per tab |
 | 11 | **Shared pieces** in `design/components/`, each with a gallery entry in both themes: glass card, hero card with ring, header (logo lockup; search and bell hidden), section header with count, medicine row (icon chip, name, dose · time, Supplement tag, status chip with taken time, ⋮), status chip (Taken, Due now, Upcoming, Not confirmed, Missed), Mark as Taken button, Quick Action tile, bottom sheet, radio option row, segmented control, time wheel, toast with Undo, single notice slot | **UI** | Sonnet | Gallery shows each in every state; render tests pass |
 | 12 | **Dev preview fixtures** for every S06 and S07 state below, in both themes, with synthetic data only: the canvas's people and medicines become the `CLAUDE.md` set ("Asha Test", "Testmed A 500 mg") | **UI** | Haiku | `/dev/preview` renders every state |
 | 13 | **S06 Today** to `screens.md`, on `todayModel.ts` and `doseStatusDisplay` unchanged: greeting by time of day with first name; hero ("Today's medications", N of M taken, Next, "N needs confirming", ring, no %); Morning, Afternoon and Evening groups, empty groups hidden, 4–5 rows then "Show all"; one Mark as Taken under the Due now row, logging the current time, toast with Undo for about 5 s, hero updating; all done shows "All done for today ✓" with a full ring; Quick Actions (Upload Record, Add Medication). A row tap opens the current medicine detail until Medication Details is designed | **UI** | Sonnet | Clinical tests unchanged and passing; every S06 state matches in both themes |
 | 14 | **S07 Dose update sheet** to `screens.md`: Cancel and Save (disabled until a choice); medicine card; Yes, I took it (as scheduled, just now, other time on a wheel that can't go into the future); No, I skipped it (optional reason: Felt unwell, Doctor advised, Ran out, Side effects, Other); No, I missed it; the log-only footnote. Opens from a Not confirmed or due dose only; paused, stopped and future doses never open it (`canActOnDose`). Needs task 16 | **UI** | Sonnet | Every S07 state matches; dose-action and clinical tests pass |
 | 15 | Raise the data gaps below: one line each in `ui-needs.md` and a `from-ui` issue in `myhealthapp-backend` linking the canvas board | **UI** | Haiku | Issues open and linked |
-| 16 | **Dose actions for S06 and S07** (data gaps 1–4): document the existing dose and action shapes in `api.md`, then add what's missing: a recorded time for Taken (not in the future), an optional skip reason, a Missed action chosen by the user, and undo of the last action. Regression tests: nothing marks Taken without an explicit call; undo restores the dose to unrecorded (Not confirmed or Due now), never Missed; a Missed record needs an explicit Missed call | **Backend** | Sonnet | PR merged after owner OK; `api.md` updated in the same PR |
+| 16 | **Dose actions for S06 and S07** (data gaps 2–5 below): accept `MISSED` on the POST and PATCH action routes; reject an `actionTime` in the future; a structured, optional skip reason; `fullName` on `GET /auth/me`. Update `api.md` in the same PR. Regression tests: nothing marks Taken or Missed without an explicit call; PATCH to `PENDING` (Undo) never leaves Missed; a future `actionTime` is refused | **Backend** | Sonnet | PR merged after owner OK; `api.md` updated in the same PR |
 | 17 | **Copy pass**: every new string through `t()`, using the copy in `screens.md` | **UI** | Haiku | `en.ts` diff only; no button label over three words |
 | 18 | After screenshots of every S06 and S07 state in `docs/phases/04b-screens/after/`, light and dark, at 360 × 800, 402 × 874 and the largest text size, plus each tab with the new tokens | **UI** | Sonnet | Every state in the table below has a screenshot |
 | 19 | Deploy task 16 (`deploy-aws.yml`), dev then production; phone check (see Tests), then approve | **Owner** | n/a | Written approval |
 | 20 | Review against `TEMPLATE-review.md` | Lead | Opus | `04b-review.md` written |
 
-**Order:** 7, 8, 10 and 12 can start at once; 9 and 11 need 7 and 8. Then 13. Task 14 needs 11 and the backend's task 16; 15 goes out as soon as 13 starts, so 16 can run alongside. 17 runs before 18. Merge order: backend, owner deploy, then the app.
+**Order:** 7, 8, 10 and 12 can start at once; 9 and 11 need 7 and 8. Then 13 (it needs 16 only for the greeting's first name, and falls back to no name). Task 14 needs 11 and the backend's task 16; 15 goes out as soon as 13 starts, so 16 can run alongside. 17 runs before 18. Merge order: backend, owner deploy, then the app.
 
 **Moved out of 4b:**
-- **S01 Mobile number, S02 OTP, S03 Create your account:** Phase 5, pending D1.
+- **S01 Mobile number, S02 OTP, S03 Create your account:** Phase 5, with the code sent by WhatsApp (D1).
 - **S04 Your health profile:** Phase 6 (height, weight, blood group, allergy status and the allergy list, with backend storage). The allergy list is a record only; it drives no warning until Phase 16.
 - **S05 Welcome, first-time Today:** Phase 6, with the profile card it depends on. Until then the existing first-run Today stays, on the new tokens.
 - **Records, Medications, Profile redesign:** after the designer's task 6.
@@ -159,17 +159,17 @@ Tasks 1–4 are done (see Results). **Who** is UI (the UI session, `myhealthapp`
 
 ## Data the 4b screens need that `api.md` doesn't have
 
-`api.md` lists routes but no shapes yet, so "missing" means it isn't in the contract; the backend confirms against the zod schemas and documents what exists.
+Checked against `api.md` as the backend filled it in on 19 November 2026 (backend `main` `b9a99e4`). Already covered: `DoseLog` (scheduled time, status, `actionTime`), `PENDING` in the past shown as Not confirmed, Taken at a chosen time (`actionTime` on POST), and Undo (PATCH back to `PENDING`). The name, strength and form come from the medicine, joined in the app.
 
 | # | Screen | Need | When |
 |---|---|---|---|
-| 1 | S06, S07 | Dose fields: scheduled time, status, recorded time (`takenAt`), strength, quantity and form ("5 mg · 1 tablet · 1:00 PM") | 4b, task 16 (document what exists) |
-| 2 | S07 | Taken at a user-chosen time (as scheduled, just now, other time), never in the future | 4b, task 16 |
-| 3 | S07 | Optional skip reason: felt unwell, doctor advised, ran out, side effects, other | 4b, task 16 |
-| 4 | S06, S07 | A user-chosen **Missed** action (the contract lists Taken, Skipped and Snoozed) and **Undo** of the last action | 4b, task 16 |
-| 5 | S06 | The user's first name for the greeting (`/auth/me` shape undocumented) | 4b, task 16 (document what exists) |
+| 1 | S06 | Quantity per dose ("1 tablet") isn't stored anywhere. Show strength and form only ("5 mg · Tablet · 1:00 PM") until Phase 12 | Phase 12; nothing in 4b |
+| 2 | S07, S06 | **Missed** as an action: `DoseLog.status` has `MISSED`, but neither action route accepts it | 4b, task 16 |
+| 3 | S07 | "Other time" can't be in the future: the POST route takes any `actionTime` | 4b, task 16 |
+| 4 | S07 | Skip reason (felt unwell, doctor advised, ran out, side effects, other): today only free-text `notes` exists. A structured optional field keeps it out of free text | 4b, task 16 |
+| 5 | S06 | First name for the greeting: `GET /auth/me` returns `userId`, `email` and `patientProfileId` only (signup does take `fullName`) | 4b, task 16 |
 
-Later phases, for their briefs: medicine or supplement type (Phase 14); appointments (Phase 18); readings (Phase 11); notifications and search (hidden); mobile OTP with resend, attempt and cool-down limits (Phase 5, if D1); account profile with date of birth, gender and self-description, optional email and a consent record (Phases 5–6); height in cm, weight, blood group, allergy status, and allergies with the allergen as typed apart from the matched name, reaction, severity, a Medicine/Food/Environment tag and kept history on delete (Phase 6); profile completeness (Phase 6).
+Later phases, for their briefs: medicine or supplement type (Phase 14); appointments (Phase 18); readings (Phase 11); notifications and search (hidden); WhatsApp OTP with resend, attempt and cool-down limits and a "no WhatsApp" result (Phase 5); account profile with date of birth, gender and self-description, optional email and a consent record (Phases 5–6); height in cm, weight, blood group, allergy status, and allergies with the allergen as typed apart from the matched name, reaction, severity, a Medicine/Food/Environment tag and kept history on delete (Phase 6); profile completeness (Phase 6).
 
 ## Tests
 
@@ -277,4 +277,4 @@ Smaller than first planned now that S01–S05 and the three tab redesigns moved 
   - Parts that contain other parts (list row, empty and error states) copy the button and pill styles, so edits to those don't propagate.
   - Opus checks: no missing parts, no dead links, no "Missed" wording.
   - Not rendered by eye before publishing; the owner reviews.
-- **Final design (lead session, 19 November 2026):** the owner marked the canvas final, and the designer pushed the handoff to `designes/initial-upload`. The lead re-based the build on the handoff (tasks 5–20) with the owner's decisions D2–D8; D1 (sign-in method) is open. S01–S05 move to Phases 5–6.
+- **Final design (lead session, 19 November 2026):** the owner marked the canvas final, and the designer pushed the handoff to `designes/initial-upload`. The lead re-based the build on the handoff (tasks 5–20) with the owner's decisions D2–D8; D1 was decided as WhatsApp OTP the same day. S01–S05 move to Phases 5–6.

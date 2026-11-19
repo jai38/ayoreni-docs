@@ -308,7 +308,7 @@ Every screen must handle every state that applies to it. A phase is not done unt
 
 #### Phase 5: Accounts and sign-in · Risk: High · FR-020 as changed by D41, FRX-15, J01, Q-02, NFR-27, D17, D40
 - **Functionality:** Email and password. Email OTP at signup, reset and new-device sign-in, sent through SES. Passkeys through WebAuthn on web and a native module on mobile, which requires a development build and a verified domain. 15-minute access tokens, rotating refresh tokens with reuse detection, device list and revoke. Secure token storage. Rate limits, strict CORS, consent version log. Recovery code, shown once and stored hashed. Re-authentication for sensitive actions. Date of birth check blocking under-18 signup. Real `isVerified`.
-- **UI:** W02-W10, I07. The final design's S01 Mobile number, S02 OTP and S03 Create your account land here if the owner chooses mobile OTP (decision D1 in the 4b brief, open on 19 November 2026). Error states: expired OTP, resend timer, email in use, wrong password, passkey unavailable, under 18, no network.
+- **UI:** W02-W10, I07. The final design's S01 Mobile number, S02 OTP and S03 Create your account land here: the owner chose a mobile number with a one-time code by WhatsApp only (D1, 19 November 2026), which replaces email OTP at sign-in. The functionality line above is rewritten in the Phase 5 brief. Error states: expired OTP, resend timer, email in use, wrong password, passkey unavailable, under 18, no network.
 - **Exit:** Tests for brute-force limits, reused OTP, token theft recovery, and recovery rules. Passkey works on a real Android phone and iPhone.
 
 #### Phase 6: Patients and profile · Risk: High · FR-016 (base), Q-01, Q-03
