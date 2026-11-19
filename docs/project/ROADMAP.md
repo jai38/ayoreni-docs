@@ -227,9 +227,9 @@ The designer gave a strong visual style across sign-in screens and 5 distinct To
 
 ### Rules for every screen
 
-**Tokens.** Blueprint colors are the base: White `#FFFFFF`, Clear Blue `#2878C7`, Teal `#087E83`, Deep Navy `#16324F`, Slate `#526372`, Cool Grey `#F2F5F7`. Status colors are separate from brand colors. Contrast is tested automatically in Phase 3.
+**Tokens.** Calm Glass UI v4, light and dark, from the designer's frozen spec (`designes/design/colour-shape-spec.md` on the `designes/initial-upload` branch of `myhealthapp`; owner decision, 19 November 2026). It replaces the blueprint palette and the white-background rule. Status colors are separate from brand colors. Text is 4.5:1 or more, tested automatically.
 
-**Font.** Inter for Latin text, Noto Sans Devanagari for Hindi. Both are free. Text scales with system settings.
+**Font.** Plus Jakarta Sans for Latin text (replacing Inter, 19 November 2026), Noto Sans Devanagari for Hindi. Both are free. Text scales with system settings.
 
 **Layout.** One main action per screen. Touch targets at least 48 px. Patient name always visible when more than one profile exists. Works on a small Android phone and at large text sizes.
 
@@ -303,17 +303,17 @@ Every screen must handle every state that applies to it. A phase is not done unt
 #### Phase 4b: Simple, modern screens · Risk: Med
 - **Why:** added 6 November 2026 after the owner's phone check found the Phase 4 screens overwhelming and dated. Brief: `docs/phases/04b-brief.md`.
 - **Functionality:** none new. A dev-only screen preview with synthetic data, render tests, and before and after screenshots.
-- **UI:** mockups approved on the phone first, then Today, Records, Medicines, Profile, the Add sheet and first run rebuilt to one rule set: one main action, Today fits one screen, a header that stays at the top, one notice at a time, short text, details one tap away.
+- **UI:** the final design (Calm Glass UI v4, re-based 19 November 2026): v4 tokens with light and dark, Plus Jakarta Sans, four tabs, then S06 Today and S07 Dose update. S01–S05 move to Phases 5 and 6; Records, Medications and Profile are redesigned after Medication Details.
 - **Exit:** a new user can add a medicine without help; nothing overlaps or clips at 360 × 800 or the largest text size.
 
 #### Phase 5: Accounts and sign-in · Risk: High · FR-020 as changed by D41, FRX-15, J01, Q-02, NFR-27, D17, D40
 - **Functionality:** Email and password. Email OTP at signup, reset and new-device sign-in, sent through SES. Passkeys through WebAuthn on web and a native module on mobile, which requires a development build and a verified domain. 15-minute access tokens, rotating refresh tokens with reuse detection, device list and revoke. Secure token storage. Rate limits, strict CORS, consent version log. Recovery code, shown once and stored hashed. Re-authentication for sensitive actions. Date of birth check blocking under-18 signup. Real `isVerified`.
-- **UI:** W02-W10, I07. Error states: expired OTP, resend timer, email in use, wrong password, passkey unavailable, under 18, no network.
+- **UI:** W02-W10, I07. The final design's S01 Mobile number, S02 OTP and S03 Create your account land here if the owner chooses mobile OTP (decision D1 in the 4b brief, open on 19 November 2026). Error states: expired OTP, resend timer, email in use, wrong password, passkey unavailable, under 18, no network.
 - **Exit:** Tests for brute-force limits, reused OTP, token theft recovery, and recovery rules. Passkey works on a real Android phone and iPhone.
 
 #### Phase 6: Patients and profile · Risk: High · FR-016 (base), Q-01, Q-03
 - **Functionality:** Separate Account, Patient and PatientAccess. All data access checks patient access through one guard, with Postgres row-level security as a second layer. Move existing data safely. Progressive profile, medical background, emergency contact fields, profile-switch context in every request.
-- **UI:** I01, I02 (basic), I06.
+- **UI:** I01, I02 (basic), I06. From the final design: S04 Your health profile (height, weight, blood group, allergy status and allergy list, stored but not used for warnings until Phase 16) and S05 Welcome, first-time Today.
 - **Exit:** Negative tests prove no cross-patient access on every route.
 
 #### Phase 7: Trust core · Risk: High · FR-027, FRX-06, FRX-13, FRX-17, FRX-18, J22, D38

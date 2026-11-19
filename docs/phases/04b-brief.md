@@ -3,7 +3,17 @@
 **Risk:** Medium. **Roadmap:** `docs/project/ROADMAP.md`, section 5 (design direction) and section 6 (Phase 4b).
 **Goal:** a new user opens Ayoreni and, without help, sees what to take now and how to add a medicine. Every tab fits the phone cleanly: nothing overlaps or clips, there's little text, and it feels like a current app, not a 2010 one.
 
-**Status:** Approved by the owner on 6 November 2026, with Health Plan hidden until Phase 18. Tasks 1–4 are done. **The design is final** (19 November 2026) in the owner's work-account canvas, "AYORENI · Calm Glass UI v4": https://claude.ai/artifact/7f6T8pLUF6V4CTzCKeYmU9. It is the only design source for this build; the earlier mockups (`S8f1FKrbV875uhqYMSRS8G` and the 26-screen "App v2" set) are superseded. The build tasks below (5–22) replace the old tasks 5–15. Several are blocked on the owner decisions in "Build decisions (19 November 2026)".
+**Status:** Approved by the owner on 6 November 2026. Tasks 1–4 are done. The design is final (19 November 2026) and the build is re-based on it: foundations first, then S06 Today and S07 Dose update. The build tasks below (5–19) replace the old tasks 5–15.
+
+**Design sources, in order of precedence:**
+1. The designer's handoff on the branch [`designes/initial-upload`](https://github.com/jai38/myhealthapp/tree/designes/initial-upload) in `jai38/myhealthapp` (designs only; never merged to `main`):
+   - [`designes/DEV-HANDOFF.md`](https://github.com/jai38/myhealthapp/blob/designes/initial-upload/designes/DEV-HANDOFF.md): status, frozen system, product rules, gaps against `main`.
+   - [`designes/design/screens.md`](https://github.com/jai38/myhealthapp/blob/designes/initial-upload/designes/design/screens.md): per-screen content, behaviour and decisions. Read it before building a screen.
+   - [`designes/design/colour-shape-spec.md`](https://github.com/jai38/myhealthapp/blob/designes/initial-upload/designes/design/colour-shape-spec.md): Calm Glass UI v4, frozen 16 November 2026.
+   - `designes/claude-design/*.dc.html`: the canvas source, for exact CSS values. Logo: `designes/assets/logo/` (never redraw or recolour).
+2. The canvas, "AYORENI · Calm Glass UI v4": https://claude.ai/artifact/7f6T8pLUF6V4CTzCKeYmU9, for the look of each state in light and dark.
+
+Where the two differ, the handoff wins. The earlier mockups (`S8f1FKrbV875uhqYMSRS8G` and the 26-screen "App v2" set) are superseded.
 
 ## Why this phase exists
 
@@ -25,7 +35,9 @@ The owner used the Phase 4 build on the phone on 6 November 2026. The components
 
 The owner is fine with leaving the designer's concept behind. Phase 5 adds sign-in, passkey and recovery screens on top of this shell, so the screens get fixed now, before more are built the same way.
 
-## Decisions (approved 6 November 2026; see the build decisions for what the final design changes)
+## Decisions (approved 6 November 2026)
+
+The build decisions below change decisions 1 (the brand), 3 (Today fits one screen), 4 (the Add sheet waits for S05 in Phase 6) and 5 (Medications is the tab name).
 
 1. **Leave the designer's layout behind, keep the brand.** Keep the Phase 3 tokens, colors, Inter, icons, logo and components. Change what each screen holds and how it's arranged. Section 5's content rules still apply: calm status wording, no pill pictures, and white backgrounds.
 2. **Mockups before code.** Opus designs every changed screen as a clickable phone-size page. The owner opens it on the phone and approves or changes it before any screen is built (tasks 3 and 4).
@@ -43,21 +55,22 @@ The owner is fine with leaving the designer's concept behind. Phase 5 adds sign-
 7. **No new features and no backend change.** Data, medicine rules, reminders and upload flow stay exactly as they are. This phase changes layout, navigation depth and wording only.
 8. **Branch.** `phase-4b/simple-screens` in `myhealthapp`, cut from `main` (`54b239c`).
 
-## Build decisions (19 November 2026)
+## Build decisions (owner, 19 November 2026)
 
-The final canvas holds seven screens, S01–S07, in two flows. It differs from this brief's earlier plan and from the roadmap in ways the owner must confirm before the affected tasks start. The lead session's recommendation follows each one.
+| # | Question | Decision |
+|---|---|---|
+| D1 | Sign-in by mobile number and SMS OTP (S01, S02) instead of email, password and passkey (roadmap Phase 5) | **Open.** The owner decides after the comparison of cost, DLT time and security. S01–S05 wait for it |
+| D2 | The new visual system | **Yes.** Calm Glass UI v4: the spec's tokens in light and dark, Plus Jakarta Sans. Noto Sans Devanagari stays for Hindi (Plus Jakarta Sans has none). Roadmap §5 updated |
+| D3 | Search and the notification bell in the header | **Hidden** until their phases. The header keeps the logo lockup |
+| D4 | Records, Medications and Profile aren't designed | The designer designs them **after Medication Details**. Until then the UI builds the foundations and S06/S07 only; the three tabs keep their current layouts and pick up the new tokens |
+| D5 | S07 was "In review" | **Locked by the owner.** Missed comes only from the user's "No, I missed it"; an untouched past dose shows Not confirmed. The designer marks it locked in `screens.md` and the canvas |
+| D6 | "Today fits one screen" (decision 3) | **Dropped** for Today, per the spec ("content scrolls, never squeezed"). Nothing overlaps or clips, and the single notice slot stays |
+| D7 | The hero ring and percentage | Keep the ring and "N of M taken", counted from recorded Taken doses only. **No percentage label** |
+| D8 | Where S01–S05 go | **Phases 5 and 6, pending D1.** S04's allergies need backend storage (Phase 6) and are **not** used for safety checks until Phase 16 |
 
-| # | The final design… | Conflicts with | Recommendation | Blocks |
-|---|---|---|---|---|
-| D1 | Signs in with a **mobile number and SMS OTP** (S01, S02) | Roadmap §5 and Phase 5: email, password and passkey; SES email only, no SMS provider | Owner decides the sign-in method. If mobile OTP: Phase 5 is rewritten, and an SMS provider plus India DLT sender registration are needed (Owner). **Build S01–S04 in Phases 5 and 6**, where their backend lands, not in 4b: a sign-in screen with no endpoint can't ship (working agreement, rule 5) | 17–20 |
-| D2 | Uses a **new visual system**: Plus Jakarta Sans, a new palette, glass cards with mesh backgrounds, and dark mode | Roadmap §5 tokens, Inter, white backgrounds; brief decision 1 ("keep the brand") | Accept, since the owner called the design final, and update roadmap §5 on approval. Keep Noto Sans Devanagari for Hindi (Plus Jakarta Sans has no Devanagari). Fix the contrast failures listed under task 6 | 6 onward |
-| D3 | Puts **appointments, readings, supplements, search and a notification bell** on Today and in the Add choices | Brief decision 7 (no new features, no backend change); these features belong to Phases 11, 14 and 18 | Build Today and the Add sheet with what exists now: medicines and records. **Hide** the appointment card, Add Appointment, Add Reading, search and the bell until their phases, as Health Plan was hidden. Show the Supplement tag only once a medicine can carry that type (D-gap 6) | 10, 11, 12 |
-| D4 | **Doesn't design Records, Medications or Profile** (only their tab icons; "Profile has 9 sections" is mentioned) | Brief tasks 9 and 10, and STATUS ("source of truth for every screen") | Restyle the current three tabs onto the v4 tokens and the 4b layout rules in this phase; design them properly in the canvas before their own phases. The alternative is to design them now (Opus, about 3–5% of a weekly cap) and build them here | 14, 15, 16 |
-| D5 | Marks **S07 Dose update "In review"**, not locked | "Design is final" | Owner locks S07 in the canvas before task 13 starts | 13 |
-| D6 | Lets **Today scroll** (S06 is 1,700 pt tall: three dose groups, an appointment, Quick Actions) | Brief decision 3 ("Today fits one screen") | Drop the one-screen rule for Today; keep "nothing overlaps or clips" and the single notice slot | 10 |
-| D7 | Shows a **"2 of 6 taken" ring with a percentage** on Today | Brief clinical choice "no percentages"; `CLAUDE.md` rule 15 | Keep the count, which comes only from recorded Taken doses; drop the % label or confirm it | 10 |
+**Not decided by the owner yet, so the brief takes the safe default (owner to confirm):** S06's Upcoming Appointment card and the Add Appointment and Add Reading tiles need data that doesn't exist (appointments, Phase 18; readings, Phase 11). Under hard rule 8 they are hidden, and Quick Actions shows Upload Record and Add Medication. The Supplement tag shows only once a medicine can carry that type.
 
-What the design gets right clinically, and the build must keep: "Not confirmed" for an unrecorded past dose ("Tap to update"), Missed only when the user says "No, I missed it", Taken from an explicit action only, an Undo after Mark as Taken, the note "This only updates your log", and the allergy states "No known allergies" and "Unknown" kept distinct from an empty list.
+What the build must keep from the design: "Not confirmed" with "Tap to update" for an unrecorded past dose; Missed only from the user; Mark as Taken logs the current time only on an explicit tap, with Undo for about 5 seconds; "other time" can't be in the future; "This only updates your log. It doesn't change your schedule or reminders."; status chips always pair an icon with a word.
 
 ## Hard rules
 
@@ -70,10 +83,11 @@ What the design gets right clinically, and the build must keep: "Not confirmed" 
    - An unrecorded past dose shows "Not confirmed" through `design/status.ts`, never "Missed".
    - Paused, stopped and future doses offer no Taken or Skip.
    - Moving a dose list to a new place keeps these rules and their tests.
-5. Screens use only `design/` tokens and components (the v4 tokens from task 6). A new shared piece goes into `design/components/` with a gallery entry. Every string goes through `t()`.
+5. Screens use only `design/` tokens and components (v4, from tasks 7 and 8). A new shared piece goes into `design/components/` with a gallery entry. Every string goes through `t()`.
 6. The owner's open wording decisions (legal text "MyHealth", the store link, the "Mumbai/AES-256/S3" claims, the privacy badge) are not decided here. Moving that text one level down doesn't change its wording.
 7. Fixtures and screenshots use the `CLAUDE.md` synthetic set, not the names drawn in the canvas.
-8. A feature hidden under D3 is not built half-way: no tile, button or empty card for it.
+8. A feature with no data behind it is not built half-way: no tile, button or empty card for it.
+9. Designs come from the `designes/initial-upload` branch; never merge that branch or its `designes/` folder into app `main`.
 
 ## State found on 6 November 2026
 
@@ -87,87 +101,87 @@ What the design gets right clinically, and the build must keep: "Not confirmed" 
 - **Desktop testing:** a desktop browser can't sign in to the AWS API, because CORS only allows GitHub Pages. Screens behind sign-in have so far been seen only on the phone. Task 2 fixes this for screenshots.
 - **Backend:** no change needed. The Gemini 3.5 Flash-Lite extraction was approved by the owner on the phone on 6 November 2026.
 
+## Contrast failures for the designer to fix in the spec
+
+The spec requires text at 4.5:1 or more, secondary included. Measured on 19 November 2026, with glass and tinted colours blended over the screen background. Dark mode passes everywhere; these light-mode pairs don't. The designer picks passing shades and updates `colour-shape-spec.md`; the UI uses the fixed values.
+
+| Pair (light mode) | Where it's used | Ratio |
+|---|---|---|
+| text-tertiary `#8A97A8` on bg `#F7FAFC` | Counts, metadata, placeholders | 2.83:1 |
+| text-tertiary `#8A97A8` on white or glass card | Group counts, helper text, "Tap to update"-style lines | 2.94–2.97:1 |
+| text-tertiary `#8A97A8` on the tab bar (white 80%) | Inactive tab labels | 2.94:1 |
+| action-blue `#0071FF` on blue-tint `#E4F0FC` | Active tab label | 3.78:1 |
+| action-blue `#0071FF` on bg `#F7FAFC` / white | Links ("Change number", "View Details") | 4.17 / 4.37:1 |
+| white on primary-gradient top `#0080FC` | Primary button text, Due now chip | 3.82:1 (5.15:1 at `#0060FC`) |
+| teal-text `#028265` on teal-tint `#E6F8F3` | Supplement tag | 4.35:1 |
+| Taken `#0B7F3F` on `#E3F5EA` | Taken chip | 4.49:1 |
+| white on the hero's teal end `#00C69C` | Hero text, if it reaches the teal side | 2.20:1 (the spec keeps text on the blue side; the UI must too) |
+| disabled button text `#8A97A8` on `#E3EAF2` | Disabled Continue, Verify, Save | 2.45:1 (WCAG exempts disabled controls, but the spec's rule doesn't; designer to say) |
+
 ## Tasks
 
-Tasks 1–4 are done (see Results). The old tasks 5–15 are replaced by these. **Who** is UI (the UI session, `myhealthapp`), Backend (the backend session, `myhealthapp-backend`) or Owner. The model column follows `CLAUDE.md`.
+Tasks 1–4 are done (see Results). **Who** is UI (the UI session, `myhealthapp`), Backend (the backend session, `myhealthapp-backend`), Designer, or Owner. The model column follows `CLAUDE.md`.
 
 | # | Task | Who | Model | Done when |
 |---|---|---|---|---|
-| 5 | Decide D1–D7 above, and lock S07 in the canvas | **Owner** | n/a | Written answer to each |
-| 6 | **v4 tokens and theme** in `design/`: the colour tokens (light and dark), Plus Jakarta Sans type scale, radii, elevation and mesh background from the canvas's Main board; a light/dark theme that follows the system. Fix the contrast failures first: text-tertiary `#8A97A8` on `#F7FAFC` is 2.8:1 and on white 3.0:1; teal text `#028265` on teal tint is 4.35:1; action blue `#0071FF` on white is 4.37:1 for 13–15 pt links. Pick shades that pass 4.5:1 and record them in the canvas | **UI** | Sonnet | Gallery shows every token in both themes; the Phase 3 contrast and touch-size checks pass |
-| 7 | **Render tests** with React Native Testing Library and Vitest (Phase 4 finding 18), with checks that fail if two notices render at once or a button label is wider than its button at the largest text size | **UI** | Sonnet | Setup lands with one passing render test per tab |
-| 8 | **Shared pieces** in `design/components/`, each with a gallery entry in both themes: glass card, hero card, section header with count, medicine row (icon tile, name, detail line, status chip, sub-line, chevron), status chip (icon plus word for Taken, Due now, Upcoming, Not confirmed, Skipped, Marked missed), Quick Action tile, bottom sheet with grab handle, radio option row, segmented control, time wheel, toast with Undo, pill tab bar (Today, Records, Medications, Profile), large title that shrinks on scroll, single notice slot | **UI** | Sonnet | Gallery shows each in every state; render tests pass |
-| 9 | **Dev preview fixtures** for every state in the table below, in both themes, with synthetic data only: rename the canvas's people and medicines to the `CLAUDE.md` set ("Asha Test", "Testmed A 500 mg", "Dr. Test Clinician") | **UI** | Haiku | `/dev/preview` renders every state |
-| 10 | **S06 Today, returning user**, built on `todayModel.ts` and `doseStatusDisplay` unchanged: greeting by time of day with first name, hero card (taken count, next dose, "N needs confirming"), Morning / Afternoon / Evening groups with counts, Mark as Taken on a due dose, toast with Undo, Quick Actions (Upload Record, Add Medication only, per D3). Uploading, saved and error share the notice slot | **UI** | Sonnet | Clinical tests unchanged and passing; both S06 states match the canvas in both themes |
-| 11 | **S05 Welcome, first-time Today**: welcome hero with Get Started, Quick Actions, "Complete your health profile" card (states: incomplete, complete). The card shows only once S04 exists (Phase 6, per D1); until then it's hidden | **UI** | Haiku | The three S05 states match the canvas |
-| 12 | **Add sheet** ("What would you like to add first?"): Health Record (upload) and Medication or Supplement (add by hand), Maybe Later. Reading and Appointment hidden per D3. Opens from Get Started, the Quick Action tiles, and Medications. Offline: upload disabled with a reason; add by hand still works | **UI** | Haiku | Sheet opens from each entry point; offline state shown |
-| 13 | **S07 Dose update sheet**: Did you take this dose? Yes (as scheduled, just now, or another time on a wheel), No I skipped it (reason chips, optional), No I missed it; Save disabled until a choice; the "only updates your log" note. Opens from a Not confirmed or due dose only: paused, stopped and future doses never open it (`canActOnDose` gate). Blocked by task 5 (D5) and task 21 | **UI** | Sonnet | The four S07 states match; dose-action and clinical tests pass |
-| 14 | **Records** restyled onto v4 (or rebuilt to a new design, per D4): one list, search, a Filter button, Reports as its own page. Old `/timeline` and `/reports` links still resolve | **UI** | Haiku | Render test passes; no clipping at the largest text size |
-| 15 | **Medications** restyled onto v4 (per D4): active list first, counts on one line, schedule and weekly view one tap down, dose actions behind `canActOnDose` and the future-dose gate. The tab label becomes "Medications" | **UI** | Sonnet wiring, Haiku layout | Dose-action tests unchanged and passing |
-| 16 | **Profile** restyled onto v4 (per D4): name card plus grouped rows; privacy, legal and help text one level down, wording unchanged | **UI** | Haiku | No paragraph on the tab; labels fit at the largest text size |
-| 17 | **S01 Mobile number** (states: default, ready, invalid number, sending code). Build in Phase 5 if D1 says so | **UI** | Sonnet | Deferred unless the owner moves it into 4b |
-| 18 | **S02 OTP** (default with autofill, code entered, verifying, wrong code with attempts left, resend available, expired). Phase 5 | **UI** | Sonnet | Deferred, as 17 |
-| 19 | **S03 Create your account** (default, filled, errors on Continue, date-of-birth wheel, self-describe gender). Phase 5 | **UI** | Sonnet | Deferred, as 17 |
-| 20 | **S04 Your health profile** (default, yes → add allergy, allergy saved, no known allergies, not sure; Skip for now). Phase 6 for height, weight and blood group; Phase 16 for allergies | **UI** | Sonnet | Deferred, as 17 |
-| 21 | **Dose action fields for S07 and the S06 Undo**, only if `api.md` can't already carry them (D-gaps 1–4): recorded time for Taken, an optional skip reason, a Missed action chosen by the user, and undo of the last action. Fill in the request and response shapes for `/medications/doses` and the action route in `api.md`. Regression tests: no route marks Taken without an explicit call, and undo restores Not confirmed, never Missed | **Backend** | Sonnet | PR merged after owner OK; `api.md` updated in the same PR |
-| 22 | **Copy pass**: every new string through `t()`, shortened to the text rules | **UI** | Haiku | `en.ts` diff only; no button label over three words |
-| 23 | After screenshots of every state below in `docs/phases/04b-screens/after/`, in both themes, at 360 × 800, 402 × 874 and the largest text size | **UI** | Sonnet | Every state in the table below has a screenshot |
-| 24 | Deploy the backend change from task 21, if any (`deploy-aws.yml`) | **Owner** | n/a | Dev, then production, green |
-| 25 | Phone check (see Tests), then approve | **Owner** | n/a | Written approval |
-| 26 | Review against `TEMPLATE-review.md` | Lead | Opus | `04b-review.md` written |
+| 5 | Decide D1 (sign-in method) | **Owner** | n/a | Written decision; Phase 5 brief updated by the lead |
+| 6 | Fix the contrast failures above in the spec; mark S07 locked in `screens.md` and the canvas; then design Medication Details, then Records, Medications and Profile | **Designer** | n/a | Spec updated on `designes/initial-upload`; S07 shows Locked |
+| 7 | **v4 tokens** in `design/tokens.ts`: every colour token in light and dark, the dose chip colours, hero gradient, mesh background, radii, spacing, elevation and motion from the spec, with a theme that follows the system setting. Use the designer's fixed contrast values (task 6); until they land, keep the failing pairs behind a single token each so the swap is one line | **UI** | Sonnet | Gallery shows every token in both themes; the Phase 3 contrast and touch-size checks pass |
+| 8 | **Plus Jakarta Sans** in `design/fonts.ts` (400, 600, 700) replacing Inter, with the spec's type scale, tracking and tabular figures for times and doses; Noto Sans Devanagari kept for Hindi; larger system text works without truncation | **UI** | Sonnet | Gallery type sheet matches the spec; no clipping at the largest text size |
+| 9 | **Four tabs**: Today, Records, Medications, Profile, in the floating frosted tab bar (inset 16, bottom 30, height 68). Remove `health-plan`, `reports` and `timeline` as tabs in `app/(tabs)/`, keeping their screens reachable: Reports and Timeline from Records, Health Plan's route kept but unlinked until Phase 18. Old links `/timeline`, `/reports` and `/medications` still resolve | **UI** | Sonnet | Four tabs render; every old route resolves; tab labels fit at the largest text size |
+| 10 | **Render tests** with React Native Testing Library and Vitest (Phase 4 finding 18), with checks that fail if two notices render at once or a button label is wider than its button at the largest text size | **UI** | Sonnet | Setup lands with one passing render test per tab |
+| 11 | **Shared pieces** in `design/components/`, each with a gallery entry in both themes: glass card, hero card with ring, header (logo lockup; search and bell hidden), section header with count, medicine row (icon chip, name, dose · time, Supplement tag, status chip with taken time, ⋮), status chip (Taken, Due now, Upcoming, Not confirmed, Missed), Mark as Taken button, Quick Action tile, bottom sheet, radio option row, segmented control, time wheel, toast with Undo, single notice slot | **UI** | Sonnet | Gallery shows each in every state; render tests pass |
+| 12 | **Dev preview fixtures** for every S06 and S07 state below, in both themes, with synthetic data only: the canvas's people and medicines become the `CLAUDE.md` set ("Asha Test", "Testmed A 500 mg") | **UI** | Haiku | `/dev/preview` renders every state |
+| 13 | **S06 Today** to `screens.md`, on `todayModel.ts` and `doseStatusDisplay` unchanged: greeting by time of day with first name; hero ("Today's medications", N of M taken, Next, "N needs confirming", ring, no %); Morning, Afternoon and Evening groups, empty groups hidden, 4–5 rows then "Show all"; one Mark as Taken under the Due now row, logging the current time, toast with Undo for about 5 s, hero updating; all done shows "All done for today ✓" with a full ring; Quick Actions (Upload Record, Add Medication). A row tap opens the current medicine detail until Medication Details is designed | **UI** | Sonnet | Clinical tests unchanged and passing; every S06 state matches in both themes |
+| 14 | **S07 Dose update sheet** to `screens.md`: Cancel and Save (disabled until a choice); medicine card; Yes, I took it (as scheduled, just now, other time on a wheel that can't go into the future); No, I skipped it (optional reason: Felt unwell, Doctor advised, Ran out, Side effects, Other); No, I missed it; the log-only footnote. Opens from a Not confirmed or due dose only; paused, stopped and future doses never open it (`canActOnDose`). Needs task 16 | **UI** | Sonnet | Every S07 state matches; dose-action and clinical tests pass |
+| 15 | Raise the data gaps below: one line each in `ui-needs.md` and a `from-ui` issue in `myhealthapp-backend` linking the canvas board | **UI** | Haiku | Issues open and linked |
+| 16 | **Dose actions for S06 and S07** (data gaps 1–4): document the existing dose and action shapes in `api.md`, then add what's missing: a recorded time for Taken (not in the future), an optional skip reason, a Missed action chosen by the user, and undo of the last action. Regression tests: nothing marks Taken without an explicit call; undo restores the dose to unrecorded (Not confirmed or Due now), never Missed; a Missed record needs an explicit Missed call | **Backend** | Sonnet | PR merged after owner OK; `api.md` updated in the same PR |
+| 17 | **Copy pass**: every new string through `t()`, using the copy in `screens.md` | **UI** | Haiku | `en.ts` diff only; no button label over three words |
+| 18 | After screenshots of every S06 and S07 state in `docs/phases/04b-screens/after/`, light and dark, at 360 × 800, 402 × 874 and the largest text size, plus each tab with the new tokens | **UI** | Sonnet | Every state in the table below has a screenshot |
+| 19 | Deploy task 16 (`deploy-aws.yml`), dev then production; phone check (see Tests), then approve | **Owner** | n/a | Written approval |
+| 20 | Review against `TEMPLATE-review.md` | Lead | Opus | `04b-review.md` written |
 
-**Order:** 5 first. 6, 7 and 9 can start at once; 8 needs 6. Screens 10–16 need 8. Task 13 waits for 5 (S07 locked) and 21 (if needed); 21 is checked first against the dose action route, and the UI opens a `from-ui` issue for whatever is missing. 22 runs before 23. Merge order: backend, owner deploy, then the app.
+**Order:** 7, 8, 10 and 12 can start at once; 9 and 11 need 7 and 8. Then 13. Task 14 needs 11 and the backend's task 16; 15 goes out as soon as 13 starts, so 16 can run alongside. 17 runs before 18. Merge order: backend, owner deploy, then the app.
 
-## Screens and required states
+**Moved out of 4b:**
+- **S01 Mobile number, S02 OTP, S03 Create your account:** Phase 5, pending D1.
+- **S04 Your health profile:** Phase 6 (height, weight, blood group, allergy status and the allergy list, with backend storage). The allergy list is a record only; it drives no warning until Phase 16.
+- **S05 Welcome, first-time Today:** Phase 6, with the profile card it depends on. Until then the existing first-run Today stays, on the new tokens.
+- **Records, Medications, Profile redesign:** after the designer's task 6.
 
-Every state below is drawn in the canvas in light and dark unless marked *(not drawn)*; those follow roadmap §5 and need a fixture and a screenshot all the same.
+## Screens and required states (this phase)
 
-| Screen | Canvas states (light and dark) | States not drawn, still required | In 4b? |
+| Screen | Drawn states (light and dark) | Required, not drawn |
+|---|---|---|
+| **Foundations** | Cover board: tokens, type, shape | Every tab on the new tokens and four-tab bar; largest text size |
+| **S06 Today, returning** | Default (one Due now, one Not confirmed); after Mark as Taken (toast with Undo, count updated) | All done ("All done for today ✓"); nothing due today; many doses ("Show all"); loading (skeleton hero and rows); error with Retry in the notice slot; offline (cached, stamp, Mark as Taken disabled with a reason); uploading in the notice slot |
+| **S07 Dose update** | Ask (Save disabled); Taken as scheduled; Taken at another time (wheel); Skipped with reason | Missed selected; saving; save failed with Retry; offline |
+
+## Data the 4b screens need that `api.md` doesn't have
+
+`api.md` lists routes but no shapes yet, so "missing" means it isn't in the contract; the backend confirms against the zod schemas and documents what exists.
+
+| # | Screen | Need | When |
 |---|---|---|---|
-| **S06 Today, returning** | Default (a dose due now, one Not confirmed); after Mark as Taken (toast with Undo, count updated) | Loading (skeleton hero and rows); nothing due today; all done; many doses; error with Retry in the notice slot; offline (cached, stamp, Mark as Taken disabled with a reason); uploading in the notice slot | Yes |
-| **S05 Welcome, first time** | Profile incomplete; Get Started sheet open; profile complete | Offline; uploading | Yes (profile card hidden until Phase 6) |
-| **Add sheet** (inside S05) | Four options: Health Record, Medication or Supplement, Reading, Appointment | Two options (D3); offline with upload disabled | Yes |
-| **S07 Dose update** | Ask (Save disabled); Taken as scheduled; Taken at another time (wheel); Skipped with reason | Missed selected; saving; save failed with Retry; offline | Yes, once locked (D5) |
-| **Records, Medications, Profile** | *(not drawn in this canvas)* | Loading, empty, filtered empty, error, offline, success, per the old table | Restyle only (D4) |
-| **S01 Mobile number** | Default; ready (number and consent); invalid number; sending code | Offline; too many requests | Phase 5 (D1) |
-| **S02 OTP** | Default with keyboard and autofill; code entered; verifying; wrong code (2 attempts left); resend available; expired | Locked after too many attempts; offline | Phase 5 (D1) |
-| **S03 Create your account** | Default; filled; errors on Continue; date-of-birth wheel; Other / self-describe | Under 18; saving; error | Phase 5 (D1) |
-| **S04 Your health profile** | Default; Yes → add allergy (search suggestions); allergy saved; No known allergies; I'm not sure | Saving; error; allergen not in the list ("Add as typed") | Phases 6 and 16 (D1) |
+| 1 | S06, S07 | Dose fields: scheduled time, status, recorded time (`takenAt`), strength, quantity and form ("5 mg · 1 tablet · 1:00 PM") | 4b, task 16 (document what exists) |
+| 2 | S07 | Taken at a user-chosen time (as scheduled, just now, other time), never in the future | 4b, task 16 |
+| 3 | S07 | Optional skip reason: felt unwell, doctor advised, ran out, side effects, other | 4b, task 16 |
+| 4 | S06, S07 | A user-chosen **Missed** action (the contract lists Taken, Skipped and Snoozed) and **Undo** of the last action | 4b, task 16 |
+| 5 | S06 | The user's first name for the greeting (`/auth/me` shape undocumented) | 4b, task 16 (document what exists) |
 
-## Data the new screens need that `api.md` doesn't have
-
-`api.md` lists routes but no request or response shapes yet, so "missing" below means it isn't in the contract; the backend session confirms against the zod schemas and documents what already exists. The UI raises each as a line in `ui-needs.md` plus a `from-ui` issue, linking the canvas board.
-
-| # | Screen | Need | Phase |
-|---|---|---|---|
-| 1 | S06, S07 | Dose fields: scheduled time, status, recorded time (`takenAt`), strength, quantity and form for the detail line ("5 mg · 1 tablet · 1:00 PM") | 4b (document what exists) |
-| 2 | S07 | Taken at a user-chosen time ("as scheduled", "just now", "other time") | 4b, task 21 |
-| 3 | S07 | Skip reason: felt unwell, doctor advised, ran out, side effects, other (optional) | 4b, task 21 |
-| 4 | S07, S06 | A user-chosen **Missed** action (the contract lists Taken, Skipped and Snoozed only) and **Undo** of the last action, restoring Not confirmed | 4b, task 21 |
-| 5 | S05, S06 | The user's first name for the greeting (`/auth/me` shape undocumented) | 4b (document what exists) |
-| 6 | S06, Add sheet | A medicine type, medicine or supplement, for the Supplement tag | Phase 14 |
-| 7 | S06 | Appointments (doctor, visit type, specialty, date and time) | Hidden in 4b (D3); Phase 18 |
-| 8 | Add sheet | Readings (BP, glucose, weight) | Hidden in 4b (D3); Phase 11 |
-| 9 | S05, S06 | Notifications and an unread count for the bell | Hidden in 4b (D3) |
-| 10 | S05, S06 | Global search across records and medicines (`/timeline` searches records only) | Hidden in 4b (D3); Phase 10 |
-| 11 | S01, S02 | Mobile OTP: request a code, verify it, resend cooldown, attempts left, expiry, rate limits; an SMS provider | Phase 5, if D1 says mobile |
-| 12 | S03 | Account profile: full name, date of birth (under-18 check), gender with an optional self-description, optional email, the masked verified number, and a consent record (version and time) | Phases 5 and 6 |
-| 13 | S04 | Health profile: height (cm or in), weight (kg or lb), blood group (eight groups or "I don't know"), allergy status (has allergies, none known, unknown) | Phase 6 |
-| 14 | S04 | Allergies: allergen as typed kept apart from the matched name, reaction, severity (mild, moderate, severe, not sure); add, edit, delete; an allergen search for suggestions | Phase 16 |
-| 15 | S05 | Profile completeness ("3 details left") | Phase 6 |
+Later phases, for their briefs: medicine or supplement type (Phase 14); appointments (Phase 18); readings (Phase 11); notifications and search (hidden); mobile OTP with resend, attempt and cool-down limits (Phase 5, if D1); account profile with date of birth, gender and self-description, optional email and a consent record (Phases 5–6); height in cm, weight, blood group, allergy status, and allergies with the allergen as typed apart from the matched name, reaction, severity, a Medicine/Food/Environment tag and kept history on delete (Phase 6); profile completeness (Phase 6).
 
 ## Tests
 
-- **Gates:** `npm run typecheck` and `npx vitest run` in `myhealthapp` (and in `myhealthapp-backend` for task 21), with counts in Results.
+- **Gates:** `npm run typecheck` and `npx vitest run` in `myhealthapp` (and in `myhealthapp-backend` for task 16), with counts in Results.
 - **New tests:**
-  - A render test per screen, covering each 4b state in the table above, in both themes.
-  - Only one notice renders at a time; the toast never stacks with an upload notice.
-  - Button labels fit at the largest text size.
-  - The Add sheet opens from Get Started, the Quick Action tiles and Medications, and shows only the two live choices.
-  - Hidden features (appointments, readings, search, the bell) don't render.
-  - Old routes `/timeline`, `/reports` and `/medications` still resolve.
-  - S07: Save stays disabled until a choice; a paused, stopped or future dose can't open it; Undo after Mark as Taken restores Not confirmed (or Due now), never Missed.
-  - The taken count on the hero counts recorded Taken doses only.
+  - A render test per tab, and for each S06 and S07 state, in both themes.
+  - Only one notice renders at a time; the Undo toast never stacks with an upload notice.
+  - Button and tab labels fit at the largest text size.
+  - Four tabs only; `/timeline`, `/reports` and `/medications` still resolve.
+  - Search and the bell don't render; nor do the appointment card and the Appointment and Reading tiles.
+  - S06: Mark as Taken records only on tap, Undo returns the dose to Due now, and the hero count counts recorded Taken doses only.
+  - S07: Save stays disabled until a choice; "other time" can't be in the future; paused, stopped and future doses can't open it.
 - **Clinical tests that must still pass unchanged:**
   - An unrecorded past dose renders "Not confirmed".
   - Notification taps never mark Taken.
@@ -175,12 +189,11 @@ Every state below is drawn in the canvas in light and dark unless marked *(not d
   - Adherence counts recorded doses only.
   - Missed appears only after the user chose "No, I missed it".
 - **Owner phone check (new APK), light and dark:**
-  1. Sign in with a fresh test account. Can you add a medicine without help from the welcome screen?
+  1. Four tabs; Reports and Timeline open from Records.
   2. Today with one dose due: tap Mark as Taken, then Undo. Does it return to Due now?
-  3. Tap a Not confirmed dose and record it as taken at another time, then as skipped with a reason.
+  3. Tap a Not confirmed dose: record it taken at another time, then skipped with a reason, then missed.
   4. Upload a prescription. Progress shows in one place, with nothing overlapping.
-  5. Records, Medications and Profile: no clipped or overflowing text.
-  6. Set the largest system text size and repeat steps 2 to 5.
+  5. Set the largest system text size and repeat steps 1 to 4.
 
 ## Review
 
@@ -188,7 +201,7 @@ Opus reviews the diffs, the before and after screenshots, and the gate results o
 
 ## Cost
 
-About the size of Phase 3 for the 4b screens: an estimated 15–25% of a weekly cap, mostly Sonnet layout work. Restyling Records, Medications and Profile adds little; designing them first (D4) adds 3–5%. Record the plan-limit reading in `usage-log.md` at the end.
+Smaller than first planned now that S01–S05 and the three tab redesigns moved out: an estimated 10–15% of a weekly cap, mostly Sonnet on tokens, components and S06/S07. Record the plan-limit reading in `usage-log.md` at the end.
 
 ## Results
 
@@ -264,4 +277,4 @@ About the size of Phase 3 for the 4b screens: an estimated 15–25% of a weekly 
   - Parts that contain other parts (list row, empty and error states) copy the button and pill styles, so edits to those don't propagate.
   - Opus checks: no missing parts, no dead links, no "Missed" wording.
   - Not rendered by eye before publishing; the owner reviews.
-- **Final design (lead session, 19 November 2026):** the owner marked the work-account canvas final. It holds S01–S07 ("Calm Glass UI v4"), each with a light and dark states board; S07 is still "In review". The lead session rewrote the build tasks (5–26), the screen and state table and the data gaps above from it, and raised D1–D7 for the owner.
+- **Final design (lead session, 19 November 2026):** the owner marked the canvas final, and the designer pushed the handoff to `designes/initial-upload`. The lead re-based the build on the handoff (tasks 5–20) with the owner's decisions D2–D8; D1 (sign-in method) is open. S01–S05 move to Phases 5–6.
