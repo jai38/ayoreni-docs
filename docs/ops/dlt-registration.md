@@ -1,5 +1,7 @@
 # DLT registration for phone OTP (India)
 
+> **Deferred (19 November 2026):** launch uses WhatsApp OTP only (see `whatsapp-otp-setup.md`). Use this checklist only if an SMS fallback is added later.
+
 **Owner decision, 19 November 2026 (D1):** sign-in uses a mobile number plus an OTP sent by SMS (S01–S02). In India, every business SMS must go through TRAI's DLT system, so this has to be done before Phase 5 can go live. It is the owner's task. Fees, timings and rules change: check each step on the portal before paying.
 
 ## Before you start: what you need

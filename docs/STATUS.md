@@ -30,7 +30,7 @@ Each session reads this first and updates **only its own section** at the end of
 
 ## Owner decisions made
 
-- 2026-11-19, D1: sign-in uses a **mobile number plus SMS OTP**, as designed in S01–S02. The owner is starting DLT registration; the checklist is in `docs/ops/dlt-registration.md`. Phase 5 is replanned around phone OTP and can't go live until the DLT approvals and an SMS provider are in place.
+- 2026-11-19, D1 (revised the same day): sign-in uses a **mobile number plus a one-time code sent by WhatsApp only**, as designed in S01–S02. There is no SMS for now, so no DLT yet; `docs/ops/dlt-registration.md` is kept for a later SMS fallback. The owner is starting Meta business verification; the checklist is in `docs/ops/whatsapp-otp-setup.md`. Phase 5 is replanned around WhatsApp OTP and can't go live until the Meta verification and the authentication template are approved. The designer needs to add a "no WhatsApp on this number" state to S01/S02.
 
 ## Owner decisions still open
 
