@@ -4,6 +4,8 @@
 
 Filled in from the code on backend `main` (`b9a99e4`) on 19 November 2026. Every shape below comes from the zod schemas, the handlers and the repository mappers. Where the code does something odd, it says so under **Known gaps** at the end rather than describing what it should do.
 
+> **Also pending: Phase 4b task 16,** in backend draft PR [jai38/myhealthapp-backend#9](https://github.com/jai38/myhealthapp-backend/pull/9), branch `phase-4b/dose-actions`, stacked on PR #4. It covers Missed, no future `actionTime`, `skipReason`, and `fullName` on `/auth/me`. Each of its changes is marked **(PR #9)**. It merges after PR #4.
+>
 > **Pending, not live yet (updated 19 November 2026):** backend draft PR [jai38/myhealthapp-backend#4](https://github.com/jai38/myhealthapp-backend/pull/4), branch `phase-4b/contract-gaps`, fixes the seven gaps found while writing this file. The routes below describe the behaviour **after** that PR. Each change is marked **(PR #4)**. Until the owner merges and deploys it, production still behaves the old way, recorded in "Known gaps". The app shouldn't rely on the new fields (`kind`, `fields`) until it is live (WORKING-AGREEMENT rule 5).
 
 ## Conventions
@@ -171,10 +173,13 @@ These are referenced by name below. `?` marks a field that is left out when empt
   scheduledTime,                     // ISO timestamp, UTC
   status: 'PENDING' | 'TAKEN' | 'SKIPPED' | 'SNOOZED' | 'MISSED',
   actionTime?, snoozeMinutes?: number, notes?,
+  skipReason?: SkipReason,           // (PR #9) only on SKIPPED, and only when the patient chose one
   createdAt, updatedAt
 }
 ```
-`PENDING` in the past means **Not confirmed**. Show it that way; don't show it as Taken or Missed.
+`PENDING` in the past means **Not confirmed**. Show it that way; don't show it as Taken or Missed. `MISSED` only ever comes from the patient's own "No, I missed it"; the server never sets it.
+
+`SkipReason` **(PR #9)**: `FELT_UNWELL | DOCTOR_ADVISED | RAN_OUT | SIDE_EFFECTS | OTHER`.
 
 **SignedDocumentUrl**
 ```ts
@@ -261,7 +266,8 @@ Body: `{ email: string (email, ≤254) }`
 Errors: 400 `VALIDATION_ERROR`.
 
 ### `GET /auth/me` (token required)
-**200**: `{ data: { userId, email, patientProfileId } }`
+**200**: `{ data: { userId, email, patientProfileId, fullName? } }`
+**(PR #9)** `fullName` is the patient's own name from signup. It is left out when none was given; greet without a name then.
 
 ### `DELETE /auth/account` (token required)
 No body. Deletes every stored document object and row first, then the user; the database cascades every other patient-owned row.
@@ -403,18 +409,27 @@ Errors: 400 `INVALID_DATE` (a date doesn't parse, or **(PR #4)** the window is o
 Only an explicit tap by the patient calls this. Never call it from a notification being delivered, dismissed or snoozed.
 Body
 ```ts
-{ action: 'TAKEN' | 'SKIPPED' | 'SNOOZED',
+{ action: 'TAKEN' | 'SKIPPED' | 'SNOOZED' | 'MISSED',   // MISSED: (PR #9)
   notes?: string (≤500),
   snoozeMinutes?: int 5–120,          // SNOOZED only; default 15
-  actionTime?: ISO datetime }         // default now
+  actionTime?: ISO datetime,          // default now. (PR #9) must not be in the future (2 minutes allowed for clock drift)
+  skipReason?: SkipReason }           // (PR #9) SKIPPED only; optional
 ```
+Each call replaces the dose's earlier action: fields it doesn't set (snooze, skip reason, notes) are cleared.
 **200**: `{ data: DoseLog, message }`
-Errors: 400 `INVALID_ID` or `VALIDATION_ERROR`; 404 `NOT_FOUND`.
+Errors:
+- 400 `INVALID_ID`.
+- 400 `VALIDATION_ERROR`: also **(PR #9)** for an `actionTime` in the future (`fields[0].path` = `actionTime`), an unknown `skipReason`, or a `skipReason` with any action but `SKIPPED` (`path` = `skipReason`).
+- 400 `INVALID_ACTION` **(PR #9)**: `MISSED` on a dose that isn't due yet (`scheduledTime` in the future).
+- 404 `NOT_FOUND`.
 
 ### `PATCH /medications/doses/:doseId/action` (correct a mistake)
-Body: `{ action: 'TAKEN' | 'SKIPPED' | 'PENDING', notes?: string (≤500) }`. `actionTime` becomes now.
+Body: `{ action: 'TAKEN' | 'SKIPPED' | 'MISSED' | 'PENDING', notes?: string (≤500), skipReason?: SkipReason }`. `MISSED` and `skipReason` are new in **(PR #9)**; `skipReason` is for `SKIPPED` only.
+- `TAKEN`, `SKIPPED` and `MISSED` set `actionTime` to now.
+- `PENDING` is **Undo**. **(PR #9)** It clears `actionTime`, `skipReason`, `snoozeMinutes` and `notes`, so the dose is Not confirmed again, with no trace of Taken or Missed. Before PR #9, `actionTime` became now.
+
 **200**: `{ data: DoseLog, message }`
-Errors: as for POST.
+Errors: as for POST (there is no `actionTime` to check here).
 
 ### `GET /medications/:id`
 **200**: `{ data: MedicationDetail }`

@@ -79,7 +79,18 @@ Each session reads this first and updates **only its own section** at the end of
   - **Owner, before deploy:** the PR adds migration `20261119180000_document_kind` (a `documents.kind` column, with a backfill of past reports). I checked it on a local Postgres with synthetic rows. It runs in the deploy workflow's migrate step.
   - **For the UI:** `api.md` marks each change **(PR #4)**. New fields `Document.kind` and error `fields` are additive, so use them only once the PR is live. Code changes: `/reports/generate` with a bad date range gives `VALIDATION_ERROR` (was `EMPTY_REPORT_ERROR`); bodies over 1 MB give 413.
   - **Gates:** typecheck clean; `npm test` 425 passed, 6 skipped. The Docker suite was skipped because there's no Docker daemon in the cloud session.
-  - **Next:** brief task 16, once the UI opens its `from-ui` issue (none open yet).
+
+- 2026-11-19: **Brief task 16 is done** in draft PR [jai38/myhealthapp-backend#9](https://github.com/jai38/myhealthapp-backend/pull/9), branch `phase-4b/dose-actions` (not merged, not deployed). It closes `from-ui` issues #5–#8.
+  - **Stacked on PR #4,** so merge #4 first.
+  - **What it adds:**
+    - `MISSED` on POST and PATCH; refused on a dose that isn't due yet.
+    - A future `actionTime` is refused, with 2 minutes allowed for clock drift.
+    - Optional `skipReason`, allowed with `SKIPPED` only.
+    - Undo (PATCH to `PENDING`) clears `actionTime`, the reason, snooze and notes.
+    - `fullName` on `/auth/me`.
+  - **For the UI:** `fullName` is left out when none was given (the issue suggested `null`), so check `if (data.fullName)`. `api.md` marks every change **(PR #9)**. Use the new fields only once the PR is live (rule 5).
+  - **Owner, before deploy:** the PR adds migration `20261119190000_dose_skip_reason` (a nullable column, no backfill). That makes two migrations across PRs #4 and #9; both run in the deploy workflow's migrate step.
+  - **Gates:** typecheck clean; `npm test` 451 passed, 6 skipped. I checked the Prisma paths on a throwaway local Postgres with synthetic rows.
 
 
 ## Gotchas
