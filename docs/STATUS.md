@@ -38,7 +38,15 @@ Each session reads this first and updates **only its own section** at the end of
 
 ## UI session
 
-- 2026-11-19: (not started in the cloud yet). Start from the branch `phase-4b/simple-screens`, which has the dev-only screen preview (`/dev/preview/<tab>?state=`) and `scripts/screens.mjs` for before/after screenshots.
+- 2026-11-19: Brief task 5 is done on `phase-4b/simple-screens`, in draft PR [jai38/myhealthapp#3](https://github.com/jai38/myhealthapp/pull/3) (not merged).
+  - **Setup:** React Native Testing Library 14 runs under Vitest as a second project, `render`, using a test-only `react-native` stand-in. `renderPreview(tab, state)` renders the real tabs from the dev-preview fixtures.
+  - **Tests:** 13 tab render tests across all four tabs, and a one-notice check.
+  - **Known failure:** Today `allDone-uploading` is marked `it.fails`, because upload progress and "All done" stack (audit item Today 1). Tasks 6 and 7 must flip it to passing.
+  - **Gates:**
+    - Before the change: typecheck passed; 550 tests in 48 files.
+    - After the change: typecheck passes; 573 tests in 50 files.
+  - **Not covered:** the "button label fits at the largest text size" check. The test renderer has no layout, so it needs the screenshot measurements.
+  - Nothing is needed from the backend.
 
 ## Backend session
 
