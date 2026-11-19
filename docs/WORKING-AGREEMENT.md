@@ -1,20 +1,21 @@
-# How the UI and backend sessions work together
+# How the lead, UI and backend sessions work together
 
-There are two Claude cloud sessions:
+There are three Claude cloud sessions:
+- The **lead session** works in this repo. It plans phases, writes briefs, reviews PRs on both sides, and keeps the roadmap and the "Now" section of `STATUS.md` current when the owner decides something. It writes no app or backend code.
 - The **UI session** works in `jai38/myhealthapp`.
 - The **backend session** works in `jai38/myhealthapp-backend`.
 
-Both also read and write this repo. The sessions can't message each other, so GitHub is their shared memory, and the owner carries one-line pointers between them.
+All three read and write this repo. The sessions can't message each other, so GitHub is their shared memory, and the owner carries one-line pointers between them.
 
 ## Who owns what
 
-| | UI session | Backend session | Owner |
-|---|---|---|---|
-| Code | `myhealthapp` | `myhealthapp-backend` (not `infra/envs/`) | Terraform values, AWS, `.env` |
-| In this repo | `docs/contracts/ui-needs.md`, the UI section of `STATUS.md`, UI results in briefs | `docs/contracts/api.md`, the backend section of `STATUS.md`, backend results in briefs | "Now" and "Owner decisions" in `STATUS.md`, approving briefs |
-| Merges to `main` | Only when the owner says (it deploys Pages and the APK) | Only when the owner says (it runs CI) | Runs `deploy-aws.yml` and `terraform apply` |
+| | Lead session | UI session | Backend session | Owner |
+|---|---|---|---|---|
+| Code | none (reads both repos to review) | `myhealthapp` | `myhealthapp-backend` (not `infra/envs/`) | Terraform values, AWS, `.env` |
+| In this repo | Roadmap, phase briefs, reviews, the "Now" section of `STATUS.md` (on the owner's word) | `docs/contracts/ui-needs.md`, the UI section of `STATUS.md`, UI results in briefs | `docs/contracts/api.md`, the backend section of `STATUS.md`, backend results in briefs | "Now" and "Owner decisions" in `STATUS.md`, approving briefs |
+| Merges to `main` | This repo only | Only when the owner says (it deploys Pages and the APK) | Only when the owner says (it runs CI) | Runs `deploy-aws.yml` and `terraform apply` |
 
-Briefs and reviews: whichever session the owner asks writes the phase brief, with every task tagged **UI**, **Backend** or **Owner**. Each session adds results only under its own tasks.
+Briefs and reviews: the lead session writes the phase brief and the review, with every task tagged **UI**, **Backend** or **Owner**. Each session adds results only under its own tasks.
 
 ## Rules
 
