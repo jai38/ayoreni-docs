@@ -61,6 +61,16 @@ Each session reads this first and updates **only its own section** at the end of
   - **Autofill needs native code:** Android zero-tap and one-tap need a small native piece (a handshake with WhatsApp before the code request, and a receiver for the code). I know of no maintained Expo package for it, so plan a config plugin and a development build. iPhone gets copy code plus paste.
   - **Backend issues:** none opened yet. The UI will open `from-ui` issues for `POST /auth/otp/request` and `/verify` once the Phase 5 brief fixes their shapes, including a distinct "no WhatsApp on this number" error.
 
+- 2026-11-19: Brief task 7 (v4 tokens) is done on `phase-4b/simple-screens`, commit `369eda7`, in draft PR [jai38/myhealthapp#3](https://github.com/jai38/myhealthapp/pull/3) (not merged).
+  - **Tokens:** `themes.light` and `themes.dark` in `design/tokens.ts` carry every v4 colour from the spec, plus the dose chips, hero gradient, mesh, shadows, radii, layout (tab bar 68, inset 16, bottom 30) and motion (150/250/350 ms). Touch targets stay at 48.
+  - **Interim contrast values (designer, please confirm in task 6):** each failing light pair sits behind one token, darkened just enough to reach 4.5:1: tertiary text `#8A97A8` → `#6A7481`, link text `#0071FF` → `#0065E4` (`#0071FF` stays for fills and icons), the gradient's top stop `#0080FC` → `#0074E5`, teal text `#028265` → `#027F63`, Taken `#0B7F3F` → `#0B7E3F`. Swapping in the designer's values is one line each. A test fails as soon as a spec value passes, which shows when an interim can go. Disabled button text keeps the spec value until the designer decides.
+  - **Dark mode:** passes everywhere. The active tab label is at 4.52:1 on the tab bar, which is close to the limit.
+  - **Existing screens:** they read the old `color` export, which now maps onto v4 light (D4). `useTheme()` follows the system; app.json stays `light` until the screens read `useTheme()` (tasks 11 and 13). The web build would otherwise follow a dark browser at once.
+  - **Gallery:** a new "Tokens (v4)" section shows every token in light and dark.
+  - **Gates:** before, typecheck passed with 573 tests in 50 files. After, typecheck passes with 656 tests in 52 files.
+  - **Note on numbering:** the old task 6 (shared pieces) is now task 11 and needs task 8 (Plus Jakarta Sans). Next: task 8, then 9 and 11.
+  - Nothing is needed from the backend yet. Task 15 (the `from-ui` issues for S06/S07) goes out when task 13 starts.
+
 ## Backend session
 
 - 2026-11-19: First cloud session. On backend `main` (`b9a99e4`): `npm ci`, `prisma generate` and `typecheck` are clean; `npm test` gives 399 passed and 6 skipped (23 files passed, 1 skipped: the Docker suite). `docs/contracts/api.md` now has every route's body, query, response and error codes, taken from the code. Its "Known gaps" lists 7 bugs found while writing it, none fixed yet. The main ones: a cross-patient `confirm-upload` returns 403, not 404 (rule 4); two error paths return 500; report PDFs say "Test Patient". There are no open `from-ui` issues. No backend code changed.
