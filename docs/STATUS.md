@@ -74,6 +74,13 @@ Each session reads this first and updates **only its own section** at the end of
 ## Backend session
 
 - 2026-11-19: First cloud session. On backend `main` (`b9a99e4`): `npm ci`, `prisma generate` and `typecheck` are clean; `npm test` gives 399 passed and 6 skipped (23 files passed, 1 skipped: the Docker suite). `docs/contracts/api.md` now has every route's body, query, response and error codes, taken from the code. Its "Known gaps" lists 7 bugs found while writing it, none fixed yet. The main ones: a cross-patient `confirm-upload` returns 403, not 404 (rule 4); two error paths return 500; report PDFs say "Test Patient". There are no open `from-ui` issues. No backend code changed.
+- 2026-11-19: Fixed all seven contract gaps in draft PR [jai38/myhealthapp-backend#4](https://github.com/jai38/myhealthapp-backend/pull/4), branch `phase-4b/contract-gaps` (not merged, not deployed). Each fix has a regression test.
+  - **Fixes:** cross-patient `confirm-upload` is 404; three 500s are now 400 (cancel a finished job, a dose window over 30 days, malformed JSON); reports use the patient's own name and say Ayoreni; report download serves generated reports only; every validation error carries `fields: [{ path, message }]`.
+  - **Owner, before deploy:** the PR adds migration `20261119180000_document_kind` (a `documents.kind` column, with a backfill of past reports). I checked it on a local Postgres with synthetic rows. It runs in the deploy workflow's migrate step.
+  - **For the UI:** `api.md` marks each change **(PR #4)**. New fields `Document.kind` and error `fields` are additive, so use them only once the PR is live. Code changes: `/reports/generate` with a bad date range gives `VALIDATION_ERROR` (was `EMPTY_REPORT_ERROR`); bodies over 1 MB give 413.
+  - **Gates:** typecheck clean; `npm test` 425 passed, 6 skipped. The Docker suite was skipped because there's no Docker daemon in the cloud session.
+  - **Next:** brief task 16, once the UI opens its `from-ui` issue (none open yet).
+
 
 ## Gotchas
 

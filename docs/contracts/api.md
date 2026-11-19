@@ -4,12 +4,14 @@
 
 Filled in from the code on backend `main` (`b9a99e4`) on 19 November 2026. Every shape below comes from the zod schemas, the handlers and the repository mappers. Where the code does something odd, it says so under **Known gaps** at the end rather than describing what it should do.
 
+> **Pending, not live yet (updated 19 November 2026):** backend draft PR [jai38/myhealthapp-backend#4](https://github.com/jai38/myhealthapp-backend/pull/4), branch `phase-4b/contract-gaps`, fixes the seven gaps found while writing this file. The routes below describe the behaviour **after** that PR. Each change is marked **(PR #4)**. Until the owner merges and deploys it, production still behaves the old way, recorded in "Known gaps". The app shouldn't rely on the new fields (`kind`, `fields`) until it is live (WORKING-AGREEMENT rule 5).
+
 ## Conventions
 
 - **Base URL:** the production API Gateway URL plus `/api/v1`. The app reads it from `EXPO_PUBLIC_API_URL`. The dev API (`api-dev`) uses the same paths.
 - **Auth:** `Authorization: Bearer <accessToken>` on every route except `/healthz`, `/app-status` and `/auth/*` (other than `GET /auth/me` and `DELETE /auth/account`).
 - **Identity** comes from the token only. Never send `patientProfileId`; the server ignores it.
-- **Another patient's resource** returns 404, never 403. (There is one exception today; see Known gaps.)
+- **Another patient's resource** returns 404, never 403. **(PR #4)** removes the last exception, `confirm-upload`.
 - **Success:** `{ "data": … }`. Some medication routes also add a top-level `"message"` string. `GET /timeline` is different: it returns `{ data, pagination }` at the top level (see below).
 - **Errors:** `{ "error": { "code": string, "message": string, "details"?: … } }`. Show `message` only as a fallback; branch on `code` and the HTTP status.
 - **Dates:** fields named `…Date` are `YYYY-MM-DD` strings. Fields named `…At` and `scheduledTime` are ISO 8601 timestamps (UTC). Optional fields that are empty are **left out** of the JSON, not sent as `null`.
@@ -22,7 +24,19 @@ Filled in from the code on backend `main` (`b9a99e4`) on 19 November 2026. Every
 | Status | `code` | When |
 |---|---|---|
 | 401 | `UNAUTHORIZED` | No `Bearer` header, or the token is invalid or expired. The app should refresh once, then sign out. |
-| 500 | `INTERNAL_ERROR` | Anything unhandled, including a malformed JSON body. In production `message` is always "An unexpected error occurred". |
+| 400 | `INVALID_JSON` | **(PR #4)** The body isn't valid JSON. The message is fixed and never quotes the body. Before PR #4 this was a 500. |
+| 413 | `PAYLOAD_TOO_LARGE` | **(PR #4)** The JSON body is over 1 MB. |
+| 500 | `INTERNAL_ERROR` | Anything unhandled. In production `message` is always "An unexpected error occurred". |
+
+### Validation errors **(PR #4)**
+
+Every `400 VALIDATION_ERROR`, and the timeline's `400 INVALID_QUERY_PARAMETERS`, carries one shared list. Branch on `fields`, not on `details`:
+```ts
+{ error: { code: 'VALIDATION_ERROR', message: string,
+           fields: Array<{ path: string, message: string }>,   // path is dot-joined, e.g. 'medicines.0.name_as_written'; '' for the whole body
+           details?: … } }                                     // the older per-route shape, kept so nothing breaks (see each section)
+```
+`fields` can be empty when the failure isn't tied to one field. No route answers 422 any more.
 
 An unknown path gets Express's default HTML 404, not JSON.
 
@@ -37,6 +51,7 @@ These are referenced by name below. `?` marks a field that is left out when empt
   originalFilename, mimeType,              // 'image/jpeg' | 'image/png' | 'application/pdf'
   fileSizeBytes: number, sha256Checksum,   // server-computed SHA-256 (hex)
   status: 'UPLOADED' | 'EXTRACTING' | 'READY_FOR_REVIEW' | 'CONFIRMED' | 'FAILED',
+  kind: 'UPLOAD' | 'REPORT',               // (PR #4) REPORT = a PDF the server generated; everything the patient uploaded is UPLOAD
   pageCount?: number, imageWidth?: number, imageHeight?: number,
   uploadedAt, updatedAt
 }
@@ -188,7 +203,7 @@ Not wrapped in `data`.
 
 ## Auth: `/auth`
 
-Auth routes report validation failures as **400 `VALIDATION_ERROR`**, with every zod message joined into `message` and no `details`.
+Auth routes report validation failures as **400 `VALIDATION_ERROR`**, with every zod message joined into `message`, no `details`, and **(PR #4)** `fields`.
 
 **Session** (returned by signup, login and refresh)
 ```ts
@@ -273,14 +288,14 @@ The server reads the stored object and checks its magic bytes, real size (15 MB 
 **201**: `{ data: Document }` (status `UPLOADED`). Confirming the same key twice in a race returns the existing record.
 Errors:
 - 400 `BAD_REQUEST`: `storageKey` is missing; the intent is not found, expired, already used or still being checked; the object is missing or empty; the MIME type or checksum doesn't match; the file fails validation. If the object isn't there yet, the intent is released and the call can be retried.
-- 403 `FORBIDDEN`: the `storageKey` is malformed or belongs to another patient. **This should be 404; see Known gaps.**
+- 404 `NOT_FOUND`, message "Upload not found": **(PR #4)** the `storageKey` is malformed or belongs to another patient. The reply is the same whether or not the key exists. (Before PR #4 this was 403 `FORBIDDEN`.)
 
 ### `GET /documents/:documentId/signed-url`
 **200**: `{ data: { signedUrl, expiresInSeconds: 900 } }`
 Errors: 404 `NOT_FOUND` (missing, or another patient's).
 
 ### `GET /documents`
-**200**: `{ data: Document[] }`, newest first. This **includes generated report PDFs** (status `CONFIRMED`). It isn't paginated.
+**200**: `{ data: Document[] }`, newest first. This **includes generated report PDFs** (status `CONFIRMED`; **(PR #4)** `kind: 'REPORT'`, so the app can tell them apart). It isn't paginated.
 
 ---
 
@@ -308,7 +323,7 @@ Errors: 404 `NOT_FOUND`.
 
 ### `POST /prescriptions/extract-job/:jobId/cancel`
 **200**: `{ data: ExtractionJob }` (status `CANCELLED`). A worker result that arrives after cancelling doesn't overwrite it.
-Errors: 404 `NOT_FOUND`. Cancelling a `SUCCEEDED` or confirmed job currently returns **500** instead of 400 (see Known gaps).
+Errors: 404 `NOT_FOUND`; 400 `BAD_REQUEST`, message "Cannot cancel a completed or confirmed job" **(PR #4)**, when the job is `SUCCEEDED` or confirmed (before PR #4 this was a 500).
 
 ### `POST /prescriptions/:jobId/confirm`
 Header: `X-Timezone-Offset` (optional). Body (`PatientPrescriptionReviewSchema`; the patient's reviewed and edited draft)
@@ -338,7 +353,7 @@ This runs in one transaction. It creates the Prescription, its items, a Medicati
 { data: { prescription: Prescription, items: PrescriptionItem[], timelineEvent: TimelineEvent } }
 ```
 Errors:
-- 400 `VALIDATION_ERROR`, with `details` = zod `format()` output (nested by field).
+- 400 `VALIDATION_ERROR`, with `fields` **(PR #4)** and `details` = zod `format()` output (nested by field).
 - 400 `BAD_REQUEST`: the job is already confirmed, or isn't `SUCCEEDED`.
 - 404 `NOT_FOUND`: the job or document is missing or another patient's.
 
@@ -353,7 +368,7 @@ Errors: 404 `NOT_FOUND`.
 
 ## Medications: `/medications`
 
-Every `:id` and `:doseId` must be a UUID, or the call gets **400 `INVALID_ID`**. Validation failures are **400 `VALIDATION_ERROR`**, with `details` = zod `format()` output. State-rule failures are **400 `INVALID_ACTION`**. A missing medicine or one belonging to another patient is **404 `NOT_FOUND`**. Successful mutations also return a top-level `message`.
+Every `:id` and `:doseId` must be a UUID, or the call gets **400 `INVALID_ID`**. Validation failures are **400 `VALIDATION_ERROR`**, with `fields` **(PR #4)** and `details` = zod `format()` output. State-rule failures are **400 `INVALID_ACTION`**. A missing medicine or one belonging to another patient is **404 `NOT_FOUND`**. Successful mutations also return a top-level `message`.
 
 ### `POST /medications` (add by hand)
 Header: `X-Timezone-Offset`. Body
@@ -382,7 +397,7 @@ Errors: 400 `INVALID_STATUS`.
 Query: `from?`, `to?` (anything `new Date()` parses; ISO is best). Header: `X-Timezone-Offset`.
 The default window runs from today 00:00 UTC to 7 days later at 23:59:59 UTC. The window can be **30 days at most**. The call also tops up `PENDING` doses for active medicines inside the window.
 **200**: `{ data: DoseLog[] }`, sorted by `scheduledTime`, oldest first.
-Errors: 400 `INVALID_DATE`. A window over 30 days currently returns **500** (see Known gaps).
+Errors: 400 `INVALID_DATE` (a date doesn't parse, or **(PR #4)** the window is over 30 days; before PR #4 the second case was a 500).
 
 ### `POST /medications/doses/:doseId/action`
 Only an explicit tap by the patient calls this. Never call it from a notification being delivered, dismissed or snoozed.
@@ -458,7 +473,7 @@ Query (all optional, all strings)
 { data: TimelineEventDetail[], pagination: { totalCount, limit, offset, hasMore: boolean } }
 ```
 Sorted by `eventDate`, newest first, then by `createdAt`, newest first.
-Errors: 400 `INVALID_QUERY_PARAMETERS`, with `details` = zod `format()` output.
+Errors: 400 `INVALID_QUERY_PARAMETERS`, with `fields` **(PR #4)** and `details` = zod `format()` output.
 
 ### `GET /timeline/:id`
 **200**: `{ data: TimelineEventDetail }`
@@ -488,7 +503,7 @@ Only verified records are included: timeline events with `isVerified` (up to 500
 **ExportData**
 ```ts
 {
-  patient: { patientProfileId, fullName },   // fullName is currently always 'Test Patient' (see Known gaps)
+  patient: { patientProfileId, fullName },   // (PR #4) the patient's own name; '' when none was given. Before PR #4 always 'Test Patient'
   reportTitle, generatedAt,
   dateRange: { startDate: string | null, endDate: string | null, label },
   summary: { timelineEventsCount, medicationsCount, totalRecords },
@@ -499,7 +514,9 @@ Only verified records are included: timeline events with `isVerified` (up to 500
 
 ### `POST /reports/export-data`
 **200**: `{ data: ExportData }`
-Errors: 400 `VALIDATION_ERROR` (schema failures, with `details` = the zod `errors` array; or a bad date or range, without `details`).
+Errors: 400 `VALIDATION_ERROR`: schema failures, with `fields` **(PR #4)** and `details` = the zod `errors` array; or a bad date or range, without `details` and with `fields` naming `startDate` or `endDate` **(PR #4)**.
+
+**(PR #4)** The PDF prints the same name, or "Name not recorded" when there is none, and its footer says Ayoreni. The PDF fonts are Latin-only: a name in another script prints "Name on file (script not supported in PDF)".
 
 ### `POST /reports/generate`
 Builds the PDF and stores it as a patient document (so it shows up in `GET /documents`).
@@ -513,7 +530,7 @@ Builds the PDF and stores it as a patient document (so it shows up in `GET /docu
     pdfBase64
 } }
 ```
-Errors: 400 `VALIDATION_ERROR` (schema); 400 `EMPTY_REPORT_ERROR` (no records and `allowEmpty` not set, **and also** for a bad date range).
+Errors: 400 `VALIDATION_ERROR` (schema, or **(PR #4)** a bad date range; before PR #4 a bad range gave `EMPTY_REPORT_ERROR`); 400 `EMPTY_REPORT_ERROR` (no records and `allowEmpty` not set).
 
 ### `POST /reports/generate-pdf`
 **200**: the raw PDF bytes, `Content-Type: application/pdf`, `Content-Disposition: inline; filename="medical-report.pdf"`. Nothing is stored.
@@ -521,7 +538,7 @@ Errors: 400 `VALIDATION_ERROR` (schema, or a bad date range); 400 `EMPTY_REPORT_
 
 ### `GET /reports/:id/download`
 **200**: the stored bytes, `Content-Type: application/pdf`, `Content-Disposition: attachment; filename="<originalFilename>"`.
-Errors: 400 `INVALID_ID`; 404 `NOT_FOUND`.
+Errors: 400 `INVALID_ID`; 404 `NOT_FOUND` (missing, another patient's, or **(PR #4)** not a generated report: an uploaded PDF or photo is 404 here; use `GET /documents/:documentId/signed-url` for those).
 
 ---
 
@@ -535,7 +552,7 @@ These routes exist in `src/app.ts` but are scaffolding. Don't build against them
 
 - There is no server endpoint for an as-needed (PRN) dose; the app saves those on the phone only (Phase 4 review, finding 2).
 - A retried prescription confirm, after the first response was lost, returns **400 `BAD_REQUEST`** ("already been confirmed"), not the created records (Phase 4 follow-up). A true race on the unique constraint can still surface as 500.
-- Found while writing this contract on 19 November 2026; not fixed yet:
+- Found while writing this contract on 19 November 2026. **All seven are fixed in draft PR [jai38/myhealthapp-backend#4](https://github.com/jai38/myhealthapp-backend/pull/4)**, which isn't merged or deployed yet. Until it is, production still does this:
   1. `POST /documents/confirm-upload` with another patient's `storageKey` returns **403 `FORBIDDEN`**. Rule 4 says it should be 404.
   2. `POST /prescriptions/extract-job/:jobId/cancel` on a `SUCCEEDED` or confirmed job returns **500**. The route checks for a different error message than the repository throws.
   3. `GET /medications/doses` with a window over 30 days returns **500**. The service sets 400, but the route doesn't map it.
@@ -543,3 +560,7 @@ These routes exist in `src/app.ts` but are scaffolding. Don't build against them
   5. `GET /reports/:id/download` streams **any** of the patient's documents (photos too) labelled as `application/pdf`, not only reports.
   6. Validation error shapes differ: auth gives 400 with no `details`; most others give 400 with zod `format()` `details`; reports give the zod `errors` array; the global handler gives 422.
   7. A malformed JSON body gives 500, not 400.
+- Still open after PR #4:
+  - The PDF draws text with a Latin-only font, so Devanagari text in medicine names, doctors or notes becomes blank. Only the patient-name line says so.
+  - The verify-email message still says "My Health App" (`src/modules/auth/email-service.ts`).
+  - `GET /patient/profile` (scaffolding, "Not for the app") still returns "Test Patient".
