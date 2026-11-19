@@ -55,6 +55,11 @@ Each session reads this first and updates **only its own section** at the end of
     - After the change: typecheck passes; 573 tests in 50 files.
   - **Not covered:** the "button label fits at the largest text size" check. The test renderer has no layout, so it needs the screenshot measurements.
   - Nothing is needed from the backend.
+- 2026-11-19, D1 (WhatsApp OTP), UI inputs for the Phase 5 replan. The replan itself is the lead's.
+  - **Package name:** the WhatsApp checklist had the wrong one. It is `com.ayoreni.app`, and `com.ayoreni.app.dev` for the dev build. Fixed in `docs/ops/whatsapp-otp-setup.md`.
+  - **Signing-key hash: blocked.** CI-built APKs are signed with the public React Native debug key, so autofill needs a real release key first (owner).
+  - **Autofill needs native code:** Android zero-tap and one-tap need a small native piece (a handshake with WhatsApp before the code request, and a receiver for the code). I know of no maintained Expo package for it, so plan a config plugin and a development build. iPhone gets copy code plus paste.
+  - **Backend issues:** none opened yet. The UI will open `from-ui` issues for `POST /auth/otp/request` and `/verify` once the Phase 5 brief fixes their shapes, including a distinct "no WhatsApp on this number" error.
 
 ## Backend session
 

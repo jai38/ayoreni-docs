@@ -20,7 +20,9 @@
 4. **Create an "Authentication" message template.** Meta fixes the wording ("{code} is your verification code."). You choose:
    - Add the security line ("For your security, do not share this code.").
    - Add the expiry line ("This code expires in 10 minutes.").
-   - The button type: **zero-tap** or **one-tap autofill** on Android (needs the app's package name `com.myhealthapp.patient` and its signing-key hash, which the UI session will provide), and **copy code** for iPhone.
+   - The button type: **zero-tap** or **one-tap autofill** on Android, and **copy code** for iPhone. Android autofill needs the app's package name and signing-key hash:
+     - **Package name:** `com.ayoreni.app`. The dev build is a separate app, `com.ayoreni.app.dev`, and needs its own entry if it should autofill too. (UI session, 19 November 2026.)
+     - **Signing-key hash: not ready yet.** CI builds the APK with `expo prebuild` and `gradlew assembleRelease`, which signs it with the public React Native debug key. A hash from that key proves nothing. First set up a real release key (EAS-managed, or a keystore kept as a CI secret); then the UI session computes the hash. Until then, create the template with **copy code** only and add autofill later.
    - Use English first; add Hindi templates later.
    - Approval usually takes minutes to hours.
 5. **Create the access token.** A permanent token comes from a system user in Business Settings. Store it in AWS Parameter Store yourself, never in chat or git, the same way as the Gemini key. For AWS End User Messaging Social, you link the WhatsApp account in AWS instead.
