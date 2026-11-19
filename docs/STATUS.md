@@ -12,7 +12,7 @@ Each session reads this first and updates **only its own section** at the end of
   - **Designer:** fix the light-mode contrast failures listed in the brief; mark S07 locked; add the "no WhatsApp on this number" state to S01/S02; then design Medication Details, then Records, Medications and Profile.
   - **Owner decisions made 19 November 2026:** new look accepted; search and bell hidden; S07 locked (Missed only from the user); Today may scroll; ring without a percentage; S01–S05 move to Phases 5–6, with allergies stored in Phase 6 and no allergy safety checks until Phase 16.
   - **D1 decided:** WhatsApp OTP only (see "Owner decisions made"). S01–S03 are built in Phase 5, which waits on the owner's Meta verification (`docs/ops/whatsapp-otp-setup.md`).
-- **Next phase:** 5, accounts and sign-in with WhatsApp OTP (roadmap section 6; brief to be written by the lead).
+- **Next phase:** 5, accounts and sign-in with WhatsApp OTP. Draft brief: `docs/phases/05-brief.md`, waiting for the owner's answers to P1–P7. Owner tasks 1–3 can start now (Meta verification, the template, a real release key and a domain). Going live is blocked on Meta approval. The designer updates S01/S02 for WhatsApp, including the "no WhatsApp on this number" state (brief task 4).
 - **Moved to cloud sessions on 19 November 2026.** There is one lead, one UI and one backend session; see `WORKING-AGREEMENT.md`.
 
 ## What's live
