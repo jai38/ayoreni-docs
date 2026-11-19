@@ -28,6 +28,10 @@ Each session reads this first and updates **only its own section** at the end of
   - The owner still has to switch it on (`dev_enabled = true`, apply, set secrets and GitHub variables, run the dev workflow). Check before assuming it's live.
   - Guide: `docs/dev-data/README.md`.
 
+## Owner decisions made
+
+- 2026-11-19, D1: sign-in uses a **mobile number plus SMS OTP**, as designed in S01–S02. The owner is starting DLT registration; the checklist is in `docs/ops/dlt-registration.md`. Phase 5 is replanned around phone OTP and can't go live until the DLT approvals and an SMS provider are in place.
+
 ## Owner decisions still open
 
 - The legal text still says "MyHealth" in six places.
