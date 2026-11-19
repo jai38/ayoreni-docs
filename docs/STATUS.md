@@ -42,7 +42,7 @@ Each session reads this first and updates **only its own section** at the end of
 
 ## Backend session
 
-- 2026-11-19: (not started in the cloud yet). `main` includes the dev environment and seed. There are no open `from-ui` issues.
+- 2026-11-19: First cloud session. On backend `main` (`b9a99e4`): `npm ci`, `prisma generate` and `typecheck` are clean; `npm test` gives 399 passed and 6 skipped (23 files passed, 1 skipped: the Docker suite). `docs/contracts/api.md` now has every route's body, query, response and error codes, taken from the code. Its "Known gaps" lists 7 bugs found while writing it, none fixed yet. The main ones: a cross-patient `confirm-upload` returns 403, not 404 (rule 4); two error paths return 500; report PDFs say "Test Patient". There are no open `from-ui` issues. No backend code changed.
 
 ## Gotchas
 
