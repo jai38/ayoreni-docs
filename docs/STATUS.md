@@ -4,11 +4,12 @@ Each session reads this first and updates **only its own section** at the end of
 
 ## Now (owner)
 
+- **Plan map (clickable, every phase down to subtasks):** https://claude.ai/artifact/BwYL4EwQyyhPkY2nkEWras. Data in `docs/project/plan/plan.json`; see working agreement rule 9.
 - **Current phase:** 4b, simple and modern screens. Brief: `docs/phases/04b-brief.md` (re-based on the designer's handoff on 19 November 2026).
   - Tasks 1–4 are done. The design is final.
   - **Design sources:** the designer's branch [`designes/initial-upload`](https://github.com/jai38/myhealthapp/tree/designes/initial-upload) in `jai38/myhealthapp`. Start with [`designes/DEV-HANDOFF.md`](https://github.com/jai38/myhealthapp/blob/designes/initial-upload/designes/DEV-HANDOFF.md), then `designes/design/screens.md` and `designes/design/colour-shape-spec.md`. Where they differ from the canvas, they win. Canvas: https://claude.ai/artifact/7f6T8pLUF6V4CTzCKeYmU9. Never merge the design branch into app `main`.
   - **Next (UI):** foundations first: v4 tokens in light and dark (task 7), Plus Jakarta Sans (8), four tabs (Today, Records, Medications, Profile; Health Plan, Reports and Timeline no longer tabs but still reachable) (9), render tests (10), shared pieces (11). Then S06 Today (13) and S07 Dose update (14).
-  - **Next (backend):** task 16, for S06/S07: accept a user-chosen Missed, refuse a future taken-at time, add a structured skip reason, and return `fullName` from `/auth/me`. The UI raises it as a `from-ui` issue (task 15).
+  - **Backend:** task 16 is built in draft PR jai38/myhealthapp-backend#9, stacked on #4 (the contract-gap fixes). **Owner:** merge #4, then #9, then deploy; the two PRs add two migrations. UI task 7 (v4 colours) and task 15 (the `from-ui` issues) are done.
   - **Designer:** fix the light-mode contrast failures listed in the brief; mark S07 locked; add the "no WhatsApp on this number" state to S01/S02; then design Medication Details, then Records, Medications and Profile.
   - **Owner decisions made 19 November 2026:** new look accepted; search and bell hidden; S07 locked (Missed only from the user); Today may scroll; ring without a percentage; S01–S05 move to Phases 5–6, with allergies stored in Phase 6 and no allergy safety checks until Phase 16.
   - **D1 decided:** WhatsApp OTP only (see "Owner decisions made"). S01–S03 are built in Phase 5, which waits on the owner's Meta verification (`docs/ops/whatsapp-otp-setup.md`).

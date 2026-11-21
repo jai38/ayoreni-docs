@@ -1,0 +1,1597 @@
+{
+  "updated": "2026-11-21",
+  "updatedBy": "Lead session",
+  "statusKey": {
+    "done": "Done",
+    "active": "In progress",
+    "waiting": "Waiting on someone",
+    "blocked": "Blocked",
+    "todo": "Not started",
+    "later": "Not briefed yet"
+  },
+  "now": {
+    "headline": "Phase 4b is being built. The new colours (task 7) and the backend's dose changes (task 16) are done; next are the font, the four tabs and the shared pieces, then Today (S06) and the Dose update sheet (S07).",
+    "current": "4b",
+    "next": "5",
+    "sessions": [
+      {
+        "who": "UI",
+        "doing": "Done: task 7 (v4 colours, light and dark). Next: task 8 (Plus Jakarta Sans), then 9 (four tabs) and 11 (shared pieces), then S06 Today.",
+        "where": "jai38/myhealthapp, branch phase-4b/simple-screens, draft PR #3"
+      },
+      {
+        "who": "Backend",
+        "doing": "Done: task 16 in draft PR #9, plus the seven contract-gap fixes in draft PR #4. Both wait for the owner to merge (#4 first) and deploy.",
+        "where": "jai38/myhealthapp-backend, PRs #4 and #9 (not merged)"
+      },
+      {
+        "who": "Designer",
+        "doing": "Next: fix the light-mode contrast failures, mark S07 locked, add the WhatsApp states to S01/S02, then Medication Details.",
+        "where": "jai38/myhealthapp, branch designes/initial-upload"
+      },
+      {
+        "who": "Lead",
+        "doing": "Keeps this map, the roadmap and the briefs current; reviews 4b at the end.",
+        "where": "jai38/ayoreni-docs"
+      }
+    ],
+    "waitingOnOwner": [
+      {
+        "item": "Merge backend PR #4, then PR #9, and run the deploy (two new database migrations)",
+        "phase": "4b",
+        "task": 19,
+        "note": "Then the app can use Missed, skip reasons and the first-name greeting."
+      },
+      {
+        "item": "Answer Phase 5 decisions P1 to P7",
+        "phase": "5",
+        "task": 5,
+        "note": "Kept open on 19 Nov 2026 while the founders discuss them."
+      },
+      {
+        "item": "Confirm that S06's appointment card and the Add Appointment and Add Reading tiles stay hidden",
+        "phase": "4b"
+      },
+      {
+        "item": "Meta business verification and the WhatsApp authentication template",
+        "phase": "5",
+        "task": 1
+      },
+      {
+        "item": "A real release signing key and a domain for passkeys and app links",
+        "phase": "5",
+        "task": 3
+      },
+      {
+        "item": "Phase 2 budget alert email",
+        "phase": "2",
+        "task": 1
+      },
+      {
+        "item": "Legal text still says \"MyHealth\" in six places",
+        "phase": "28"
+      },
+      {
+        "item": "Store link is a placeholder",
+        "phase": "29"
+      },
+      {
+        "item": "Confirm the \"Hosted in Mumbai\" and \"AES-256 / private S3\" wording",
+        "phase": "28"
+      },
+      {
+        "item": "Keep or remove the Profile privacy badge",
+        "phase": "4b"
+      }
+    ]
+  },
+  "decisions": [
+    {
+      "id": "P1",
+      "phase": "5",
+      "status": "open",
+      "q": "How is the app protected after the first sign-in?",
+      "rec": "App lock now (fingerprint, face or PIN, on by default). Passkeys later, once there's a real release key and a domain."
+    },
+    {
+      "id": "P2",
+      "phase": "5",
+      "status": "open",
+      "q": "Recycled phone numbers: a new person could get an old number and see its records.",
+      "rec": "On a new device, also ask for a passkey or recovery code. If the account has neither and was inactive 90+ days, hide its records until support checks the person. Needs: confirm 90 days, and who does support."
+    },
+    {
+      "id": "P3",
+      "phase": "5",
+      "status": "open",
+      "q": "Recovery code?",
+      "rec": "Show one once after sign-up, stored only as a hash. It answers P2 and replaces a lost passkey."
+    },
+    {
+      "id": "P4",
+      "phase": "5",
+      "status": "open",
+      "q": "Under-18 users?",
+      "rec": "Block sign-up at launch with a calm message, until legal review settles the guardian path."
+    },
+    {
+      "id": "P5",
+      "phase": "5",
+      "status": "open",
+      "q": "The old email and password routes?",
+      "rec": "Keep them until the app stops using them, then remove. All existing accounts are synthetic."
+    },
+    {
+      "id": "P6",
+      "phase": "5",
+      "status": "open",
+      "q": "Which service sends the WhatsApp codes?",
+      "rec": "AWS End User Messaging Social or the Meta Cloud API. The backend compares them first; the owner picks."
+    },
+    {
+      "id": "P7",
+      "phase": "5",
+      "status": "open",
+      "q": "Changing your phone number?",
+      "rec": "Not in Phase 5. Add it to Profile in Phase 6."
+    },
+    {
+      "id": "D1",
+      "phase": "4b",
+      "status": "decided",
+      "q": "Sign-in method",
+      "rec": "Mobile number plus a one-time code by WhatsApp only. No SMS or DLT for now."
+    },
+    {
+      "id": "D2",
+      "phase": "4b",
+      "status": "decided",
+      "q": "The new visual system",
+      "rec": "Yes: Calm Glass UI v4, light and dark, Plus Jakarta Sans (Noto Sans Devanagari kept for Hindi)."
+    },
+    {
+      "id": "D3",
+      "phase": "4b",
+      "status": "decided",
+      "q": "Search and the bell in the header",
+      "rec": "Hidden until their phases."
+    },
+    {
+      "id": "D4",
+      "phase": "4b",
+      "status": "decided",
+      "q": "Records, Medications and Profile aren't designed",
+      "rec": "The designer does them after Medication Details; until then they keep their layouts on the new colours."
+    },
+    {
+      "id": "D5",
+      "phase": "4b",
+      "status": "decided",
+      "q": "S07 Dose update",
+      "rec": "Locked. Missed only when the user says so; an untouched past dose shows Not confirmed."
+    },
+    {
+      "id": "D6",
+      "phase": "4b",
+      "status": "decided",
+      "q": "Must Today fit one screen?",
+      "rec": "No. Today may scroll; nothing overlaps or clips."
+    },
+    {
+      "id": "D7",
+      "phase": "4b",
+      "status": "decided",
+      "q": "The ring on Today",
+      "rec": "Ring and \"N of M taken\", counted from recorded Taken doses only. No percentage."
+    },
+    {
+      "id": "D8",
+      "phase": "4b",
+      "status": "decided",
+      "q": "Where S01 to S05 go",
+      "rec": "S01 to S03 in Phase 5, S04 and S05 in Phase 6. Allergies are stored in Phase 6 but drive no safety check until Phase 16."
+    }
+  ],
+  "stages": [
+    {
+      "id": "A",
+      "name": "Foundations",
+      "summary": "Make the code safe, move to AWS, build the design system and the app shell, then accounts, patients and the trust layer.",
+      "phases": [
+        {
+          "id": "1",
+          "name": "Stabilize and set up the AI process",
+          "risk": "High",
+          "status": "done",
+          "goal": "Local work can't touch production, fake dose history is gone, and the AI working process is set up.",
+          "brief": "docs/phases/01-brief.md",
+          "note": "Closed in early November 2026. Two owner items were left open: the synthetic document set and the Claude API spending limit.",
+          "tasks": [
+            {
+              "n": 1,
+              "title": "Read-only production check: migration status and row counts",
+              "who": "Owner",
+              "status": "done"
+            },
+            {
+              "n": 2,
+              "title": "Decide how the pending migration ships",
+              "who": "Owner",
+              "status": "done",
+              "notes": "Start fresh on AWS, no data moved."
+            },
+            {
+              "n": 3,
+              "title": "Point local .env at Docker Postgres and MinIO",
+              "who": "Owner",
+              "status": "done"
+            },
+            {
+              "n": 4,
+              "title": "Review the uncommitted backend work; remove the third-party sign-in route",
+              "who": "Owner",
+              "model": "Sonnet",
+              "status": "done"
+            },
+            {
+              "n": 5,
+              "title": "Tests for the kept auth work (reset tokens, same reply for unknown email, deletion scope)",
+              "who": "Backend",
+              "model": "Sonnet",
+              "status": "done"
+            },
+            {
+              "n": 6,
+              "title": "Rotate the storage key and take it out of render.yaml",
+              "who": "Owner",
+              "status": "done",
+              "notes": "Old keys revoked at the Phase 2 cutover."
+            },
+            {
+              "n": 7,
+              "title": "Remove fabricated dose history",
+              "who": "UI",
+              "model": "Sonnet",
+              "status": "done"
+            },
+            {
+              "n": 8,
+              "title": "Run the integration suite in CI with Postgres and MinIO",
+              "who": "Backend",
+              "model": "Haiku",
+              "status": "done"
+            },
+            {
+              "n": 9,
+              "title": "Rewrite CLAUDE.md for the new direction",
+              "who": "Lead",
+              "model": "Opus",
+              "status": "done"
+            },
+            {
+              "n": 10,
+              "title": "Invariant test kit: patient isolation, 404s, storage keys, no PHI in logs, notifications never mark Taken",
+              "who": "Backend",
+              "model": "Sonnet",
+              "status": "done"
+            },
+            {
+              "n": 11,
+              "title": "Synthetic document set (20+ documents, including handwriting)",
+              "who": "Owner",
+              "status": "waiting"
+            },
+            {
+              "n": 12,
+              "title": "Brief and review templates, usage log, screenshot script",
+              "who": "Lead",
+              "model": "Haiku",
+              "status": "done"
+            },
+            {
+              "n": 13,
+              "title": "Set the Claude API spending limit",
+              "who": "Owner",
+              "status": "waiting"
+            },
+            {
+              "n": 14,
+              "title": "Haiku pilot on screen Y2",
+              "who": "UI",
+              "model": "Haiku",
+              "status": "done",
+              "notes": "Passed first try; Haiku keeps screen work."
+            }
+          ]
+        },
+        {
+          "id": "2",
+          "name": "AWS foundation",
+          "risk": "High",
+          "status": "waiting",
+          "goal": "The whole backend runs on AWS in Mumbai, can be rebuilt from Terraform, and billing alerts fire.",
+          "brief": "docs/phases/02-brief.md",
+          "note": "Cut over 2 November 2026 and everything works. It stays open only for the budget alert email.",
+          "tasks": [
+            {
+              "n": 1,
+              "title": "AWS account, MFA, budget alert, domain decision",
+              "who": "Owner",
+              "status": "waiting",
+              "notes": "Budget alert email still to arrive.",
+              "sub": [
+                {
+                  "t": "AWS account and MFA",
+                  "s": "done"
+                },
+                {
+                  "t": "Budget alarm set",
+                  "s": "done"
+                },
+                {
+                  "t": "Budget alert email received",
+                  "s": "waiting"
+                }
+              ]
+            },
+            {
+              "n": 2,
+              "title": "New paid Gemini key",
+              "who": "Owner",
+              "status": "done"
+            },
+            {
+              "n": 3,
+              "title": "Terraform for the V1 environment",
+              "who": "Backend",
+              "model": "Sonnet",
+              "status": "done"
+            },
+            {
+              "n": 4,
+              "title": "Migrations as a deploy step, not on boot",
+              "who": "Backend",
+              "model": "Sonnet",
+              "status": "done"
+            },
+            {
+              "n": 5,
+              "title": "SQS worker path for extraction",
+              "who": "Backend",
+              "model": "Sonnet",
+              "status": "done"
+            },
+            {
+              "n": 6,
+              "title": "SES email sender replacing Resend",
+              "who": "Backend",
+              "model": "Haiku",
+              "status": "done"
+            },
+            {
+              "n": 7,
+              "title": "Connection limits, S3 config, endpoint guard",
+              "who": "Backend",
+              "model": "Sonnet",
+              "status": "done"
+            },
+            {
+              "n": 8,
+              "title": "GitHub Actions deploy to ECS through OIDC",
+              "who": "Backend",
+              "model": "Sonnet",
+              "status": "done"
+            },
+            {
+              "n": 9,
+              "title": "terraform apply, set parameters, first deploy",
+              "who": "Owner",
+              "status": "done"
+            },
+            {
+              "n": 10,
+              "title": "Cutover: retire Render and Supabase, revoke old keys",
+              "who": "Owner",
+              "status": "done"
+            }
+          ]
+        },
+        {
+          "id": "3",
+          "name": "Design system",
+          "risk": "Low",
+          "status": "done",
+          "goal": "Tokens, type, icons and every base component in a dev gallery, with contrast and touch-size checks.",
+          "brief": "docs/phases/03-brief.md",
+          "note": "Approved on the phone and closed 5 November 2026.",
+          "tasks": [
+            {
+              "n": 1,
+              "title": "Logo vector, or placeholder accepted",
+              "who": "Owner",
+              "status": "done"
+            },
+            {
+              "n": 2,
+              "title": "Token spec and component name list",
+              "who": "Lead",
+              "model": "Opus",
+              "status": "done"
+            },
+            {
+              "n": 3,
+              "title": "Tokens, Inter font, text styles",
+              "who": "UI",
+              "model": "Haiku",
+              "status": "done"
+            },
+            {
+              "n": 4,
+              "title": "Contrast and touch-size tests",
+              "who": "UI",
+              "model": "Haiku",
+              "status": "done"
+            },
+            {
+              "n": 5,
+              "title": "Status display helpers (Not confirmed never maps to Taken or Missed)",
+              "who": "UI",
+              "model": "Sonnet",
+              "status": "done"
+            },
+            {
+              "n": 6,
+              "title": "String helper and en.ts",
+              "who": "UI",
+              "model": "Haiku",
+              "status": "done"
+            },
+            {
+              "n": 7,
+              "title": "Foundations components",
+              "who": "UI",
+              "model": "Haiku",
+              "status": "done"
+            },
+            {
+              "n": 8,
+              "title": "Action components",
+              "who": "UI",
+              "model": "Haiku",
+              "status": "done"
+            },
+            {
+              "n": 9,
+              "title": "Inputs, part 1",
+              "who": "UI",
+              "model": "Haiku",
+              "status": "done"
+            },
+            {
+              "n": 10,
+              "title": "Inputs, part 2",
+              "who": "UI",
+              "model": "Haiku",
+              "status": "done"
+            },
+            {
+              "n": 11,
+              "title": "Containers",
+              "who": "UI",
+              "model": "Haiku",
+              "status": "done"
+            },
+            {
+              "n": 12,
+              "title": "Navigation components",
+              "who": "UI",
+              "model": "Haiku",
+              "status": "done"
+            },
+            {
+              "n": 13,
+              "title": "Feedback components",
+              "who": "UI",
+              "model": "Haiku",
+              "status": "done"
+            },
+            {
+              "n": 14,
+              "title": "Trust components",
+              "who": "UI",
+              "model": "Haiku",
+              "status": "done"
+            },
+            {
+              "n": 15,
+              "title": "Dev-only gallery screen",
+              "who": "UI",
+              "model": "Haiku",
+              "status": "done"
+            },
+            {
+              "n": 16,
+              "title": "Gallery screenshots",
+              "who": "UI",
+              "model": "Haiku",
+              "status": "done"
+            },
+            {
+              "n": 17,
+              "title": "Review",
+              "who": "Lead",
+              "model": "Opus",
+              "status": "done"
+            },
+            {
+              "n": 18,
+              "title": "Phone check and approval of the look",
+              "who": "Owner",
+              "status": "done"
+            }
+          ]
+        },
+        {
+          "id": "4",
+          "name": "App shell and rebrand",
+          "risk": "Med",
+          "status": "done",
+          "goal": "Expo upgrade, the Ayoreni name and icons, routed tabs, global error, offline and update handling.",
+          "brief": "docs/phases/04-brief.md",
+          "note": "Closed 6 November 2026; merged and deployed (app 54b239c, backend 0f28284). App-status is live.",
+          "tasks": [
+            {
+              "n": 1,
+              "title": "Confirm decisions; merge Phase 3",
+              "who": "Owner",
+              "status": "done"
+            },
+            {
+              "n": 2,
+              "title": "Expo SDK upgrade note",
+              "who": "Lead",
+              "model": "Opus",
+              "status": "done"
+            },
+            {
+              "n": 3,
+              "title": "Upgrade the Expo SDK",
+              "who": "UI",
+              "model": "Sonnet",
+              "status": "done"
+            },
+            {
+              "n": 4,
+              "title": "Display name \"Ayoreni\"",
+              "who": "UI",
+              "model": "Haiku",
+              "status": "done"
+            },
+            {
+              "n": 5,
+              "title": "Routing shell with tabs and redirects",
+              "who": "UI",
+              "model": "Sonnet",
+              "status": "done"
+            },
+            {
+              "n": 6,
+              "title": "Launch and auth gate (W01)",
+              "who": "UI",
+              "model": "Sonnet",
+              "status": "done"
+            },
+            {
+              "n": 7,
+              "title": "Split the oversized screens into feature modules",
+              "who": "UI",
+              "model": "Haiku",
+              "status": "done"
+            },
+            {
+              "n": 8,
+              "title": "Global error, no connection, offline banner (Y2)",
+              "who": "UI",
+              "model": "Sonnet",
+              "status": "done"
+            },
+            {
+              "n": 9,
+              "title": "Force update and maintenance (Y1) plus /app-status",
+              "who": "UI",
+              "model": "Sonnet",
+              "status": "done"
+            },
+            {
+              "n": 10,
+              "title": "Today, first version (T1)",
+              "who": "UI",
+              "model": "Sonnet",
+              "status": "done"
+            },
+            {
+              "n": 11,
+              "title": "Re-skin the bridge screens",
+              "who": "UI",
+              "model": "Haiku",
+              "status": "done"
+            },
+            {
+              "n": 12,
+              "title": "Paste real Claude usage into the usage log",
+              "who": "Owner",
+              "status": "done"
+            },
+            {
+              "n": 13,
+              "title": "Re-price the roadmap's cost section",
+              "who": "Lead",
+              "model": "Opus",
+              "status": "done"
+            },
+            {
+              "n": 14,
+              "title": "Phone check",
+              "who": "Owner",
+              "status": "done"
+            },
+            {
+              "n": 15,
+              "title": "Review",
+              "who": "Lead",
+              "model": "Opus",
+              "status": "done"
+            }
+          ]
+        },
+        {
+          "id": "4b",
+          "name": "Simple, modern screens",
+          "risk": "Med",
+          "status": "active",
+          "goal": "The designer's new look (light and dark), four tabs, then a new Today (S06) and Dose update sheet (S07). Nothing overlaps or clips at 360 × 800 or the largest text size.",
+          "brief": "docs/phases/04b-brief.md",
+          "note": "Added 6 November 2026 after the owner's phone check. Re-based on the designer's handoff on 19 November 2026.",
+          "order": "7, 8, 10 and 12 can start at once. 9 and 11 need 7 and 8. Then 13. Task 14 needs 11 and the backend's 16. Merge order: backend, owner deploy, then the app.",
+          "tasks": [
+            {
+              "n": 1,
+              "title": "Approve the decisions",
+              "who": "Owner",
+              "status": "done"
+            },
+            {
+              "n": 2,
+              "title": "Dev-only screen preview with synthetic data and before screenshots",
+              "who": "UI",
+              "model": "Sonnet",
+              "status": "done"
+            },
+            {
+              "n": 3,
+              "title": "Audit of the old screens",
+              "who": "Lead",
+              "model": "Opus",
+              "status": "done"
+            },
+            {
+              "n": 4,
+              "title": "Mockups and the designer's final handoff",
+              "who": "Lead",
+              "model": "Opus",
+              "status": "done"
+            },
+            {
+              "n": 5,
+              "title": "Start Meta business verification and the WhatsApp template (gates Phase 5)",
+              "who": "Owner",
+              "status": "active",
+              "done": "The checklist's status table filled in"
+            },
+            {
+              "n": 6,
+              "title": "Designer fixes and next screens",
+              "who": "Designer",
+              "status": "todo",
+              "done": "Spec updated on designes/initial-upload; S07 shows Locked",
+              "sub": [
+                {
+                  "t": "Fix the light-mode contrast failures listed in the brief",
+                  "s": "todo"
+                },
+                {
+                  "t": "Mark S07 locked in screens.md and the canvas",
+                  "s": "todo"
+                },
+                {
+                  "t": "Add \"no WhatsApp on this number\" to S01 and S02 (for Phase 5)",
+                  "s": "todo"
+                },
+                {
+                  "t": "Design Medication Details",
+                  "s": "todo"
+                },
+                {
+                  "t": "Then Records, Medications and Profile",
+                  "s": "todo"
+                }
+              ]
+            },
+            {
+              "n": 7,
+              "title": "v4 colour tokens in light and dark",
+              "who": "UI",
+              "model": "Sonnet",
+              "status": "done",
+              "done": "Gallery shows every token in both themes; contrast and touch-size checks pass",
+              "sub": [
+                {
+                  "t": "Every colour token in light and dark",
+                  "s": "done"
+                },
+                {
+                  "t": "Dose chip colours, hero gradient, mesh background",
+                  "s": "done"
+                },
+                {
+                  "t": "Radii, spacing, elevation and motion from the spec",
+                  "s": "done"
+                },
+                {
+                  "t": "Theme follows the phone's setting",
+                  "s": "done"
+                },
+                {
+                  "t": "Failing contrast pairs kept behind one token each",
+                  "s": "done"
+                }
+              ],
+              "notes": "Commit 369eda7 in draft PR #3. Interim contrast values sit behind one token each until the designer confirms them."
+            },
+            {
+              "n": 8,
+              "title": "Plus Jakarta Sans font and type scale",
+              "who": "UI",
+              "model": "Sonnet",
+              "status": "todo",
+              "done": "Type sheet matches the spec; no clipping at the largest text size",
+              "sub": [
+                {
+                  "t": "Weights 400, 600, 700 replacing Inter",
+                  "s": "todo"
+                },
+                {
+                  "t": "Type scale, tracking, tabular figures for times and doses",
+                  "s": "todo"
+                },
+                {
+                  "t": "Noto Sans Devanagari kept for Hindi",
+                  "s": "todo"
+                }
+              ]
+            },
+            {
+              "n": 9,
+              "title": "Four tabs: Today, Records, Medications, Profile",
+              "who": "UI",
+              "model": "Sonnet",
+              "status": "todo",
+              "done": "Four tabs render; every old route resolves; labels fit at the largest text size",
+              "sub": [
+                {
+                  "t": "Floating frosted tab bar",
+                  "s": "todo"
+                },
+                {
+                  "t": "Remove Health Plan, Reports and Timeline as tabs",
+                  "s": "todo"
+                },
+                {
+                  "t": "Reports and Timeline reachable from Records",
+                  "s": "todo"
+                },
+                {
+                  "t": "Old links /timeline, /reports, /medications still work",
+                  "s": "todo"
+                }
+              ]
+            },
+            {
+              "n": 10,
+              "title": "Render tests",
+              "who": "UI",
+              "model": "Sonnet",
+              "status": "active",
+              "done": "Setup lands with one passing render test per tab",
+              "notes": "Mostly done in draft PR jai38/myhealthapp#3.",
+              "sub": [
+                {
+                  "t": "Testing setup and one test per tab",
+                  "s": "done"
+                },
+                {
+                  "t": "Check that only one notice shows at a time",
+                  "s": "done"
+                },
+                {
+                  "t": "Check that button labels fit at the largest text size",
+                  "s": "todo"
+                },
+                {
+                  "t": "Flip the known upload + All done failure when S06 lands",
+                  "s": "todo"
+                }
+              ]
+            },
+            {
+              "n": 11,
+              "title": "Shared pieces in both themes",
+              "who": "UI",
+              "model": "Sonnet",
+              "status": "todo",
+              "done": "Gallery shows each in every state; render tests pass",
+              "sub": [
+                {
+                  "t": "Glass card and hero card with ring",
+                  "s": "todo"
+                },
+                {
+                  "t": "Header (search and bell hidden) and section header",
+                  "s": "todo"
+                },
+                {
+                  "t": "Medicine row and status chip",
+                  "s": "todo"
+                },
+                {
+                  "t": "Mark as Taken button and Quick Action tile",
+                  "s": "todo"
+                },
+                {
+                  "t": "Bottom sheet, radio row, segmented control, time wheel",
+                  "s": "todo"
+                },
+                {
+                  "t": "Toast with Undo and the single notice slot",
+                  "s": "todo"
+                }
+              ]
+            },
+            {
+              "n": 12,
+              "title": "Preview fixtures for every S06 and S07 state (synthetic data)",
+              "who": "UI",
+              "model": "Haiku",
+              "status": "todo",
+              "done": "/dev/preview renders every state"
+            },
+            {
+              "n": 13,
+              "title": "S06 Today",
+              "who": "UI",
+              "model": "Sonnet",
+              "status": "todo",
+              "done": "Clinical tests unchanged and passing; every S06 state matches in both themes",
+              "sub": [
+                {
+                  "t": "Greeting by time of day with first name",
+                  "s": "todo"
+                },
+                {
+                  "t": "Hero: N of M taken, next dose, needs confirming, ring",
+                  "s": "todo"
+                },
+                {
+                  "t": "Morning, Afternoon, Evening groups with Show all",
+                  "s": "todo"
+                },
+                {
+                  "t": "Mark as Taken with a 5-second Undo",
+                  "s": "todo"
+                },
+                {
+                  "t": "All done, nothing due, loading, error, offline, uploading",
+                  "s": "todo"
+                },
+                {
+                  "t": "Quick Actions: Upload Record, Add Medication",
+                  "s": "todo"
+                }
+              ]
+            },
+            {
+              "n": 14,
+              "title": "S07 Dose update sheet",
+              "who": "UI",
+              "model": "Sonnet",
+              "status": "todo",
+              "done": "Every S07 state matches; dose-action and clinical tests pass",
+              "notes": "Needs backend task 16.",
+              "sub": [
+                {
+                  "t": "Yes, I took it: as scheduled, just now, or another time (never the future)",
+                  "s": "todo"
+                },
+                {
+                  "t": "No, I skipped it, with an optional reason",
+                  "s": "todo"
+                },
+                {
+                  "t": "No, I missed it",
+                  "s": "todo"
+                },
+                {
+                  "t": "Opens only for due or Not confirmed doses",
+                  "s": "todo"
+                }
+              ]
+            },
+            {
+              "n": 15,
+              "title": "Raise the data gaps as from-ui issues",
+              "who": "UI",
+              "model": "Haiku",
+              "status": "done",
+              "done": "Issues open and linked",
+              "notes": "Backend issues #5 to #8."
+            },
+            {
+              "n": 16,
+              "title": "Dose actions for S06 and S07",
+              "who": "Backend",
+              "model": "Sonnet",
+              "status": "waiting",
+              "done": "PR merged after owner OK; api.md updated in the same PR",
+              "sub": [
+                {
+                  "t": "Accept MISSED on both dose action routes",
+                  "s": "done"
+                },
+                {
+                  "t": "Refuse a taken time in the future",
+                  "s": "done"
+                },
+                {
+                  "t": "Optional structured skip reason",
+                  "s": "done"
+                },
+                {
+                  "t": "Return fullName from /auth/me",
+                  "s": "done"
+                },
+                {
+                  "t": "Regression tests: nothing marks Taken or Missed without an explicit call",
+                  "s": "done"
+                }
+              ],
+              "notes": "Built in draft PR jai38/myhealthapp-backend#9, stacked on #4. Waiting for the owner to merge and deploy."
+            },
+            {
+              "n": 17,
+              "title": "Copy pass: every string through t()",
+              "who": "UI",
+              "model": "Haiku",
+              "status": "todo",
+              "done": "en.ts diff only; no button label over three words"
+            },
+            {
+              "n": 18,
+              "title": "After screenshots, light and dark, three sizes",
+              "who": "UI",
+              "model": "Sonnet",
+              "status": "todo",
+              "done": "Every state has a screenshot"
+            },
+            {
+              "n": 19,
+              "title": "Deploy task 16, then phone check and approve",
+              "who": "Owner",
+              "status": "waiting",
+              "done": "Written approval",
+              "notes": "Merge backend PR #4, then #9, then run deploy-aws.yml (dev, then production)."
+            },
+            {
+              "n": 20,
+              "title": "Review",
+              "who": "Lead",
+              "model": "Opus",
+              "status": "todo",
+              "done": "04b-review.md written"
+            }
+          ]
+        },
+        {
+          "id": "5",
+          "name": "Accounts and sign-in with WhatsApp",
+          "risk": "High",
+          "status": "waiting",
+          "goal": "Sign up and sign in with a mobile number and a code sent by WhatsApp (S01 to S03), then app lock. No code, number or name ever reaches a log.",
+          "brief": "docs/phases/05-brief.md",
+          "note": "Draft brief. Waiting on the owner's answers to P1 to P7. Going live is blocked on Meta verification and the template.",
+          "order": "Owner tasks 1 to 3 start now (they take days to weeks). Then 4, 5 and 6. Tasks 7 to 12 are built against a fake sender before Meta approves. 13 and 14 wait for task 3.",
+          "tasks": [
+            {
+              "n": 1,
+              "title": "Meta business verification, WhatsApp number, display name \"Ayoreni\"",
+              "who": "Owner",
+              "status": "active",
+              "done": "Checklist status table filled in"
+            },
+            {
+              "n": 2,
+              "title": "WhatsApp authentication template, token in Parameter Store, spend alarm",
+              "who": "Owner",
+              "status": "todo",
+              "done": "Template approved"
+            },
+            {
+              "n": 3,
+              "title": "Real release signing key and a domain",
+              "who": "Owner",
+              "status": "todo",
+              "done": "CI APK signed with the release key; domain chosen"
+            },
+            {
+              "n": 4,
+              "title": "Designer: S01/S02 for WhatsApp, plus new screens",
+              "who": "Designer",
+              "status": "todo",
+              "sub": [
+                {
+                  "t": "WhatsApp copy on S01 and S02",
+                  "s": "todo"
+                },
+                {
+                  "t": "Copy-and-paste instead of \"From Messages\"",
+                  "s": "todo"
+                },
+                {
+                  "t": "\"No WhatsApp on this number\" on S01 and S02",
+                  "s": "todo"
+                },
+                {
+                  "t": "App lock, recovery code, new-device check, under-18 message",
+                  "s": "todo"
+                }
+              ]
+            },
+            {
+              "n": 5,
+              "title": "Answer P1 to P7",
+              "who": "Owner",
+              "status": "waiting",
+              "notes": "Kept open on 19 Nov 2026 while the founders discuss."
+            },
+            {
+              "n": 6,
+              "title": "Compare AWS and Meta for sending WhatsApp codes",
+              "who": "Backend",
+              "model": "Sonnet",
+              "status": "todo"
+            },
+            {
+              "n": 7,
+              "title": "Code request and verify endpoints with a fake sender for tests",
+              "who": "Backend",
+              "model": "Sonnet",
+              "status": "todo"
+            },
+            {
+              "n": 8,
+              "title": "Account and profile fields, consent record, fullName on /auth/me",
+              "who": "Backend",
+              "model": "Sonnet",
+              "status": "todo"
+            },
+            {
+              "n": 9,
+              "title": "Sessions: short tokens, rotating refresh, device list, recovery code, new-device check",
+              "who": "Backend",
+              "model": "Sonnet",
+              "status": "todo"
+            },
+            {
+              "n": 10,
+              "title": "Terraform for the sender (owner applies)",
+              "who": "Backend",
+              "model": "Sonnet",
+              "status": "todo"
+            },
+            {
+              "n": 11,
+              "title": "S01, S02, S03 screens with every state",
+              "who": "UI",
+              "model": "Sonnet",
+              "status": "todo"
+            },
+            {
+              "n": 12,
+              "title": "App lock",
+              "who": "UI",
+              "model": "Sonnet",
+              "status": "todo"
+            },
+            {
+              "n": 13,
+              "title": "Android code autofill (native config plugin)",
+              "who": "UI",
+              "model": "Sonnet",
+              "status": "blocked",
+              "notes": "Needs task 3."
+            },
+            {
+              "n": 14,
+              "title": "Passkeys",
+              "who": "UI",
+              "model": "Sonnet",
+              "status": "blocked",
+              "notes": "Needs P1 and task 3."
+            },
+            {
+              "n": 15,
+              "title": "Switch the app off email sign-in, then remove the old routes",
+              "who": "UI",
+              "model": "Sonnet",
+              "status": "todo"
+            },
+            {
+              "n": 16,
+              "title": "Deploy to dev, then production, after Meta approval",
+              "who": "Owner",
+              "status": "blocked",
+              "notes": "Needs tasks 1 and 2."
+            },
+            {
+              "n": 17,
+              "title": "Review, with a security pass",
+              "who": "Lead",
+              "model": "Opus",
+              "status": "todo"
+            }
+          ]
+        },
+        {
+          "id": "6",
+          "name": "Patients and profile",
+          "risk": "High",
+          "status": "later",
+          "goal": "Account, Patient and PatientAccess kept apart, with one access guard and database row-level security.",
+          "scope": [
+            "Separate Account, Patient and PatientAccess; one guard on every data access, plus row-level security",
+            "Move existing data safely",
+            "Progressive profile, medical background, emergency contact fields",
+            "S04 Your health profile: height, weight, blood group, allergy status and list (stored only, no warnings until Phase 16)",
+            "S05 Welcome, first-time Today",
+            "Change of phone number (if P7 is accepted)",
+            "Exit: tests prove no cross-patient access on every route"
+          ]
+        },
+        {
+          "id": "7",
+          "name": "Trust core",
+          "risk": "High",
+          "status": "later",
+          "goal": "Every fact keeps its history and source; a corrected fact flags what depends on it.",
+          "scope": [
+            "Audit records, revision history, provenance labels",
+            "Verification and invalidation events",
+            "Partial and uncertain dates, time zones",
+            "Background job retries and outbox",
+            "Per-patient keys wrapped by KMS for the most sensitive text",
+            "Exit: a corrected fact keeps its old version, and dependents get flagged"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "name": "Records",
+      "summary": "Capture documents, extract them with AI as drafts the patient confirms, then timeline, search and quick entries.",
+      "phases": [
+        {
+          "id": "8",
+          "name": "Capture and document library",
+          "risk": "Med",
+          "status": "later",
+          "goal": "One scan engine for every entry point, with safe storage and short view links.",
+          "scope": [
+            "Multi-page capture, crop, rotate, reorder",
+            "Type detection with override; duplicate detection",
+            "Patient check before saving; offline drafts",
+            "Delete with impact review",
+            "HEIC support, metadata stripped from display copies",
+            "Malware scan before processing; parsing in an isolated worker",
+            "5-minute view links"
+          ]
+        },
+        {
+          "id": "9",
+          "name": "Extraction and review",
+          "risk": "High",
+          "status": "later",
+          "goal": "AI reads a prescription into per-field drafts, and nothing becomes a fact until the patient confirms it.",
+          "scope": [
+            "Per-field candidates with the page and text they came from",
+            "Rule checks on numbers, units and dates",
+            "Versioned prompts and a test set of handwritten Indian prescriptions",
+            "Prompt-injection defences and a red-team document set",
+            "AI switch per feature and per patient",
+            "Never default a missing form or route; never invent a medicine",
+            "Gate: Google's paid terms, no training, retention, lawyer's view on processing outside India",
+            "Exit: measured accuracy and cost report"
+          ]
+        },
+        {
+          "id": "10",
+          "name": "Timeline and search",
+          "risk": "Med",
+          "status": "later",
+          "goal": "One timeline across every kind of record, with fast patient-only search.",
+          "scope": [
+            "Timeline over all event types, with an uncertain-date group",
+            "Indexed patient-scoped search",
+            "Filters with one Clear all",
+            "Pagination tested on 15 years of data"
+          ]
+        },
+        {
+          "id": "11",
+          "name": "Quick Add, measurements, symptoms",
+          "risk": "Med",
+          "status": "later",
+          "goal": "Record readings (BP, glucose, temperature and more), symptoms and manual events.",
+          "scope": [
+            "Observations with units and context",
+            "Symptom episodes, including open-ended",
+            "Manual medical events",
+            "Validation messages with no diagnosis wording"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "name": "Medicines and safety",
+      "summary": "The medicine engine, reminders, medicine screens, prescription to reminder, allergies and warnings, emergency card and offline.",
+      "phases": [
+        {
+          "id": "12",
+          "name": "Medicine engine",
+          "risk": "High",
+          "status": "later",
+          "goal": "A correct, append-only model of courses, schedules and doses. The highest review effort of the project.",
+          "scope": [
+            "Catalog item, course, course version, schedule rule, occurrence",
+            "Append-only intake ledger; Not Confirmed state",
+            "Every recurrence type, time zone and clock rule",
+            "Quantity per dose (\"1 tablet\")",
+            "Migrate existing medicines without inventing history",
+            "Exit: complete state-rule test table"
+          ]
+        },
+        {
+          "id": "13",
+          "name": "Reminders",
+          "risk": "High",
+          "status": "later",
+          "goal": "Reliable local reminders that never mark a dose Taken by themselves.",
+          "scope": [
+            "Notifications from occurrences, stable IDs, reconcile on reboot and edit",
+            "Grouping, quiet settings, permission and battery guidance",
+            "Lock-screen text with no drug names",
+            "Actions need unlock",
+            "Android real-device test matrix"
+          ]
+        },
+        {
+          "id": "14",
+          "name": "Medicine screens and lifecycle",
+          "risk": "Med",
+          "status": "later",
+          "goal": "Add, change and review medicines; history; refill reminders (off by default).",
+          "scope": [
+            "Manual add and one-time log",
+            "Course changes and medication review",
+            "Intake history",
+            "Medicine or supplement type",
+            "Refill reminder, off by default"
+          ]
+        },
+        {
+          "id": "15",
+          "name": "Prescription to reminder, package scan",
+          "risk": "Med",
+          "status": "later",
+          "goal": "Confirmed prescription lines become a course and reminders without retyping.",
+          "scope": [
+            "Verified lines create a course and reminders",
+            "Follow-up candidates held for Phase 18",
+            "Barcode and label candidates, always confirmed",
+            "Medicine catalog source"
+          ]
+        },
+        {
+          "id": "16",
+          "name": "Allergies, reactions, warnings",
+          "risk": "High",
+          "status": "later",
+          "goal": "Allergy records drive warnings at medicine entry, exact match only.",
+          "scope": [
+            "Suspected, confirmed and non-allergic kept apart",
+            "Reaction reports",
+            "Warnings at medicine entry with recorded acknowledgment",
+            "Emergency guidance wording marked for clinician review"
+          ]
+        },
+        {
+          "id": "17",
+          "name": "Emergency card, offline, device privacy",
+          "risk": "High",
+          "status": "later",
+          "goal": "An emergency card, a safe offline mode with no duplicate doses, and device privacy.",
+          "scope": [
+            "Emergency card with freshness and export",
+            "Encrypted local cache and an idempotent sync queue",
+            "Conflict rules",
+            "App lock timeout, Android screenshot blocking, rooted-device warning",
+            "Exit: airplane-mode test with no duplicate doses after reconnecting"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "V1",
+      "name": "V1 gate",
+      "summary": "A checkpoint between Phases 17 and 18: no real record enters the system until every item passes.",
+      "phases": [
+        {
+          "id": "V1",
+          "name": "Before the first real record",
+          "risk": "High",
+          "status": "later",
+          "goal": "Legal, clinical, security and data controls in place before real testers add their own records.",
+          "scope": [
+            "Lawyer: tester consent, privacy notice, complaints contact, breach duties, AI outside India",
+            "Clinician: medicine states, reminders, allergy warnings, emergency wording",
+            "Pentester: API, patient isolation, sign-in, recovery, uploads, document links",
+            "Build: account deletion and export, AI off switch, log scrubbing, backups and a restore drill",
+            "Environment wiped of synthetic data; access limited to named people with MFA",
+            "Adults only, own records, no real data in dev tools",
+            "Exit: evidence for every item, and the owner signs the go decision"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "name": "Connected views",
+      "summary": "Health Plan, lab trends, conditions, AI summaries, doctor sharing and adherence.",
+      "phases": [
+        {
+          "id": "18",
+          "name": "Health Plan and final Today",
+          "risk": "Med",
+          "status": "later",
+          "goal": "Appointments, tests and follow-ups, and the finished Today screen.",
+          "scope": [
+            "Appointments, tests, follow-ups, recurring tasks, reminders",
+            "Completion with or without results",
+            "Prescription-driven candidates",
+            "Today finished: appointment card and every due, none, new and all-done state"
+          ]
+        },
+        {
+          "id": "19",
+          "name": "Lab results and trends",
+          "risk": "Med",
+          "status": "later",
+          "goal": "Lab reports become verified readings with trend charts.",
+          "scope": [
+            "Lab extraction into verified observations",
+            "Comparable-unit rules, duplicates, reference ranges",
+            "Chart plus an accessible table; every point opens its source"
+          ]
+        },
+        {
+          "id": "20",
+          "name": "Conditions",
+          "risk": "Med",
+          "status": "later",
+          "goal": "Conditions linked to records, with AI suggestions waiting for review.",
+          "scope": [
+            "Condition model with many-to-many links",
+            "AI-suggested links awaiting review",
+            "Aliases and reversible merge",
+            "Conflicting diagnoses kept with their sources"
+          ]
+        },
+        {
+          "id": "21",
+          "name": "AI summaries and assistant",
+          "risk": "High",
+          "status": "later",
+          "goal": "Short, evidence-linked summaries that refuse diagnosis and dosing advice.",
+          "scope": [
+            "2 to 5 line summaries with sources and an as-of date",
+            "Abstains when evidence is thin; marks stale summaries",
+            "Assistant limited to verified facts and explaining terms",
+            "Evaluation for citations and made-up claims",
+            "Structured explanations, not open chat, at launch"
+          ]
+        },
+        {
+          "id": "22",
+          "name": "Doctor sharing",
+          "risk": "Med",
+          "status": "later",
+          "goal": "Choose what to share and send a sourced PDF to a doctor.",
+          "scope": [
+            "Scope selection and snapshot",
+            "Branded PDF with sources and disclaimer",
+            "Device share; stale marking",
+            "Genomic files excluded by default"
+          ]
+        },
+        {
+          "id": "23",
+          "name": "Adherence and engagement",
+          "risk": "Med",
+          "status": "later",
+          "goal": "Honest adherence counts, with the formula shown and no single unexplained score.",
+          "scope": [
+            "Separate counts: on time, taken, skipped or missed, unknown",
+            "Formula shown",
+            "Opt-in encouragement only"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "E",
+      "name": "Full breadth",
+      "summary": "Family and caregivers; privacy center, export and deletion.",
+      "phases": [
+        {
+          "id": "24",
+          "name": "Family and caregivers",
+          "risk": "High",
+          "status": "later",
+          "goal": "Invite an adult caregiver with limited, revocable permissions.",
+          "scope": [
+            "Caregiver invite with a 7-day expiry",
+            "Action attribution, revoke, role matrix",
+            "Child profiles behind a flag until the lawyer approves",
+            "Patient banners on capture and export flows"
+          ]
+        },
+        {
+          "id": "25",
+          "name": "Privacy center, export, deletion, genomic",
+          "risk": "High",
+          "status": "later",
+          "goal": "Consent history, full export and complete deletion.",
+          "scope": [
+            "Consent history and withdrawal",
+            "Full data export",
+            "Deletion covering storage, derived data and backups",
+            "Sensitive document handling"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "F",
+      "name": "Launch",
+      "summary": "Accessibility and Hindi, production infrastructure, specialist review, beta and the stores.",
+      "phases": [
+        {
+          "id": "26",
+          "name": "Accessibility and language",
+          "risk": "Low",
+          "status": "later",
+          "goal": "Screen readers, large text, reduced motion and Hindi work everywhere.",
+          "scope": [
+            "Screen-reader labels and focus order",
+            "Large text and reduced motion",
+            "Hindi strings, date and unit formats",
+            "TalkBack and VoiceOver walk-through"
+          ]
+        },
+        {
+          "id": "27",
+          "name": "Production infrastructure",
+          "risk": "Med",
+          "status": "later",
+          "goal": "A separate production environment, sized for real users, with backups and alerts.",
+          "scope": [
+            "Separate production environment from the same Terraform",
+            "Multi-AZ database and two API tasks when numbers justify it",
+            "WAF, backups with a restore drill, scrubbed error tracking",
+            "Uptime alerts, dependency scans, low-end Android performance budgets",
+            "Runbooks, support-access and breach procedures"
+          ]
+        },
+        {
+          "id": "28",
+          "name": "Specialist review",
+          "risk": "High",
+          "status": "later",
+          "goal": "Clinician, lawyer and pentester sign-off. Public users only after this.",
+          "scope": [
+            "Clinician: medicine rules, wording, warnings, AI behaviour",
+            "Lawyer: DPDP, policies, CDSCO classification, breach duties, guardian rules",
+            "Pentest of app and API; breach tabletop",
+            "Fix legal text (\"MyHealth\"), hosting and encryption wording",
+            "Exit: no open critical safety or security issue"
+          ]
+        },
+        {
+          "id": "29",
+          "name": "Beta, stores, launch",
+          "risk": "Med",
+          "status": "later",
+          "goal": "Closed beta, Play and App Store listings, then public launch.",
+          "scope": [
+            "Closed beta with varied ages and phones",
+            "Measure sign-in code completion",
+            "Play and App Store builds, privacy forms, listings, real store link",
+            "Landing page rebrand",
+            "Exit: all 34 register items have test evidence; public launch"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "G",
+      "name": "After launch",
+      "summary": "Smarter notifications, inventory and devices, ABHA, advanced AI.",
+      "phases": [
+        {
+          "id": "30",
+          "name": "Smarter notifications and share links",
+          "risk": "Med",
+          "status": "later",
+          "goal": "Adaptive reminder preferences and expiring share links.",
+          "scope": [
+            "Adaptive preferences",
+            "Share links: 7-day default, 30-day max, revoke and view log"
+          ]
+        },
+        {
+          "id": "31",
+          "name": "Inventory and devices",
+          "risk": "Med",
+          "status": "later",
+          "goal": "Medicine stock and imports from Health Connect and Apple Health.",
+          "scope": [
+            "Stock, expiry and refill estimates kept apart from treatment",
+            "Health Connect and Apple Health import, attributed and deduplicated"
+          ]
+        },
+        {
+          "id": "32",
+          "name": "ABHA and ABDM",
+          "risk": "High",
+          "status": "later",
+          "goal": "Consent-based linking with India's health records network.",
+          "scope": [
+            "Consent-based linking and record import with source tracking",
+            "After partner and legal agreements"
+          ]
+        },
+        {
+          "id": "33",
+          "name": "Advanced AI",
+          "risk": "High",
+          "status": "later",
+          "goal": "Natural-language search and consultation preparation, each clinically validated.",
+          "scope": [
+            "Natural-language record search",
+            "Consultation preparation",
+            "Deeper comparisons"
+          ]
+        }
+      ]
+    }
+  ]
+}

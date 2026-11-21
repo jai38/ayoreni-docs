@@ -7,6 +7,7 @@ This repo, `jai38/ayoreni-docs`, is the shared memory between sessions. Read the
 2. `docs/WORKING-AGREEMENT.md`: how the UI and backend sessions work together.
 3. `docs/project/ROADMAP.md`: the plan. The current phase brief is in `docs/phases/`.
 4. `docs/contracts/api.md`: the API both sides build against.
+5. `docs/project/plan/plan.json`: the data behind the owner's plan map (https://claude.ai/artifact/BwYL4EwQyyhPkY2nkEWras). Update your own tasks' status there when you update `STATUS.md` (working agreement rule 9).
 
 ## Repos
 

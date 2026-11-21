@@ -31,6 +31,7 @@ Briefs and reviews: the lead session writes the phase brief and the review, with
 6. **Breaking API changes** need a new field or route, never a silent change of meaning. The old shape stays until the app no longer uses it.
 7. **The owner passes messages between sessions.** When one session finishes something the other needs, the owner pastes one line into the other chat. For example: "Backend closed issue #12, see `api.md` and `STATUS.md`; wire the Profile screen."
 8. **Pull this repo at the start of each session,** and commit small changes often, so the two sessions rarely touch the same lines.
+9. **Keep the plan map current.** The owner's clickable map of every phase, task and subtask is https://claude.ai/artifact/BwYL4EwQyyhPkY2nkEWras. Its data is `docs/project/plan/plan.json`. When you update your `STATUS.md` section, also set the `status` of your own tasks (and their `sub` items) in that file: `done`, `active`, `waiting`, `blocked` or `todo`, with a one-line `notes` and the PR link. Change nothing else in it. The lead session owns the rest of the file (the "now" block, decisions, new phases) and republishes the map. A session without the Artifact tool only edits the JSON.
 
 ## Starter prompts
 
