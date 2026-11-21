@@ -76,6 +76,23 @@ Each session reads this first and updates **only its own section** at the end of
   - **Note on numbering:** the old task 6 (shared pieces) is now task 11 and needs task 8 (Plus Jakarta Sans). Next: task 8, then 9 and 11.
   - Nothing is needed from the backend yet. Task 15 (the `from-ui` issues for S06/S07) goes out when task 13 starts.
 
+- 2026-11-21: Brief tasks 8, 9, 10, 11, 12 (S06 part) and 13 are done, and task 15 went out, on `phase-4b/simple-screens`, in draft PR [jai38/myhealthapp#3](https://github.com/jai38/myhealthapp/pull/3) (not merged; last commit `f56cbf6`).
+  - **15:** `from-ui` issues [#5](https://github.com/jai38/myhealthapp-backend/issues/5)–[#8](https://github.com/jai38/myhealthapp-backend/issues/8), listed in `ui-needs.md`. Backend PR #9 closed them; the UI uses Missed, `skipReason` and `fullName` only once it's deployed (rule 5).
+  - **8:** Plus Jakarta Sans (400/600/700), with the spec's type scale and tracking; Inter removed. Hindi falls back to the system's Devanagari font.
+  - **9:** four tabs (Today, Records, Medications, Profile) in the floating frosted bar. Health Plan's route stays, unlinked; `/timeline`, `/reports` and `/medications` still resolve. Tab labels grow at most 1.15× with system text, as on iOS, so all four fit at the largest size.
+  - **10:** `node scripts/screens.mjs --check-labels` is the label-fit check: it fails when a button or tab label leaves its button or wraps. It also takes `--themes light,dark` and uses 402 × 874 in place of 430. The one-notice check now passes for every Today state, so `allDone-uploading` is fixed.
+  - **11:** the v4 parts are in `design/components/Glass/`, with the bottom sheet, segmented control and Undo toast restyled. The gallery shows every part in every state, light and dark.
+  - **12:** the preview has the S06 states (`returning`, `afterTaken`, `loading`, `uploading`) and `?theme=dark`. The S07 states come with task 14.
+  - **13 (S06):** built on `todayModel` and `doseStatusDisplay`, unchanged. A tap on Mark as Taken records Taken now, then shows the toast with Undo, which PATCHes the dose back to `PENDING`. Upload progress, "saved" and errors share one notice slot, and the slot stays empty while the toast shows. Loading now shows a skeleton until the first load settles, instead of the new-user card.
+  - **For the lead and owner (my choices, please confirm):**
+    - The hero ring counts Taken doses only (D7). So an all-done day with a skipped dose says "All done for today ✓" but its ring isn't full, although task 13 says "full ring". I chose not to show a full ring for a day with a skipped dose (rule 15).
+    - Until S07 (task 14), a row's ⋮ offers Taken or Skip, as the old Today did, and "Tap to update" isn't shown.
+    - The app root pins the light theme until every tab reads `useTheme()`.
+    - Glass blur shows on web only; native needs `expo-blur`. No mesh background yet.
+  - **Still open:** the first-run card's "Scan a prescription" clips at the largest text size; that card stays until S05 (Phase 6). Medications and Records still fail the label check ("Snooze 15m", "Prescribed (2)", "TODAY"), as expected until their redesign (D4).
+  - **Gates:** before, typecheck passed with 656 tests in 52 files. After, typecheck passes with 709 tests in 56 files. The clinical and invariant suites are unchanged.
+  - **Next:** task 14 (S07) once PR #9 is deployed. Before that I can do 17 (copy pass) and 18 (after screenshots).
+
 ## Backend session
 
 - 2026-11-19: First cloud session. On backend `main` (`b9a99e4`): `npm ci`, `prisma generate` and `typecheck` are clean; `npm test` gives 399 passed and 6 skipped (23 files passed, 1 skipped: the Docker suite). `docs/contracts/api.md` now has every route's body, query, response and error codes, taken from the code. Its "Known gaps" lists 7 bugs found while writing it, none fixed yet. The main ones: a cross-patient `confirm-upload` returns 403, not 404 (rule 4); two error paths return 500; report PDFs say "Test Patient". There are no open `from-ui` issues. No backend code changed.

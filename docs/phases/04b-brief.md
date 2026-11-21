@@ -278,3 +278,18 @@ Smaller than first planned now that S01–S05 and the three tab redesigns moved 
   - Opus checks: no missing parts, no dead links, no "Missed" wording.
   - Not rendered by eye before publishing; the owner reviews.
 - **Final design (lead session, 19 November 2026):** the owner marked the canvas final, and the designer pushed the handoff to `designes/initial-upload`. The lead re-based the build on the handoff (tasks 5–20) with the owner's decisions D2–D8; D1 was decided as WhatsApp OTP the same day. S01–S05 move to Phases 5–6.
+- **UI tasks 7–13 and 15 (UI session, 19–21 November 2026),** in draft PR [jai38/myhealthapp#3](https://github.com/jai38/myhealthapp/pull/3) (not merged):
+  - **7:** v4 tokens in light and dark (`themes`, `useTheme()`). The failing light pairs each sit behind one interim token until the designer's fix lands.
+  - **8:** Plus Jakarta Sans and the spec's type scale.
+  - **9:** four tabs in the floating bar; old routes resolve; Health Plan unlinked.
+  - **10:** the render tests, plus the `--check-labels` label-fit check in `screens.mjs`.
+  - **11:** the Glass parts in the gallery, in both themes.
+  - **12:** the S06 preview states (S07's come with task 14).
+  - **13:** S06 Today.
+  - **15:** issues #5–#8.
+  - **Gates:** typecheck passes; 709 tests in 56 files (573 in 50 before task 7).
+  - **Open choices for the lead:**
+    - The ring counts Taken only, so all done with a skip isn't a full ring.
+    - Until S07, the row ⋮ offers Taken and Skip.
+    - Blur is on web only.
+    - The first-run card's button clips at the largest text size (S05, Phase 6).

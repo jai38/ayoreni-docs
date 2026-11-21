@@ -758,57 +758,59 @@
               "title": "Plus Jakarta Sans font and type scale",
               "who": "UI",
               "model": "Sonnet",
-              "status": "todo",
+              "status": "done",
               "done": "Type sheet matches the spec; no clipping at the largest text size",
               "sub": [
                 {
                   "t": "Weights 400, 600, 700 replacing Inter",
-                  "s": "todo"
+                  "s": "done"
                 },
                 {
                   "t": "Type scale, tracking, tabular figures for times and doses",
-                  "s": "todo"
+                  "s": "done"
                 },
                 {
                   "t": "Noto Sans Devanagari kept for Hindi",
-                  "s": "todo"
+                  "s": "done"
                 }
-              ]
+              ],
+              "notes": "Plus Jakarta Sans 400/600/700 and the spec's type scale; Inter removed. Draft PR jai38/myhealthapp#3."
             },
             {
               "n": 9,
               "title": "Four tabs: Today, Records, Medications, Profile",
               "who": "UI",
               "model": "Sonnet",
-              "status": "todo",
+              "status": "done",
               "done": "Four tabs render; every old route resolves; labels fit at the largest text size",
               "sub": [
                 {
                   "t": "Floating frosted tab bar",
-                  "s": "todo"
+                  "s": "done"
                 },
                 {
                   "t": "Remove Health Plan, Reports and Timeline as tabs",
-                  "s": "todo"
+                  "s": "done"
                 },
                 {
                   "t": "Reports and Timeline reachable from Records",
-                  "s": "todo"
+                  "s": "done"
                 },
                 {
                   "t": "Old links /timeline, /reports, /medications still work",
-                  "s": "todo"
+                  "s": "done"
                 }
-              ]
+              ],
+              "notes": "Four tabs in the floating frosted bar; Health Plan route kept, unlinked; old links resolve; tab labels fit at the largest text size. Draft PR jai38/myhealthapp#3."
             },
             {
               "n": 10,
               "title": "Render tests",
               "who": "UI",
               "model": "Sonnet",
-              "status": "active",
+              "status": "done",
               "done": "Setup lands with one passing render test per tab",
-              "notes": "Mostly done in draft PR jai38/myhealthapp#3.",
+              "notes": "Render tests per tab and per S06 state; one-notice check passes for every Today state (allDone-uploading fixed); label-fit check is screens.mjs --check-labels. Draft PR jai38/myhealthapp#3.",
               "sub": [
                 {
                   "t": "Testing setup and one test per tab",
@@ -820,11 +822,11 @@
                 },
                 {
                   "t": "Check that button labels fit at the largest text size",
-                  "s": "todo"
+                  "s": "done"
                 },
                 {
                   "t": "Flip the known upload + All done failure when S06 lands",
-                  "s": "todo"
+                  "s": "done"
                 }
               ]
             },
@@ -833,76 +835,79 @@
               "title": "Shared pieces in both themes",
               "who": "UI",
               "model": "Sonnet",
-              "status": "todo",
+              "status": "done",
               "done": "Gallery shows each in every state; render tests pass",
               "sub": [
                 {
                   "t": "Glass card and hero card with ring",
-                  "s": "todo"
+                  "s": "done"
                 },
                 {
                   "t": "Header (search and bell hidden) and section header",
-                  "s": "todo"
+                  "s": "done"
                 },
                 {
                   "t": "Medicine row and status chip",
-                  "s": "todo"
+                  "s": "done"
                 },
                 {
                   "t": "Mark as Taken button and Quick Action tile",
-                  "s": "todo"
+                  "s": "done"
                 },
                 {
                   "t": "Bottom sheet, radio row, segmented control, time wheel",
-                  "s": "todo"
+                  "s": "done"
                 },
                 {
                   "t": "Toast with Undo and the single notice slot",
-                  "s": "todo"
+                  "s": "done"
                 }
-              ]
+              ],
+              "notes": "design/components/Glass plus restyled sheet, segmented control and Undo toast; gallery shows every part in light and dark. Draft PR jai38/myhealthapp#3."
             },
             {
               "n": 12,
               "title": "Preview fixtures for every S06 and S07 state (synthetic data)",
               "who": "UI",
               "model": "Haiku",
-              "status": "todo",
-              "done": "/dev/preview renders every state"
+              "status": "active",
+              "done": "/dev/preview renders every state",
+              "notes": "S06 states done (returning, afterTaken, loading, uploading, plus ?theme=dark). S07 states come with task 14. Draft PR jai38/myhealthapp#3."
             },
             {
               "n": 13,
               "title": "S06 Today",
               "who": "UI",
               "model": "Sonnet",
-              "status": "todo",
+              "status": "done",
               "done": "Clinical tests unchanged and passing; every S06 state matches in both themes",
               "sub": [
                 {
                   "t": "Greeting by time of day with first name",
-                  "s": "todo"
+                  "s": "done"
                 },
                 {
                   "t": "Hero: N of M taken, next dose, needs confirming, ring",
-                  "s": "todo"
+                  "s": "done"
                 },
                 {
                   "t": "Morning, Afternoon, Evening groups with Show all",
-                  "s": "todo"
+                  "s": "done"
                 },
                 {
                   "t": "Mark as Taken with a 5-second Undo",
-                  "s": "todo"
+                  "s": "done"
                 },
                 {
                   "t": "All done, nothing due, loading, error, offline, uploading",
-                  "s": "todo"
+                  "s": "done"
                 },
                 {
                   "t": "Quick Actions: Upload Record, Add Medication",
-                  "s": "todo"
+                  "s": "done"
                 }
-              ]
+              ],
+              "notes": "S06 built on todayModel unchanged; Mark as Taken with Undo; one notice slot; hero counts Taken only. Greeting name from fullName once PR #9 is live. Draft PR jai38/myhealthapp#3."
             },
             {
               "n": 14,
