@@ -10,7 +10,7 @@
     "later": "Not briefed yet"
   },
   "now": {
-    "headline": "Phase 4b is being built. The new colours (task 7) and the backend's dose changes (task 16) are done; next are the font, the four tabs and the shared pieces, then Today (S06) and the Dose update sheet (S07).",
+    "headline": "Phase 4b is being built. The new colours (task 7) are done, and the backend's dose changes (task 16) are merged and wait for a deploy. Next: the font, the four tabs and the shared pieces, then Today (S06) and the Dose update sheet (S07).",
     "current": "4b",
     "next": "5",
     "sessions": [
@@ -21,8 +21,8 @@
       },
       {
         "who": "Backend",
-        "doing": "Done: task 16 in draft PR #9, plus the seven contract-gap fixes in draft PR #4. Both wait for the owner to merge (#4 first) and deploy.",
-        "where": "jai38/myhealthapp-backend, PRs #4 and #9 (not merged)"
+        "doing": "Done: task 16 and the seven contract fixes, both merged to main on 21 Nov 2026 (PRs #9 and #4). Nothing open in 4b; the Phase 5 sending-route comparison (task 6) can start if the owner says so.",
+        "where": "jai38/myhealthapp-backend, main 881a97c (not deployed)"
       },
       {
         "who": "Designer",
@@ -37,16 +37,20 @@
     ],
     "waitingOnOwner": [
       {
-        "item": "Merge backend PR #4, then PR #9, and run the deploy (two new database migrations)",
+        "item": "Run deploy-aws.yml (dev, then production) to put backend PRs #4 and #9 live",
         "phase": "4b",
         "task": 19,
-        "note": "Then the app can use Missed, skip reasons and the first-name greeting."
+        "note": "Both merged 21 Nov 2026. The deploy applies two migrations. Then the app can use Missed, skip reasons and the first-name greeting."
       },
       {
-        "item": "Answer Phase 5 decisions P1 to P7",
+        "item": "Approve the Phase 5 brief and say when building starts",
         "phase": "5",
-        "task": 5,
-        "note": "Kept open on 19 Nov 2026 while the founders discuss them."
+        "note": "P1–P7 are approved; 4b is still open."
+      },
+      {
+        "item": "Name who does support for the P2 new-device check",
+        "phase": "5",
+        "task": 9
       },
       {
         "item": "Confirm that S06's appointment card and the Add Appointment and Add Reading tiles stay hidden",
@@ -89,51 +93,51 @@
     {
       "id": "P1",
       "phase": "5",
-      "status": "open",
+      "status": "decided",
       "q": "How is the app protected after the first sign-in?",
-      "rec": "App lock now (fingerprint, face or PIN, on by default). Passkeys later, once there's a real release key and a domain."
+      "rec": "Approved 21 Nov 2026: App lock now (fingerprint, face or PIN, on by default). Passkeys later, once there's a real release key and a domain."
     },
     {
       "id": "P2",
       "phase": "5",
-      "status": "open",
+      "status": "decided",
       "q": "Recycled phone numbers: a new person could get an old number and see its records.",
-      "rec": "On a new device, also ask for a passkey or recovery code. If the account has neither and was inactive 90+ days, hide its records until support checks the person. Needs: confirm 90 days, and who does support."
+      "rec": "Approved 21 Nov 2026: On a new device, also ask for a passkey or recovery code. If the account has neither and was inactive 90+ days, hide its records until support checks the person. Needs: confirm 90 days, and who does support."
     },
     {
       "id": "P3",
       "phase": "5",
-      "status": "open",
+      "status": "decided",
       "q": "Recovery code?",
-      "rec": "Show one once after sign-up, stored only as a hash. It answers P2 and replaces a lost passkey."
+      "rec": "Approved 21 Nov 2026: Show one once after sign-up, stored only as a hash. It answers P2 and replaces a lost passkey."
     },
     {
       "id": "P4",
       "phase": "5",
-      "status": "open",
+      "status": "decided",
       "q": "Under-18 users?",
-      "rec": "Block sign-up at launch with a calm message, until legal review settles the guardian path."
+      "rec": "Approved 21 Nov 2026: Block sign-up at launch with a calm message, until legal review settles the guardian path."
     },
     {
       "id": "P5",
       "phase": "5",
-      "status": "open",
+      "status": "decided",
       "q": "The old email and password routes?",
-      "rec": "Keep them until the app stops using them, then remove. All existing accounts are synthetic."
+      "rec": "Approved 21 Nov 2026: Keep them until the app stops using them, then remove. All existing accounts are synthetic."
     },
     {
       "id": "P6",
       "phase": "5",
-      "status": "open",
+      "status": "decided",
       "q": "Which service sends the WhatsApp codes?",
-      "rec": "AWS End User Messaging Social or the Meta Cloud API. The backend compares them first; the owner picks."
+      "rec": "Approved 21 Nov 2026: AWS End User Messaging Social or the Meta Cloud API. The backend compares them first; the owner picks."
     },
     {
       "id": "P7",
       "phase": "5",
-      "status": "open",
+      "status": "decided",
       "q": "Changing your phone number?",
-      "rec": "Not in Phase 5. Add it to Profile in Phase 6."
+      "rec": "Approved 21 Nov 2026: Not in Phase 5. Add it to Profile in Phase 6."
     },
     {
       "id": "D1",
@@ -940,7 +944,7 @@
               "title": "Dose actions for S06 and S07",
               "who": "Backend",
               "model": "Sonnet",
-              "status": "waiting",
+              "status": "done",
               "done": "PR merged after owner OK; api.md updated in the same PR",
               "sub": [
                 {
@@ -964,7 +968,7 @@
                   "s": "done"
                 }
               ],
-              "notes": "Built in draft PR jai38/myhealthapp-backend#9, stacked on #4. Waiting for the owner to merge and deploy."
+              "notes": "Merged to backend main on 21 Nov 2026 (PR #9, after PR #4). Not deployed yet."
             },
             {
               "n": 17,
@@ -988,7 +992,7 @@
               "who": "Owner",
               "status": "waiting",
               "done": "Written approval",
-              "notes": "Merge backend PR #4, then #9, then run deploy-aws.yml (dev, then production)."
+              "notes": "PRs #4 and #9 are merged. Run deploy-aws.yml (dev, then production), then do the phone check."
             },
             {
               "n": 20,
@@ -1007,7 +1011,7 @@
           "status": "waiting",
           "goal": "Sign up and sign in with a mobile number and a code sent by WhatsApp (S01 to S03), then app lock. No code, number or name ever reaches a log.",
           "brief": "docs/phases/05-brief.md",
-          "note": "Draft brief. Waiting on the owner's answers to P1 to P7. Going live is blocked on Meta verification and the template.",
+          "note": "Draft brief. P1–P7 approved 21 Nov 2026. Building starts when the owner approves the brief. Going live is blocked on Meta verification and the template.",
           "order": "Owner tasks 1 to 3 start now (they take days to weeks). Then 4, 5 and 6. Tasks 7 to 12 are built against a fake sender before Meta approves. 13 and 14 wait for task 3.",
           "tasks": [
             {
@@ -1059,8 +1063,8 @@
               "n": 5,
               "title": "Answer P1 to P7",
               "who": "Owner",
-              "status": "waiting",
-              "notes": "Kept open on 19 Nov 2026 while the founders discuss."
+              "status": "done",
+              "notes": "All seven approved as recommended on 21 Nov 2026."
             },
             {
               "n": 6,
@@ -1125,7 +1129,7 @@
               "who": "UI",
               "model": "Sonnet",
               "status": "blocked",
-              "notes": "Needs P1 and task 3."
+              "notes": "P1 approved; still needs task 3 (release key and domain)."
             },
             {
               "n": 15,

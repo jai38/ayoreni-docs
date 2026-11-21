@@ -3,7 +3,7 @@
 **Risk:** High. **Roadmap:** `docs/project/ROADMAP.md`, section 6 (Phase 5), as changed by D1.
 **Goal:** a new user signs up with their mobile number and a code sent by WhatsApp, creates their account (S01–S03), and protects the app with app lock or a passkey; a returning user signs in the same way. No code, number or name ever reaches a log.
 
-**Status:** Draft by the lead session, 19 November 2026. Waiting for the owner's approval and the open decisions below. Building can start before Meta approves; **going live is blocked** on Meta business verification and the authentication template (tasks 1–3).
+**Status:** Draft by the lead session, 19 November 2026. **P1–P7 approved by the owner on 21 November 2026, every one as recommended** (see Decisions). Still open: who does support for the P2 check, and the P6 pick once the backend's comparison (task 6) is in. Building starts when the owner approves the brief and says go (one phase at a time; 4b is still open). Building can start before Meta approves; **going live is blocked** on Meta business verification and the authentication template (tasks 1–3).
 
 ## What changed (D1)
 
@@ -13,12 +13,12 @@
 
 ## Decisions
 
-Proposed by the lead; the owner confirms or changes each.
+Proposed by the lead. **Owner, 21 November 2026: all approved as recommended**, including 90 days for P2. P6 stays a pick the owner makes after task 6.
 
 | # | Decision | Recommendation |
 |---|---|---|
 | P1 | **After the first sign-in: passkey or app lock** | **App lock in Phase 5** (device biometrics or PIN, through the maintained `expo-local-authentication`), offered right after S03 and on by default. **Passkeys follow** once the app has a verified domain and a real release key (task 3); they need both. |
-| P2 | **New-device sign-in on a recycled number.** Indian operators reassign deactivated numbers, so a code alone could open someone else's records | When a number signs in on a new device and the account has a passkey or recovery code, ask for one of them as well as the code. When it has neither and the account has been inactive for 90 days or more, keep its records hidden until support verifies the user. Owner to confirm the 90 days and the support path |
+| P2 | **New-device sign-in on a recycled number.** Indian operators reassign deactivated numbers, so a code alone could open someone else's records | When a number signs in on a new device and the account has a passkey or recovery code, ask for one of them as well as the code. When it has neither and the account has been inactive for 90 days or more, keep its records hidden until support verifies the user. 90 days approved (owner, 21 November 2026); the owner names the support path before task 9 ships |
 | P3 | **Recovery code** | Show one once after S03, stored only as a hash; it unlocks P2 and replaces a lost device's passkey |
 | P4 | **Under 18** | The roadmap blocks under-18 signup; `screens.md` shows a guardian note pending legal review. Recommend **block at launch** with a calm message, until legal review settles the guardian path |
 | P5 | **The old email and password routes** | Keep them only until the app no longer calls them (working agreement rule 6), then remove them in a later PR. Existing accounts are synthetic test accounts (production started fresh in Phase 2); no migration |
@@ -54,7 +54,7 @@ Proposed by the lead; the owner confirms or changes each.
 | 2 | Authentication template in English: security and expiry lines, **copy code** button first (autofill added after task 3); token or AWS link stored in Parameter Store; spend alarm next to the AWS budget alarm | **Owner** | n/a | Template approved; non-secret IDs recorded in the checklist |
 | 3 | A real release signing key (EAS-managed, or a keystore as a CI secret), and a domain for passkeys and Android app links | **Owner** | n/a | CI APK signed with the release key; domain chosen |
 | 4 | **Designer:** update S01/S02 for WhatsApp: the copy ("We'll send a 6-digit code on WhatsApp", "We sent a code on WhatsApp to …"); replace the iOS "From Messages" suggestion with copy-and-paste; add the **"no WhatsApp on this number"** state (it may arrive only after the code request, so draw it on S02 too); add app lock, recovery code and the under-18 message | **Designer** | n/a | States locked in `screens.md` and the canvas |
-| 5 | Confirm P1–P7 | **Owner** | n/a | Written answers |
+| 5 | Confirm P1–P7 | **Owner** | n/a | Done 21 November 2026: all approved as recommended |
 | 6 | **Sending route spike:** compare AWS End User Messaging Social and the Meta Cloud API on price, Terraform support, delivery receipts and how each reports a number with no WhatsApp (straight away, or later through a webhook) | **Backend** | Sonnet | A short note in this brief; owner picks |
 | 7 | **OTP endpoints**, with `api.md` in the same PR (draft shapes below): `POST /auth/otp/request`, `POST /auth/otp/verify`, and a status call or webhook path for late delivery failure. A `WhatsAppSender` interface with a Meta/AWS implementation and a memory fake for tests | **Backend** | Sonnet | Tests below pass; shapes in `api.md` |
 | 8 | **Account and profile:** `phoneE164` unique and verified on the user, `fullName`, `dateOfBirth` (under-18 per P4), gender and an optional self-description, optional email, and a consent record (terms version from S01, health-data consent version from S03, with times). `fullName` on `GET /auth/me` | **Backend** | Sonnet | Migration reviewed by Opus; tests pass |
