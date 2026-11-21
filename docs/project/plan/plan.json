@@ -48,9 +48,10 @@
         "note": "P1–P7 are approved; 4b is still open."
       },
       {
-        "item": "Name who does support for the P2 new-device check",
+        "item": "Create the support email (for the P2 new-device check)",
         "phase": "5",
-        "task": 9
+        "task": 18,
+        "note": "Needed before Phase 5 goes live."
       },
       {
         "item": "Confirm that S06's appointment card and the Add Appointment and Add Reading tiles stay hidden",
@@ -102,7 +103,7 @@
       "phase": "5",
       "status": "decided",
       "q": "Recycled phone numbers: a new person could get an old number and see its records.",
-      "rec": "Approved 21 Nov 2026: On a new device, also ask for a passkey or recovery code. If the account has neither and was inactive 90+ days, hide its records until support checks the person. Needs: confirm 90 days, and who does support."
+      "rec": "Approved 21 Nov 2026: On a new device, also ask for a passkey or recovery code. If the account has neither and was inactive 90+ days, hide its records until support checks the person. Needs: confirm 90 days, and who does support. Support: a support email the owner creates later."
     },
     {
       "id": "P3",
@@ -130,7 +131,7 @@
       "phase": "5",
       "status": "decided",
       "q": "Which service sends the WhatsApp codes?",
-      "rec": "Approved 21 Nov 2026: AWS End User Messaging Social or the Meta Cloud API. The backend compares them first; the owner picks."
+      "rec": "Approved 21 Nov 2026: whichever is cheaper and easier to build, AWS End User Messaging Social or the Meta Cloud API. The backend compares them (task 6) and the lead records the pick."
     },
     {
       "id": "P7",
@@ -1068,7 +1069,7 @@
             },
             {
               "n": 6,
-              "title": "Compare AWS and Meta for sending WhatsApp codes",
+              "title": "Compare AWS and Meta for sending WhatsApp codes; pick the cheaper and easier one",
               "who": "Backend",
               "model": "Sonnet",
               "status": "todo"
@@ -1143,7 +1144,7 @@
               "title": "Deploy to dev, then production, after Meta approval",
               "who": "Owner",
               "status": "blocked",
-              "notes": "Needs tasks 1 and 2."
+              "notes": "Needs tasks 1, 2 and 18."
             },
             {
               "n": 17,
@@ -1151,6 +1152,13 @@
               "who": "Lead",
               "model": "Opus",
               "status": "todo"
+            },
+            {
+              "n": 18,
+              "title": "Create the support email for the P2 new-device check",
+              "who": "Owner",
+              "status": "todo",
+              "done": "Address recorded in the brief before going live"
             }
           ]
         },

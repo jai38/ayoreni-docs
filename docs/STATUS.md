@@ -36,6 +36,7 @@ Each session reads this first and updates **only its own section** at the end of
 ## Owner decisions made
 
 - 2026-11-21, Phase 5 P1–P7, all as the lead recommended (`docs/phases/05-brief.md`): P1 app lock now, passkeys later; P2 on a new device ask for a passkey or recovery code too, and hide the records of accounts inactive 90+ days until support checks (90 days approved; the owner names who does support); P3 recovery code shown once, stored hashed; P4 block under-18 sign-up at launch; P5 retire the email routes once the app stops using them; P6 the backend compares AWS and Meta, then the owner picks; P7 change of number moves to Phase 6.
+- 2026-11-21, follow-ups: P2 support goes through a support email the owner creates later (Phase 5 task 18, before going live). P6: whichever sending route is cheaper and easier to build, per the backend's comparison; no separate owner pick.
 - 2026-11-21: merge backend PRs #4 and #9 to `main` (done by the lead session). Deploy still to run.
 
 - 2026-11-19, D1 (revised the same day): sign-in uses a **mobile number plus a one-time code sent by WhatsApp only**, as designed in S01–S02. There is no SMS for now, so no DLT yet; `docs/ops/dlt-registration.md` is kept for a later SMS fallback. The owner is starting Meta business verification; the checklist is in `docs/ops/whatsapp-otp-setup.md`. Phase 5 is replanned around WhatsApp OTP and can't go live until the Meta verification and the authentication template are approved. The designer needs to add a "no WhatsApp on this number" state to S01/S02.

@@ -3,7 +3,7 @@
 **Risk:** High. **Roadmap:** `docs/project/ROADMAP.md`, section 6 (Phase 5), as changed by D1.
 **Goal:** a new user signs up with their mobile number and a code sent by WhatsApp, creates their account (S01–S03), and protects the app with app lock or a passkey; a returning user signs in the same way. No code, number or name ever reaches a log.
 
-**Status:** Draft by the lead session, 19 November 2026. **P1–P7 approved by the owner on 21 November 2026, every one as recommended** (see Decisions). Still open: who does support for the P2 check, and the P6 pick once the backend's comparison (task 6) is in. Building starts when the owner approves the brief and says go (one phase at a time; 4b is still open). Building can start before Meta approves; **going live is blocked** on Meta business verification and the authentication template (tasks 1–3).
+**Status:** Draft by the lead session, 19 November 2026. **P1–P7 approved by the owner on 21 November 2026, every one as recommended** (see Decisions). Owner follow-ups the same day: P2 support goes through a support email the owner creates later; P6 goes to whichever route is cheaper and easier to build, per the backend's comparison (task 6), with no separate owner pick. Building starts when the owner approves the brief and says go (one phase at a time; 4b is still open). Building can start before Meta approves; **going live is blocked** on Meta business verification and the authentication template (tasks 1–3).
 
 ## What changed (D1)
 
@@ -13,16 +13,16 @@
 
 ## Decisions
 
-Proposed by the lead. **Owner, 21 November 2026: all approved as recommended**, including 90 days for P2. P6 stays a pick the owner makes after task 6.
+Proposed by the lead. **Owner, 21 November 2026: all approved as recommended**, including 90 days for P2. P6: whichever route is cheaper and easier to build (owner, 21 November 2026).
 
 | # | Decision | Recommendation |
 |---|---|---|
 | P1 | **After the first sign-in: passkey or app lock** | **App lock in Phase 5** (device biometrics or PIN, through the maintained `expo-local-authentication`), offered right after S03 and on by default. **Passkeys follow** once the app has a verified domain and a real release key (task 3); they need both. |
-| P2 | **New-device sign-in on a recycled number.** Indian operators reassign deactivated numbers, so a code alone could open someone else's records | When a number signs in on a new device and the account has a passkey or recovery code, ask for one of them as well as the code. When it has neither and the account has been inactive for 90 days or more, keep its records hidden until support verifies the user. 90 days approved (owner, 21 November 2026); the owner names the support path before task 9 ships |
+| P2 | **New-device sign-in on a recycled number.** Indian operators reassign deactivated numbers, so a code alone could open someone else's records | When a number signs in on a new device and the account has a passkey or recovery code, ask for one of them as well as the code. When it has neither and the account has been inactive for 90 days or more, keep its records hidden until support verifies the user. 90 days approved (owner, 21 November 2026). Support is a support email the owner creates before Phase 5 goes live (task 18) |
 | P3 | **Recovery code** | Show one once after S03, stored only as a hash; it unlocks P2 and replaces a lost device's passkey |
 | P4 | **Under 18** | The roadmap blocks under-18 signup; `screens.md` shows a guardian note pending legal review. Recommend **block at launch** with a calm message, until legal review settles the guardian path |
 | P5 | **The old email and password routes** | Keep them only until the app no longer calls them (working agreement rule 6), then remove them in a later PR. Existing accounts are synthetic test accounts (production started fresh in Phase 2); no migration |
-| P6 | **Sending route** | AWS End User Messaging Social or the Meta Cloud API, per the checklist, to avoid a provider markup. The backend session compares them in task 6; the owner sets up the chosen one |
+| P6 | **Sending route** | AWS End User Messaging Social or the Meta Cloud API, per the checklist, to avoid a provider markup. The backend session compares them in task 6. **Owner, 21 November 2026: pick whichever is cheaper and easier to build**; the backend recommends and the lead records it. The owner sets up the chosen one |
 | P7 | **Change of number** | Out of scope; Profile, Phase 6. A user who loses the number signs in through P2/P3 |
 
 ## Hard rules
@@ -55,7 +55,7 @@ Proposed by the lead. **Owner, 21 November 2026: all approved as recommended**, 
 | 3 | A real release signing key (EAS-managed, or a keystore as a CI secret), and a domain for passkeys and Android app links | **Owner** | n/a | CI APK signed with the release key; domain chosen |
 | 4 | **Designer:** update S01/S02 for WhatsApp: the copy ("We'll send a 6-digit code on WhatsApp", "We sent a code on WhatsApp to …"); replace the iOS "From Messages" suggestion with copy-and-paste; add the **"no WhatsApp on this number"** state (it may arrive only after the code request, so draw it on S02 too); add app lock, recovery code and the under-18 message | **Designer** | n/a | States locked in `screens.md` and the canvas |
 | 5 | Confirm P1–P7 | **Owner** | n/a | Done 21 November 2026: all approved as recommended |
-| 6 | **Sending route spike:** compare AWS End User Messaging Social and the Meta Cloud API on price, Terraform support, delivery receipts and how each reports a number with no WhatsApp (straight away, or later through a webhook) | **Backend** | Sonnet | A short note in this brief; owner picks |
+| 6 | **Sending route spike:** compare AWS End User Messaging Social and the Meta Cloud API on price, Terraform support, delivery receipts and how each reports a number with no WhatsApp (straight away, or later through a webhook) | **Backend** | Sonnet | A short note in this brief naming the cheaper and easier route (P6 rule); the lead records the choice |
 | 7 | **OTP endpoints**, with `api.md` in the same PR (draft shapes below): `POST /auth/otp/request`, `POST /auth/otp/verify`, and a status call or webhook path for late delivery failure. A `WhatsAppSender` interface with a Meta/AWS implementation and a memory fake for tests | **Backend** | Sonnet | Tests below pass; shapes in `api.md` |
 | 8 | **Account and profile:** `phoneE164` unique and verified on the user, `fullName`, `dateOfBirth` (under-18 per P4), gender and an optional self-description, optional email, and a consent record (terms version from S01, health-data consent version from S03, with times). `fullName` on `GET /auth/me` | **Backend** | Sonnet | Migration reviewed by Opus; tests pass |
 | 9 | **Sessions:** 15-minute access tokens; rotating refresh tokens with reuse detection, which revokes the whole family; device list and revoke; recovery code (P3); the new-device check (P2) | **Backend** | Sonnet | Token-theft and reuse tests pass |
@@ -67,6 +67,7 @@ Proposed by the lead. **Owner, 21 November 2026: all approved as recommended**, 
 | 15 | Switch the app off email sign-in; then the backend removes the old routes (P5) | **UI**, then **Backend** | Sonnet | Old routes unused, then removed |
 | 16 | Deploy to dev, then production, after Meta approval | **Owner** | n/a | Real code arrives on the owner's phone |
 | 17 | Review against `TEMPLATE-review.md`, including a security pass on tasks 7–9 | Lead | Opus | `05-review.md` written |
+| 18 | Create the support email for the P2 new-device check, and give its address to the UI for the "records hidden pending support" screen | **Owner** | n/a | Address recorded here before task 16 |
 
 **Order:** 1–3 start now; they take days to weeks. 4, 5 and 6 next. 7–9 then 11 and 12 can be built and tested against the fake sender before Meta approves. 13 and 14 wait for task 3. Merge order: backend, owner deploy, then the app. Production sign-in switches over only when tasks 1–2 are done.
 
